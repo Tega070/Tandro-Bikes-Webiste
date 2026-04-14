@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tandro Bike Tours & Bike Rent Georgia — Guided cycling tours and bike rentals in Tbilisi, Kutaisi & across Georgia." />
+  <title>Tandro Bike Tours & Bike Rent Georgia</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy:   #1A3A6B;
+      --blue:   #2563EB;
+      --green:  #16A34A;
+      --dark:   #0F172A;
+      --surface:#F8FAFC;
+      --white:  #FFFFFF;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-heading: 'Barlow', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --radius: 4px;
+      --transition: 250ms ease;
+      --max-w: 1200px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+    }
+
+    /* ============================================
+       LOADING SCREEN
+    ============================================ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-logo {
+      width: 80px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 0.2s forwards;
+    }
+
+    .loader-track {
+      width: 280px;
+      height: 60px;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .loader-road {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 1px;
+    }
+
+    .loader-bike {
+      position: absolute;
+      bottom: 10px;
+      left: -60px;
+      animation: rideAcross 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loader-bike {
+        animation: none;
+        left: 110px;
+      }
+      .loader-logo {
+        animation: none;
+        opacity: 1;
+      }
+    }
+
+    @keyframes rideAcross {
+      0%   { left: -60px; }
+      100% { left: 310px; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .loader-text {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.7);
+      opacity: 0;
+      animation: fadeIn 0.6s ease 0.5s forwards;
+    }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 16px;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+
+    #navbar.scrolled {
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: none;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      color: var(--white);
+      opacity: 0.85;
+      transition: opacity var(--transition);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-social {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: var(--white);
+      opacity: 0.75;
+      transition: opacity var(--transition), background var(--transition);
+    }
+
+    .nav-social a:hover {
+      opacity: 1;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn-book {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      transition: background var(--transition), transform var(--transition);
+      min-height: 44px;
+      cursor: pointer;
+    }
+
+    .btn-book:hover {
+      background: #15803D;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      cursor: pointer;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 1px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      z-index: 49;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .mobile-links a {
+      font-family: var(--font-display);
+      font-size: 40px;
+      letter-spacing: 2px;
+      color: var(--white);
+      opacity: 0.85;
+      transition: opacity var(--transition), color var(--transition);
+    }
+
+    .mobile-links a:hover {
+      opacity: 1;
+      color: var(--green);
+    }
+
+    .mobile-socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .mobile-socials a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      color: var(--white);
+      opacity: 0.75;
+      transition: opacity var(--transition), border-color var(--transition);
+    }
+
+    .mobile-socials a:hover {
+      opacity: 1;
+      border-color: var(--green);
+    }
+
+    /* Desktop nav */
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .nav-social { display: flex; }
+      .hamburger { display: none; }
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    #hero {
+      position: relative;
+      height: 100dvh;
+      min-height: 560px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('Images/Imige 5.jpeg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      filter: blur(3px);
+      transition: transform 8s ease;
+    }
+
+    .hero-bg.loaded {
+      transform: scale(1.05);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 23, 42, 0.80) 0%,
+        rgba(15, 23, 42, 0.35) 50%,
+        rgba(15, 23, 42, 0.15) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px 64px;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0.7;
+      margin-bottom: 16px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--green);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 10vw, 110px);
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .hero-title span {
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      min-height: 52px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: #15803D;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid rgba(255,255,255,0.6);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      min-height: 52px;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--white);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-heading);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 2;
+      animation: bounce 2s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================
+       SHARED SECTION STYLES
+    ============================================ */
+    section {
+      padding: 80px 16px;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--green);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 60px);
+      line-height: 1;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       SERVICES
+    ============================================ */
+    #services {
+      background: var(--surface);
+    }
+
+    .services-header {
+      margin-bottom: 48px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 36px 32px 32px;
+      border-top: 3px solid var(--green);
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 16px 48px rgba(15, 23, 42, 0.12);
+      transform: translateY(-4px);
+      background: #FAFFFE;
+    }
+
+    .service-icon-wrap {
+      width: 52px;
+      height: 52px;
+      background: rgba(22, 163, 74, 0.10);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+
+    .service-icon {
+      width: 26px;
+      height: 26px;
+      color: var(--green);
+    }
+
+    .service-title {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+      letter-spacing: -0.2px;
+    }
+
+    .service-text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 0;
+      flex: 1;
+    }
+
+    .service-divider {
+      height: 1px;
+      background: #E8EDF3;
+      margin: 24px 0;
+    }
+
+    .service-link {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap var(--transition), color var(--transition);
+      cursor: pointer;
+    }
+
+    .service-link:hover {
+      gap: 10px;
+      color: var(--green);
+    }
+
+    /* ============================================
+       BIKE ROAD STRIP
+    ============================================ */
+    .bike-road {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      background: #12121f;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Road surface lines */
+    .bike-road::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      transform: translateY(-50%);
+      background: repeating-linear-gradient(
+        to right,
+        rgba(255,255,255,0.25) 0px,
+        rgba(255,255,255,0.25) 18px,
+        transparent 18px,
+        transparent 36px
+      );
+    }
+
+    /* Subtle road edge lines */
+    .bike-road::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-top: 2px solid rgba(255,255,255,0.06);
+      border-bottom: 2px solid rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+
+    .bike-lane {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      display: flex;
+      align-items: center;
+    }
+
+    .bike-lane--top { top: 0; }
+    .bike-lane--bottom { bottom: 0; }
+
+    .road-bike {
+      position: absolute;
+      width: 52px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    /* Left → Right */
+    .road-bike--right {
+      animation: rideRight 16s linear infinite;
+    }
+    .road-bike--right:nth-child(2) { animation-delay: -5.3s; }
+    .road-bike--right:nth-child(3) { animation-delay: -10.7s; }
+
+    /* Right → Left (flipped) */
+    .road-bike--left {
+      transform: scaleX(-1);
+      animation: rideLeft 16s linear infinite;
+    }
+    .road-bike--left:nth-child(2) { animation-delay: -5.3s; }
+    .road-bike--left:nth-child(3) { animation-delay: -10.7s; }
+
+    @keyframes rideRight {
+      from { left: -70px; }
+      to   { left: calc(100% + 70px); }
+    }
+
+    @keyframes rideLeft {
+      from { right: -70px; left: auto; transform: scaleX(-1) translateX(-100%); }
+      to   { right: calc(100% + 70px); left: auto; transform: scaleX(-1) translateX(-100%); }
+    }
+
+    /* Simpler rideLeft using left property with scaleX wrapper trick */
+    .bike-lane--bottom .road-bike--left {
+      animation: rideLeftSimple 16s linear infinite;
+      transform: scaleX(-1);
+    }
+    .bike-lane--bottom .road-bike--left:nth-child(2) { animation-delay: -5.3s; }
+    .bike-lane--bottom .road-bike--left:nth-child(3) { animation-delay: -10.7s; }
+
+    @keyframes rideLeftSimple {
+      from { left: calc(100% + 70px); }
+      to   { left: -70px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .road-bike { animation-play-state: paused; }
+    }
+
+    /* ============================================
+       WHY TANDRO
+    ============================================ */
+    #why {
+      background: var(--white);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 32px;
+      margin-top: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .why-grid { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    }
+
+    .why-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .why-icon {
+      width: 44px;
+      height: 44px;
+      color: var(--navy);
+    }
+
+    .why-title {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .why-text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       FEATURED EXPERIENCES
+    ============================================ */
+    #experiences {
+      background: var(--dark);
+      overflow: hidden;
+    }
+
+    #experiences .section-title {
+      color: var(--white);
+    }
+
+    #experiences .section-label {
+      color: var(--green);
+    }
+
+    #experiences .section-label::before {
+      background: var(--green);
+    }
+
+    .exp-header {
+      margin-bottom: 40px;
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .exp-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .exp-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+
+    @media (min-width: 640px) {
+      .exp-card { aspect-ratio: 2/3; }
+    }
+
+    .exp-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .exp-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .exp-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.1) 60%);
+      transition: background var(--transition);
+    }
+
+    .exp-card:hover .exp-overlay {
+      background: linear-gradient(to top, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.3) 60%);
+    }
+
+    .exp-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+    }
+
+    .exp-tag {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .exp-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .exp-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity var(--transition), transform var(--transition), color var(--transition);
+      cursor: pointer;
+    }
+
+    .exp-card:hover .exp-arrow {
+      opacity: 1;
+      transform: translateY(0);
+      color: var(--white);
+    }
+
+    /* ============================================
+       GALLERY STRIP
+    ============================================ */
+    #gallery {
+      padding: 0;
+      background: var(--dark);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    .gallery-img {
+      overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+
+    .gallery-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-img:hover img {
+      transform: scale(1.04);
+    }
+
+    /* ============================================
+       STATS BAR
+    ============================================ */
+    #stats {
+      background: var(--navy);
+      padding: 48px 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 60px);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-number span {
+      color: var(--green);
+    }
+
+    .stat-label {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+    }
+
+    /* ============================================
+       CTA BANNER
+    ============================================ */
+    #cta {
+      background: var(--dark);
+      text-align: center;
+      padding: 96px 16px;
+    }
+
+    .cta-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 8vw, 80px);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .cta-title span {
+      color: var(--green);
+    }
+
+    .cta-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+
+    .cta-phone {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 36px;
+      display: block;
+      transition: color var(--transition);
+      cursor: pointer;
+    }
+
+    .cta-phone:hover {
+      color: var(--green);
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      min-height: 52px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-whatsapp:hover {
+      background: #1ebe5a;
+      transform: translateY(-1px);
+    }
+
+    .btn-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      min-height: 52px;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .btn-email:hover {
+      border-color: var(--white);
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      background: #060E1A;
+      padding: 56px 16px 0;
+    }
+
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-inner { grid-template-columns: 2fr 1fr 1fr; gap: 64px; }
+    }
+
+    .footer-brand img {
+      height: 52px;
+      margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .footer-socials a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.55);
+      transition: color var(--transition);
+      cursor: pointer;
+    }
+
+    .footer-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      transition: border-color var(--transition);
+      flex-shrink: 0;
+    }
+
+    .footer-social-label {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: rgba(255,255,255,0.35);
+      transition: color var(--transition);
+      white-space: nowrap;
+    }
+
+    .footer-socials a:hover {
+      color: var(--green);
+    }
+
+    .footer-socials a:hover .footer-social-icon {
+      border-color: var(--green);
+    }
+
+    .footer-socials a:hover .footer-social-label {
+      color: var(--green);
+    }
+
+    .footer-partner-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.15);
+      margin: 0 4px;
+      align-self: flex-start;
+      flex-shrink: 0;
+    }
+
+    .footer-partner-link:hover {
+      color: #FF8000 !important;
+    }
+
+    .footer-partner-link:hover .footer-social-icon {
+      border-color: #FF8000 !important;
+    }
+
+    .footer-partner-link:hover .footer-social-label {
+      color: #FF8000 !important;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      transition: color var(--transition);
+      cursor: pointer;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-contact-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-contact-list li svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--green);
+    }
+
+    .footer-contact-list a {
+      color: rgba(255,255,255,0.6);
+      transition: color var(--transition);
+    }
+
+    .footer-contact-list a:hover {
+      color: var(--white);
+    }
+
+    .footer-map-link {
+      color: var(--green) !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-map-link:hover {
+      color: #fff !important;
+    }
+
+    .footer-bottom {
+      margin-top: 56px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-copy a {
+      color: rgba(255,255,255,0.45);
+      transition: color var(--transition);
+    }
+
+    .footer-copy a:hover {
+      color: var(--white);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       LOADING SCREEN
+  =========================================== -->
+  <div id="loader" role="status" aria-label="Loading Tandro Bike Tours">
+    <img
+      src="Images/Tandro Logo Without BG.png"
+      alt="Tandro Cycling Tours"
+      class="loader-logo"
+    />
+    <div class="loader-track">
+      <div class="loader-road"></div>
+      <!-- Bicycle SVG -->
+      <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Rear wheel -->
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <!-- Front wheel -->
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <!-- Frame -->
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="26" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <!-- Handlebars -->
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <!-- Seat -->
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <!-- Pedal crank -->
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading</p>
+  </div>
+
+  <!-- ==========================================
+       NAVBAR
+  =========================================== -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Tandro home">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#">Home</a></li>
+        <li><a href="tours.html">Tours</a></li>
+        <li><a href="rental.html">Bike Rental</a></li>
+        <li><a href="#why">About</a></li>
+        <li><a href="#cta">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="nav-social" aria-label="Social media links">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <!-- WhatsApp -->
+          <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book a tour on WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book Now
+        </a>
+
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-links" role="list">
+      <li><a href="#" onclick="closeMenu()">Home</a></li>
+      <li><a href="tours.html" onclick="closeMenu()">Tours</a></li>
+      <li><a href="rental.html" onclick="closeMenu()">Bike Rental</a></li>
+      <li><a href="#why" onclick="closeMenu()">About</a></li>
+      <li><a href="#cta" onclick="closeMenu()">Contact</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;">
+      Book Now
+    </a>
+    <div class="mobile-socials" aria-label="Social media">
+      <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       HERO
+  =========================================== -->
+  <section id="hero" aria-label="Hero">
+    <div class="hero-bg" id="hero-bg" role="img" aria-label="Group of cyclists on a scenic mountain road in Georgia"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-label">Georgia · Tbilisi · Kutaisi</p>
+      <h1 class="hero-title">Explore<br><span>Georgia</span><br>by Bike</h1>
+      <p class="hero-sub">Guided cycling tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
+      <div class="hero-ctas">
+        <a href="tours.html" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          View Tours
+        </a>
+        <a href="rental.html" class="btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Rent a Bike
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SERVICES
+  =========================================== -->
+  <section id="services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="services-header">
+        <p class="section-label">What We Do</p>
+        <h2 class="section-title" id="services-title">Two Wheels,<br>Endless Roads</h2>
+        <p class="section-sub">Whether you want a guided tour through history or the freedom of your own two wheels, we've got you covered.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- City Tours -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="service-title">Guided City Tours</h3>
+          <p class="service-text">Discover Tbilisi's ancient streets, monasteries, and hidden gems on two wheels with a local guide who knows every corner.</p>
+          <div class="service-divider"></div>
+          <a href="tours.html" class="service-link">
+            Explore tours
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <!-- Mountain Tours -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 20 9 4 12 10 15 7 21 20 3 20"/></svg>
+          </div>
+          <h3 class="service-title">Mountain Adventures</h3>
+          <p class="service-text">Ride the Caucasus on curated mountain bike routes. Breathtaking scenery, thrilling descents, and memories that last a lifetime.</p>
+          <div class="service-divider"></div>
+          <a href="tours.html" class="service-link">
+            Explore tours
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <!-- Bike Rental -->
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="5.5" cy="17.5" r="3.5"/>
+              <circle cx="18.5" cy="17.5" r="3.5"/>
+              <path d="M5.5 17.5 L9.5 9 L18.5 17.5"/>
+              <path d="M9.5 9 L13 13"/>
+              <path d="M8 12 L12 12"/>
+              <path d="M9.5 9 L15 9"/>
+              <path d="M15 9 L18.5 17.5"/>
+              <path d="M15 9 L15 7"/>
+              <path d="M13.5 7 L17 7"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Bike Rentals</h3>
+          <p class="service-text">Well-maintained bikes for every rider. Flexible pickup and drop-off in Tbilisi and Kutaisi. Explore at your own pace.</p>
+          <div class="service-divider"></div>
+          <a href="rental.html" class="service-link">
+            View rentals
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BIKE ROAD STRIP
+  =========================================== -->
+  <div class="bike-road" aria-hidden="true">
+    <!-- Lane 1: Left → Right -->
+    <div class="bike-lane bike-lane--top">
+      <svg class="road-bike road-bike--right" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="road-bike road-bike--right" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="road-bike road-bike--right" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Lane 2: Right → Left (bikes flipped via CSS scaleX) -->
+    <div class="bike-lane bike-lane--bottom">
+      <svg class="road-bike road-bike--left" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="26" r="9" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        <circle cx="41" cy="26" r="9" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="road-bike road-bike--left" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="26" r="9" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        <circle cx="41" cy="26" r="9" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="road-bike road-bike--left" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="26" r="9" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        <circle cx="41" cy="26" r="9" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       WHY TANDRO
+  =========================================== -->
+  <section id="why" aria-labelledby="why-title">
+    <div class="container">
+      <p class="section-label">Why Choose Us</p>
+      <h2 class="section-title" id="why-title">Ride With<br>The Locals</h2>
+      <div class="why-grid">
+        <div class="why-item">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <h3 class="why-title">Local Expertise</h3>
+          <p class="why-text">Born and raised in Georgia. We know the routes, the stories, and the best spots that no guidebook will tell you.</p>
+        </div>
+        <div class="why-item">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <h3 class="why-title">All Levels Welcome</h3>
+          <p class="why-text">From casual city rides to demanding mountain trails — we have tours and bikes suited to every rider's ability.</p>
+        </div>
+        <div class="why-item">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3 class="why-title">Quality Bikes</h3>
+          <p class="why-text">Our fleet is regularly serviced and maintained. Helmets, locks, and spare parts included — your safety comes first.</p>
+        </div>
+        <div class="why-item">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <h3 class="why-title">Flexible Pickup</h3>
+          <p class="why-text">We come to your hotel or meeting point in Tbilisi and Kutaisi. A small delivery fee applies based on location.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FEATURED EXPERIENCES
+  =========================================== -->
+  <section id="experiences" aria-labelledby="exp-title">
+    <div class="container">
+      <div class="exp-header">
+        <p class="section-label">Our Tours</p>
+        <h2 class="section-title" id="exp-title">A Taste of<br>What's Waiting</h2>
+      </div>
+      <div class="exp-grid">
+
+        <a href="tours.html" class="exp-card" aria-label="Tbilisi City Tour — view details">
+          <img src="Images/Imige 1.jpeg" alt="Cyclists riding through Tbilisi with Metekhi Church in the background" loading="lazy" />
+          <div class="exp-overlay" aria-hidden="true"></div>
+          <div class="exp-info">
+            <span class="exp-tag">City Tour</span>
+            <h3 class="exp-title">Tbilisi by Bike</h3>
+            <span class="exp-arrow">
+              Explore
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="tours.html" class="exp-card" aria-label="Mountain Bike Tour — view details">
+          <img src="Images/Imige 2.jpeg" alt="Mountain bikers grouped together in front of lush Caucasus peaks" loading="lazy" />
+          <div class="exp-overlay" aria-hidden="true"></div>
+          <div class="exp-info">
+            <span class="exp-tag">Mountain</span>
+            <h3 class="exp-title">Caucasus Trails</h3>
+            <span class="exp-arrow">
+              Explore
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="tours.html" class="exp-card" aria-label="Multi-Day Bikepacking Tour — view details">
+          <img src="Images/Imige 3.jpeg" alt="Two cyclists with loaded bikes at a high mountain pass in Georgia" loading="lazy" />
+          <div class="exp-overlay" aria-hidden="true"></div>
+          <div class="exp-info">
+            <span class="exp-tag">Multi-Day</span>
+            <h3 class="exp-title">Epic Bikepacking</h3>
+            <span class="exp-arrow">
+              Explore
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       GALLERY STRIP
+  =========================================== -->
+  <section id="gallery" aria-label="Photo gallery">
+    <div class="gallery-grid">
+      <div class="gallery-img">
+        <img src="Images/Imige 4.jpeg" alt="Large group of cyclists gathered in a park with tall trees, Tbilisi" loading="lazy" />
+      </div>
+      <div class="gallery-img">
+        <img src="Images/Imige 5.jpeg" alt="Group of smiling cyclists on a mountain road with a stunning Georgian valley behind them" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       STATS BAR
+  =========================================== -->
+  <section id="stats" aria-label="Key statistics">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">500<span>+</span></div>
+        <div class="stat-label">Happy Riders</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">25<span>+</span></div>
+        <div class="stat-label">Tour Routes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Cities Covered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">5<span>★</span></div>
+        <div class="stat-label">Rated Experience</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CTA BANNER
+  =========================================== -->
+  <section id="cta" aria-labelledby="cta-title">
+    <div class="cta-inner">
+      <h2 class="cta-title" id="cta-title">Ready to Ride<br><span>Georgia?</span></h2>
+      <p class="cta-sub">Get in touch and we'll plan the perfect ride for you — whether it's a morning city tour or a week-long Caucasus expedition.</p>
+      <a href="tel:+995599373788" class="cta-phone" aria-label="Call us at +995 599 373 788">+995 599 373 788</a>
+      <div class="cta-buttons">
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Message us on WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Message on WhatsApp
+        </a>
+        <a href="mailto:kvkcycling@gmail.com" class="btn-email" aria-label="Send us an email">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send an Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+        <p class="footer-tagline">Guided cycling tours and bike rentals across Georgia — from ancient Tbilisi to the peaks of the Caucasus.</p>
+        <div class="footer-socials" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="footer-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="footer-social-label">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <span class="footer-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </span>
+            <span class="footer-social-label">Facebook</span>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="footer-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            </span>
+            <span class="footer-social-label">WhatsApp</span>
+          </a>
+          <span class="footer-partner-divider" aria-hidden="true"></span>
+          <a href="https://www.getyourguide.com/tbilisi-l1379/tbilisi-bike-tour-peace-bridge-old-town-sameba-views-t1164852/?ranking_uuid=0132c445-e886-4253-93d0-9188ee75a85d" target="_blank" rel="noopener" aria-label="Book on GetYourGuide" class="footer-partner-link">
+            <span class="footer-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 2l-1.5 4H6l3.5 2.5-1.5 4L12 14l4 2.5-1.5-4L18 10h-4.5z"/></svg>
+            </span>
+            <span class="footer-social-label">GetYourGuide</span>
+          </a>
+          <a href="https://www.bajabikes.eu/en/tbilisi-sightseeing-tours/" target="_blank" rel="noopener" aria-label="Book on Baja Bikes" class="footer-partner-link">
+            <span class="footer-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="5.5" cy="17.5" r="3.5"/>
+                <circle cx="18.5" cy="17.5" r="3.5"/>
+                <path d="M5.5 17.5 L9.5 9 L18.5 17.5"/>
+                <path d="M9.5 9 L13 13"/>
+                <path d="M8 12 L12 12"/>
+                <path d="M9.5 9 L15 9"/>
+                <path d="M15 9 L18.5 17.5"/>
+                <path d="M15 9 L15 7"/>
+                <path d="M13.5 7 L17 7"/>
+              </svg>
+            </span>
+            <span class="footer-social-label">Baja Bikes</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links" role="list">
+          <li><a href="#">Home</a></li>
+          <li><a href="tours.html">Tours</a></li>
+          <li><a href="rental.html">Bike Rental</a></li>
+          <li><a href="#why">About</a></li>
+          <li><a href="#cta">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-contact-list" role="list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+995599373788">+995 599 373 788</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="https://maps.app.goo.gl/dW8tMeMxYSkNPnKz7" target="_blank" rel="noopener" class="footer-map-link">Tbilisi</a> &amp; <a href="https://maps.app.goo.gl/DyHZWoafGciduHgX7" target="_blank" rel="noopener" class="footer-map-link">Kutaisi</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+      <p class="footer-copy"><a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+  <script>
+    // ---- Loading screen ----
+    const loader = document.getElementById('loader');
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 500);
+      }, 800);
+    });
+
+    // Failsafe: remove after 4s regardless
+    setTimeout(() => {
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 500);
+      }
+    }, 4000);
+
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ---- Hamburger / mobile menu ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    // ---- Hero bg subtle zoom on load ----
+    const heroBg = document.getElementById('hero-bg');
+    setTimeout(() => heroBg && heroBg.classList.add('loaded'), 100);
+
+    // ---- Reduced motion check ----
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const bike = document.querySelector('.loader-bike');
+      if (bike) bike.style.animation = 'none';
+    }
+  </script>
+
+</body>
+</html>
