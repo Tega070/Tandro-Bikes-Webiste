@@ -254,7 +254,7 @@
       background: var(--white);
     }
 
-    .tour-panel.open { max-height: 700px; }
+    .tour-panel.open { max-height: none; }
 
     .tour-panel-inner {
       padding: 32px 24px;
@@ -558,7 +558,7 @@
     }
 
     /* Panel height increase */
-    .tour-panel.open { max-height: 900px; }
+    .tour-panel.open { max-height: none; }
   </style>
 </head>
 <body>
@@ -1333,14 +1333,14 @@
           group.querySelectorAll('.tour-header').forEach(b => {
             b.setAttribute('aria-expanded', 'false');
             const p = document.getElementById(b.getAttribute('aria-controls'));
-            if (p) p.classList.remove('open');
+            if (p) { p.classList.remove('open'); p.style.maxHeight = '0'; }
           });
 
           // Open clicked if it was closed
           if (!isOpen) {
             btn.setAttribute('aria-expanded', 'true');
             const panel = document.getElementById(btn.getAttribute('aria-controls'));
-            if (panel) panel.classList.add('open');
+            if (panel) { panel.classList.add('open'); panel.style.maxHeight = panel.scrollHeight + 'px'; }
           }
         });
       });

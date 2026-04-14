@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bike rental in Georgia — premium MTBs, Gravel bikes, and E-bikes in Kutaisi and Tbilisi. Tandro Bikes: professional fleet, country-wide insurance, inter-city drop-off." />
+  <title>Bike Rental in Georgia | Tandro</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1A3A6B;
+      --blue:   #2563EB;
+      --green:  #16A34A;
+      --dark:   #0F172A;
+      --surface:#F8FAFC;
+      --white:  #FFFFFF;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-heading: 'Barlow', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --radius: 4px;
+      --transition: 250ms ease;
+      --max-w: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
+
+    /* ============================================
+       LOADER
+    ============================================ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo { width: 80px; margin-bottom: 48px; opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards; }
+    .loader-track { width: 280px; height: 60px; position: relative; margin-bottom: 24px; }
+    .loader-road { position: absolute; bottom: 8px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.2); border-radius: 1px; }
+    .loader-bike { position: absolute; bottom: 10px; left: -60px; animation: rideAcross 1.8s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @media (prefers-reduced-motion: reduce) { .loader-bike { animation: none; left: 110px; } .loader-logo { animation: none; opacity: 1; } }
+    @keyframes rideAcross { 0% { left: -60px; } 100% { left: 310px; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .loader-text { font-family: var(--font-display); font-size: 22px; letter-spacing: 4px; color: rgba(255,255,255,0.7); opacity: 0; animation: fadeIn 0.6s ease 0.5s forwards; }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 16px;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-links { display: none; list-style: none; gap: 32px; }
+    .nav-links a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; color: var(--white); opacity: 0.85; transition: opacity var(--transition); }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-social { display: none; align-items: center; gap: 8px; }
+    .nav-social a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), background var(--transition); }
+    .nav-social a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+    .btn-book { display: flex; align-items: center; gap: 6px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 10px 18px; border-radius: var(--radius); transition: background var(--transition); min-height: 44px; cursor: pointer; }
+    .btn-book:hover { background: #15803D; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 1px; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 49; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+    #mobile-menu.open { display: flex; }
+    .mobile-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 40px; }
+    .mobile-links a { font-family: var(--font-display); font-size: 40px; letter-spacing: 2px; color: var(--white); opacity: 0.85; transition: opacity var(--transition), color var(--transition); }
+    .mobile-links a:hover, .mobile-links a.active { opacity: 1; color: var(--green); }
+    .mobile-socials { display: flex; gap: 16px; margin-top: 16px; }
+    .mobile-socials a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), border-color var(--transition); }
+    .mobile-socials a:hover { opacity: 1; border-color: var(--green); }
+    @media (min-width: 768px) { .nav-links { display: flex; } .nav-social { display: flex; } .hamburger { display: none; } }
+
+    /* ============================================
+       SHARED SECTION STYLES
+    ============================================ */
+    section { padding: 80px 16px; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+    .section-title { font-family: var(--font-display); font-size: clamp(36px, 6vw, 60px); line-height: 1; color: var(--dark); margin-bottom: 16px; }
+    .section-title-light { color: var(--white); }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .section-sub-light { color: rgba(255,255,255,0.6); }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: var(--radius); min-height: 52px; cursor: pointer; transition: background var(--transition), transform var(--transition); }
+    .btn-primary:hover { background: #15803D; transform: translateY(-1px); }
+
+    /* ============================================
+       PAGE HEADER
+    ============================================ */
+    #page-header {
+      background: linear-gradient(160deg, #07111f 0%, #0F172A 45%, #091a0d 100%);
+      padding: 140px 16px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    #page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 15% 60%, rgba(22,163,74,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 70% at 85% 20%, rgba(37,99,235,0.1) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #page-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(22,163,74,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-header-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .page-header-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .page-header-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--green);
+    }
+    .page-header-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9vw, 96px);
+      line-height: 0.95;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+    .page-header-title span { color: var(--green); }
+    .page-header-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 32px;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-right: 32px;
+      margin-right: 32px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 16px;
+    }
+    .hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+    .hero-stat-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ============================================
+       WHY TANDRO — FEATURE CARDS
+    ============================================ */
+    #why-tandro { background: var(--surface); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    @media (min-width: 480px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .feature-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,0.08); transform: translateY(-2px); }
+    .feature-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(22,163,74,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+    .feature-title {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.3;
+    }
+    .feature-text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ============================================
+       PRICING TABLE
+    ============================================ */
+    #pricing { background: var(--white); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 48px;
+    }
+    @media (min-width: 600px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .price-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .price-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,0.08); transform: translateY(-2px); }
+    .price-card-head {
+      background: var(--dark);
+      padding: 20px 24px 16px;
+    }
+    .price-bike-type {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.5px;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .price-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .badge-mtb    { background: rgba(22,163,74,0.2);  color: #4ade80; }
+    .badge-gravel { background: rgba(37,99,235,0.2);  color: #93c5fd; }
+    .badge-ebike  { background: rgba(234,179,8,0.2);  color: #fbbf24; }
+    .badge-city   { background: rgba(148,163,184,0.15); color: #94a3b8; }
+
+    .price-card-body { padding: 20px 24px; }
+    .price-daily {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .price-unit {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .price-discounts {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .price-discounts li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .price-discounts li::before {
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316A34A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .price-discounts .no-discount {
+      color: rgba(100,116,139,0.5);
+      font-style: italic;
+    }
+    .price-discounts .no-discount::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
+    }
+
+    .pricing-includes {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 640px) { .pricing-includes { grid-template-columns: 1fr 1fr; } }
+
+    .includes-block {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .includes-title {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .includes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .includes-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: var(--dark);
+    }
+    .includes-list li::before {
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316A34A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    /* ============================================
+       CITY RENTAL SECTIONS
+    ============================================ */
+    .city-section { padding: 80px 16px; }
+    .city-section:nth-of-type(odd) { background: var(--dark); }
+    .city-section:nth-of-type(even) { background: #060E1A; }
+
+    .city-section-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .city-intro {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    @media (min-width: 768px) { .city-intro { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+    .city-advantages {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+    @media (min-width: 540px) { .city-advantages { grid-template-columns: 1fr 1fr; } }
+
+    .advantage-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .advantage-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(22,163,74,0.3); }
+    .advantage-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(22,163,74,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+    .advantage-text {}
+    .advantage-title {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .advantage-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.55;
+    }
+
+    /* Routes */
+    .routes-block { margin-bottom: 64px; }
+    .routes-title {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .routes-title::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+
+    .routes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .route-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 6px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .route-item:hover { border-color: rgba(22,163,74,0.35); background: rgba(255,255,255,0.06); }
+    .route-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--green);
+      line-height: 1;
+      opacity: 0.5;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .route-content {}
+    .route-name {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .route-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    /* Gallery */
+    .gallery-block { margin-bottom: 48px; }
+    .gallery-label {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    @media (min-width: 480px) { .photo-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1024px) { .photo-grid { grid-template-columns: repeat(5, 1fr); } }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .photo-grid img:hover { transform: scale(1.03); opacity: 0.9; }
+
+    .photo-grid-tbilisi {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 480px) { .photo-grid-tbilisi { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .photo-grid-tbilisi { grid-template-columns: repeat(4, 1fr); } }
+
+    /* City CTA */
+    .city-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    @media (min-width: 480px) { .city-cta { flex-direction: row; align-items: center; } }
+
+    /* Pro Logistics (Tbilisi) */
+    .logistics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    @media (min-width: 640px) { .logistics-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .logistics-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .logistics-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(37,99,235,0.4); }
+    .logistics-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(37,99,235,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #93c5fd;
+    }
+    .logistics-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .logistics-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.55;
+    }
+
+    /* ============================================
+       PRACTICAL INFO
+    ============================================ */
+    #practical { background: var(--surface); }
+    .practical-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (min-width: 640px) { .practical-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .practical-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .practical-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .practical-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(22,163,74,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .practical-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .practical-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .practical-list li {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .practical-list a { color: var(--green); transition: opacity var(--transition); }
+    .practical-list a:hover { opacity: 0.75; }
+
+    /* ============================================
+       BOOKING CTA
+    ============================================ */
+    #booking-cta {
+      background: linear-gradient(160deg, #07111f 0%, #0F172A 55%, #091a0d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #booking-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(22,163,74,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 90% 30%, rgba(37,99,235,0.08) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .cta-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    @media (min-width: 768px) {
+      .cta-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 0.5px;
+    }
+    .cta-title span { color: var(--green); }
+    .cta-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 12px;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+    .cta-actions { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      min-height: 56px;
+      transition: background var(--transition), transform var(--transition);
+      white-space: nowrap;
+    }
+    .btn-whatsapp:hover { background: #15803D; transform: translateY(-1px); }
+    .cta-email {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+    }
+    .cta-email a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .cta-email a:hover { color: var(--white); }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer { background: #060E1A; padding: 56px 16px 0; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media (min-width: 768px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr; gap: 64px; } }
+    .footer-brand img { height: 52px; margin-bottom: 16px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .footer-socials a { display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); transition: color var(--transition); cursor: pointer; }
+    .footer-social-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.12); border-radius: 50%; transition: border-color var(--transition); flex-shrink: 0; }
+    .footer-social-label { font-family: var(--font-heading); font-size: 10px; font-weight: 600; letter-spacing: 0.4px; color: rgba(255,255,255,0.35); transition: color var(--transition); white-space: nowrap; }
+    .footer-socials a:hover { color: var(--green); }
+    .footer-socials a:hover .footer-social-icon { border-color: var(--green); }
+    .footer-socials a:hover .footer-social-label { color: var(--green); }
+    .footer-partner-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); margin: 0 4px; align-self: flex-start; flex-shrink: 0; }
+    .footer-partner-link:hover { color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-icon { border-color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-label { color: #FF8000 !important; }
+    .footer-col-title { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-size: 15px; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.6); }
+    .footer-contact-list li svg { flex-shrink: 0; margin-top: 2px; color: var(--green); }
+    .footer-contact-list a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-contact-list a:hover { color: var(--white); }
+    .footer-map-link { color: var(--green) !important; text-decoration: underline; text-underline-offset: 3px; }
+    .footer-map-link:hover { color: #fff !important; }
+    .footer-bottom { margin-top: 56px; border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading Tandro Bike Rental">
+    <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours" class="loader-logo" />
+    <div class="loader-track">
+      <div class="loader-road"></div>
+      <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="26" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Tandro home">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tours.html">Tours</a></li>
+        <li><a href="rental.html" class="active">Bike Rental</a></li>
+        <li><a href="index.html#why">About</a></li>
+        <li><a href="index.html#cta">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-social" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book on WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book Now
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-links" role="list">
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="tours.html" onclick="closeMenu()">Tours</a></li>
+      <li><a href="rental.html" class="active" onclick="closeMenu()">Bike Rental</a></li>
+      <li><a href="index.html#why" onclick="closeMenu()">About</a></li>
+      <li><a href="index.html#cta" onclick="closeMenu()">Contact</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;">Book Now</a>
+    <div class="mobile-socials" aria-label="Social media">
+      <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PAGE HEADER
+  =========================================== -->
+  <section id="page-header">
+    <div class="page-header-inner">
+      <p class="page-header-label">Tandro Bikes</p>
+      <h1 class="page-header-title">Bike Rental<br><span>in Georgia</span></h1>
+      <p class="page-header-sub">The only specialized provider in Tbilisi and Kutaisi offering a professionally tuned, elite fleet — for serious explorers, gravel adventurers, and city riders alike.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">6</span>
+          <span class="hero-stat-label">Bike Types</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">2</span>
+          <span class="hero-stat-label">City Locations</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">24/7</span>
+          <span class="hero-stat-label">Support</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">150</span>
+          <span class="hero-stat-label">GEL Insurance</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       WHY TANDRO
+  =========================================== -->
+  <section id="why-tandro">
+    <div class="container">
+      <p class="section-label">The Tandro Difference</p>
+      <h2 class="section-title">Why Riders Choose Us</h2>
+      <p class="section-sub">Stop settling for generic rentals and unreliable maintenance. Here's what sets Tandro apart from every other shop in Georgia.</p>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L9.5 9l9 8.5"/><path d="M9.5 9l3.5 4"/><path d="M8 12l4 0"/><path d="M9.5 9h5.5"/><path d="M15 9l3.5 8.5"/><path d="M15 9V7"/><path d="M13.5 7h3"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Elite Bike Fleet</p>
+            <p class="feature-text">We exclusively stock Cube, Trek, Specialized, Stevens, KTM, Orbea, and Haibike. Every bike is inspected and serviced after every rental by professional mechanics.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="80">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Country-Wide Insurance</p>
+            <p class="feature-text">For a flat 150 GEL, get Georgia's only full-coverage guarantee. From Mestia to Kakheti — if you have a mechanical issue, we come to you with parts or a bike swap.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="160">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Inter-City Drop-Off</p>
+            <p class="feature-text">Pick up at our Kutaisi branch, drop off in Tbilisi — or vice versa. We are the only provider in Georgia offering seamless one-way inter-city rentals.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Safety & Tech Gold Standard</p>
+            <p class="feature-text">Every rental includes a full puncture kit with lock, helmet (optional), multi-tool, pump, spare tube, tire levers, and rear rack — all at no extra charge.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="80">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">24/7 WhatsApp + GPX Maps</p>
+            <p class="feature-text">You're never alone on the trail. All customers get a direct line to our Live Support Team and access to Digital Trail Maps (GPX/Komoot) pre-loaded with Georgia's best routes.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="160">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Flexible Rental Durations</p>
+            <p class="feature-text">Single-day urban rides to multi-week cross-country expeditions. Transparent discount tiers for longer rentals — the more days, the lower your daily rate.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PRICING
+  =========================================== -->
+  <section id="pricing">
+    <div class="container">
+      <p class="section-label">Rental Prices</p>
+      <h2 class="section-title">Bikes & Daily Rates</h2>
+      <p class="section-sub">All prices in Georgian Lari (GEL). Discounts apply automatically for longer rentals — no negotiation needed.</p>
+
+      <div class="pricing-grid">
+
+        <div class="price-card reveal">
+          <div class="price-card-head">
+            <p class="price-bike-type">City Bike</p>
+            <span class="price-badge badge-city">Urban</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">50</span>
+              <span class="price-unit">GEL / day</span>
+            </div>
+            <ul class="price-discounts">
+              <li>40 GEL / day — 10+ days</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="60">
+          <div class="price-card-head">
+            <p class="price-bike-type">Hardtail MTB</p>
+            <span class="price-badge badge-mtb">MTB</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">70</span>
+              <span class="price-unit">GEL / day</span>
+            </div>
+            <ul class="price-discounts">
+              <li>60 GEL / day — 10+ days</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="120">
+          <div class="price-card-head">
+            <p class="price-bike-type">Gravel Bike</p>
+            <span class="price-badge badge-gravel">Gravel</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">100</span>
+              <span class="price-unit">GEL / day</span>
+            </div>
+            <ul class="price-discounts">
+              <li>90 GEL / day — 6+ days</li>
+              <li>80 GEL / day — 13+ days</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="0">
+          <div class="price-card-head">
+            <p class="price-bike-type">Full-Sus MTB</p>
+            <span class="price-badge badge-mtb">MTB</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">120</span>
+              <span class="price-unit">GEL / day</span>
+            </div>
+            <ul class="price-discounts">
+              <li>100 GEL / day — 10+ days</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="60">
+          <div class="price-card-head">
+            <p class="price-bike-type">Hardtail E-Bike</p>
+            <span class="price-badge badge-ebike">E-Bike</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">150</span>
+              <span class="price-unit">GEL / day</span>
+            </div>
+            <ul class="price-discounts">
+              <li>135 GEL / day — 3+ days</li>
+              <li>120 GEL / day — 7+ days</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="120">
+          <div class="price-card-head">
+            <p class="price-bike-type">Full-Sus E-Bike</p>
+            <span class="price-badge badge-ebike">E-Bike</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">240</span>
+              <span class="price-unit">GEL / day</span>
+            </div>
+            <ul class="price-discounts">
+              <li>220 GEL / day — 3+ days</li>
+              <li>195 GEL / day — 7+ days</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pricing-includes">
+        <div class="includes-block reveal">
+          <p class="includes-title">Always Included — Free</p>
+          <ul class="includes-list">
+            <li>Lock</li>
+            <li>Multi-tool</li>
+            <li>Pump</li>
+            <li>Spare tube &amp; tire levers</li>
+            <li>Rear rack</li>
+          </ul>
+        </div>
+        <div class="includes-block reveal" data-delay="80">
+          <p class="includes-title">Optional Add-Ons</p>
+          <ul class="includes-list">
+            <li>Helmet — 5 GEL / day</li>
+            <li>Country-Wide Insurance — 150 GEL flat</li>
+            <li>Inter-City Drop-Off — ask us</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BIKE RENTAL IN KUTAISI
+  =========================================== -->
+  <section class="city-section" id="kutaisi-rental">
+    <div class="city-section-inner">
+
+      <div class="city-intro">
+        <div>
+          <p class="section-label" style="color:var(--green);">Western Georgia</p>
+          <h2 class="section-title section-title-light">Bike Rental<br><span style="color:var(--green);">in Kutaisi</span></h2>
+        </div>
+        <div>
+          <p style="font-size:16px; color:rgba(255,255,255,0.6); line-height:1.75; margin-top:8px;">Tandro Bikes is the only specialized, high-performance bike provider in Kutaisi. We don't just rent bikes — we provide an elite fleet of MTBs, Gravel bikes, and E-bikes engineered for the demanding terrain of Western Georgia. From the Imereti canyon trails to the 2,182m Zekari Pass, our bikes are built to perform.</p>
+        </div>
+      </div>
+
+      <div class="city-advantages">
+
+        <div class="advantage-card reveal">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Never Stranded Guarantee</p>
+            <p class="advantage-desc">150 GEL flat fee. Mechanical failure anywhere from Mestia to Zekari Pass? We dispatch a replacement bike or technician to your location.</p>
+          </div>
+        </div>
+
+        <div class="advantage-card reveal" data-delay="80">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Kutaisi-to-Tbilisi One-Way</p>
+            <p class="advantage-desc">Start your journey in Kutaisi, end it in Tbilisi. We are the only shop in Georgia offering a true inter-city drop-off.</p>
+          </div>
+        </div>
+
+        <div class="advantage-card reveal" data-delay="160">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L9.5 9l9 8.5"/><path d="M9.5 9l3.5 4"/><path d="M8 12l4 0"/><path d="M9.5 9h5.5"/><path d="M15 9l3.5 8.5"/><path d="M15 9V7"/><path d="M13.5 7h3"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Pro-Grade Fleet</p>
+            <p class="advantage-desc">Cube, Stevens, Trek, Orbea, Haibike and more. Every bike features a perfectly tuned drivetrain, brakes, and mountain-ready tires with sealants.</p>
+          </div>
+        </div>
+
+        <div class="advantage-card reveal" data-delay="240">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Digital Concierge</p>
+            <p class="advantage-desc">24/7 WhatsApp support line and pre-loaded GPS/GPX Route Maps for your smartphone — Georgia's best trails, ready to go.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Routes -->
+      <div class="routes-block">
+        <p class="routes-title">Kutaisi Expedition Routes</p>
+        <div class="routes-list">
+
+          <div class="route-item reveal">
+            <span class="route-num">01</span>
+            <div class="route-content">
+              <p class="route-name">Tandro Signature Trails <span style="font-size:11px; color:var(--green); font-family:var(--font-heading); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-left:6px;">Exclusive</span></p>
+              <p class="route-desc">MTB singletracks and banked flow trails hand-built by the Tandro team for 2026. Available only to Tandro riders.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="60">
+            <span class="route-num">02</span>
+            <div class="route-content">
+              <p class="route-name">Zekari E-MTB Challenge</p>
+              <p class="route-desc">Ascent of the 2,182m Zekari Pass — the Baghdati-Abastumani crossing. Perfect for our Full-Suspension E-bikes.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="120">
+            <span class="route-num">03</span>
+            <div class="route-content">
+              <p class="route-name">The Monastery Loop — Gelati &amp; Motsameta</p>
+              <p class="route-desc">1-day technical UNESCO climbs. Also great on E-bikes for a sweat-free cultural ride through Imereti's medieval heritage.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="180">
+            <span class="route-num">04</span>
+            <div class="route-content">
+              <p class="route-name">The Dinosaur Trail — Sataplia</p>
+              <p class="route-desc">A brutal 2km climb followed by a high-speed descent. Perfect for testing our Gravel and Hybrid fleets.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="240">
+            <span class="route-num">05</span>
+            <div class="route-content">
+              <p class="route-name">Imereti Canyon Run — Okatse &amp; Martvili</p>
+              <p class="route-desc">Long-distance endurance route through Western Georgia's water wonders. Recommended for our Premium Gravel bikes.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div class="gallery-block">
+        <p class="gallery-label">Our Fleet &amp; Location — Kutaisi</p>
+        <div class="photo-grid">
+          <img src="Images/Kutaisi Bike Rent 1.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 2.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 3.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 4.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 5.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 6.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 7.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 8.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+          <img src="Images/Kutaisi Bike Rent 9.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- City CTA -->
+      <div class="city-cta">
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20bike%20rental%20in%20Kutaisi" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book Kutaisi Rental
+        </a>
+        <span style="font-size:13px; color:rgba(255,255,255,0.35);">26 May Street, N10 — Inside Hotel Terrace Kutaisi</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BIKE RENTAL IN TBILISI
+  =========================================== -->
+  <section class="city-section" id="tbilisi-rental">
+    <div class="city-section-inner">
+
+      <div class="city-intro">
+        <div>
+          <p class="section-label" style="color:var(--green);">Capital City</p>
+          <h2 class="section-title section-title-light">Bike Rental<br><span style="color:var(--green);">in Tbilisi</span></h2>
+        </div>
+        <div>
+          <p style="font-size:16px; color:rgba(255,255,255,0.6); line-height:1.75; margin-top:8px;">Tandro Bikes is Tbilisi's premium provider for high-performance Gravel Bikes, E-bikes, and MTBs. From the flowing singletracks at Udzo &amp; Tsodoreti to the scenic Lisi Lake loop, we provide elite bikes for everything the capital and its surrounding terrain has to offer.</p>
+        </div>
+      </div>
+
+      <div class="city-advantages">
+
+        <div class="advantage-card reveal">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Never Stranded Guarantee</p>
+            <p class="advantage-desc">150 GEL flat fee. Mechanical issue anywhere from Kojori Fortress to Gudauri? We send replacement parts or a bike straight to you.</p>
+          </div>
+        </div>
+
+        <div class="advantage-card reveal" data-delay="80">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Tbilisi-to-Kutaisi One-Way</p>
+            <p class="advantage-desc">Planning a cross-country ride? Pick up in Tbilisi, drop off at our Kutaisi branch. Georgia's only inter-city one-way rental service.</p>
+          </div>
+        </div>
+
+        <div class="advantage-card reveal" data-delay="160">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L9.5 9l9 8.5"/><path d="M9.5 9l3.5 4"/><path d="M8 12l4 0"/><path d="M9.5 9h5.5"/><path d="M15 9l3.5 8.5"/><path d="M15 9V7"/><path d="M13.5 7h3"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Pro-Grade Fleet</p>
+            <p class="advantage-desc">Cube, Stevens, Trek, Specialized, KTM and more. Clean, tuned drivetrains, brakes, and trail-ready tires on every bike, every rental.</p>
+          </div>
+        </div>
+
+        <div class="advantage-card reveal" data-delay="240">
+          <div class="advantage-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="advantage-text">
+            <p class="advantage-title">Digital Concierge</p>
+            <p class="advantage-desc">24/7 WhatsApp support and GPX/Komoot Route Maps for your smartphone. Georgia's most iconic trails, mapped and ready.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Routes -->
+      <div class="routes-block">
+        <p class="routes-title">Tbilisi Bike Routes</p>
+        <div class="routes-list">
+
+          <div class="route-item reveal">
+            <span class="route-num">01</span>
+            <div class="route-content">
+              <p class="route-name">Udzo &amp; Tsodoreti Trails</p>
+              <p class="route-desc">High-speed flowing singletrack and forest tracks. Best experienced on our Specialized or Cube MTBs.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="60">
+            <span class="route-num">02</span>
+            <div class="route-content">
+              <p class="route-name">Mtskheta &amp; Jvari Monastery</p>
+              <p class="route-desc">A riverside flat-run followed by the scenic Jvari climb. Optimized for our Premium Gravel and E-bike fleets.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="120">
+            <span class="route-num">03</span>
+            <div class="route-content">
+              <p class="route-name">The Three Lakes Loop — Lisi, Turtle, Tbilisi Sea</p>
+              <p class="route-desc">Sunset views and skyline photos. Perfect for a fast Hybrid or E-bike city tour around Tbilisi's iconic lakes.</p>
+            </div>
+          </div>
+
+          <div class="route-item reveal" data-delay="180">
+            <span class="route-num">04</span>
+            <div class="route-content">
+              <p class="route-name">Kojori &amp; Shavnabada Ridge</p>
+              <p class="route-desc">High-altitude ridge roads with panoramic views over the capital. We recommend our Gravel bikes for these punchy dirt-asphalt mixes.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Pro Logistics -->
+      <div class="routes-block">
+        <p class="routes-title">Pro Logistics — More Than Bike Rental</p>
+        <div class="logistics-grid">
+
+          <div class="logistics-card reveal">
+            <div class="logistics-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 4H5a2 2 0 0 0-2 2v14"/><path d="m6 19 4-4"/><path d="m10 19-4-4"/><path d="m10 15 4 4"/><path d="m14 19-4-4"/></svg>
+            </div>
+            <p class="logistics-title">Airport Bike Transfers</p>
+            <p class="logistics-desc">Dedicated transport for you and your bike box to and from Tbilisi (TBS) and Kutaisi (KUT) airports.</p>
+          </div>
+
+          <div class="logistics-card reveal" data-delay="80">
+            <div class="logistics-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <p class="logistics-title">Custom Shuttles</p>
+            <p class="logistics-desc">Point-to-point rides made easy. Bike shuttles to high-altitude drop points — Omalo, Kazbegi, Mestia, Tusheti, and more.</p>
+          </div>
+
+          <div class="logistics-card reveal" data-delay="160">
+            <div class="logistics-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <p class="logistics-title">Event &amp; Group Support</p>
+            <p class="logistics-desc">Bike logistics and support vehicles for corporate retreats and cycling clubs across Georgia.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div class="gallery-block">
+        <p class="gallery-label">Our Fleet &amp; Location — Tbilisi</p>
+        <div class="photo-grid photo-grid-tbilisi">
+          <img src="Images/Tbilisi Bike Rent 1.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+          <img src="Images/Tbilisi Bike Rent 2.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+          <img src="Images/Tbilisi Bike Rent 3.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+          <img src="Images/Tbilisi Bike Rent 4.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+          <img src="Images/Tbilisi Bike Rent 5.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+          <img src="Images/Tbilisi Bike Rent 6.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+          <img src="Images/Tbilisi Bike Rent 7.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- City CTA -->
+      <div class="city-cta">
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20bike%20rental%20in%20Tbilisi" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book Tbilisi Rental
+        </a>
+        <span style="font-size:13px; color:rgba(255,255,255,0.35);">David Aghmashenebeli 211, Tbilisi</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PRACTICAL INFO
+  =========================================== -->
+  <section id="practical">
+    <div class="container">
+      <p class="section-label">Before You Ride</p>
+      <h2 class="section-title">Practical Information</h2>
+
+      <div class="practical-grid">
+
+        <div class="practical-card reveal">
+          <div class="practical-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <p class="practical-title">Our Locations</p>
+          <ul class="practical-list">
+            <li><strong style="color:var(--dark);">Tbilisi:</strong> David Aghmashenebeli 211</li>
+            <li><strong style="color:var(--dark);">Kutaisi:</strong> 26 May Street, N10<br>Inside Hotel Terrace Kutaisi</li>
+          </ul>
+        </div>
+
+        <div class="practical-card reveal" data-delay="80">
+          <div class="practical-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <p class="practical-title">Opening Hours</p>
+          <ul class="practical-list">
+            <li>09:00 – 21:00 daily</li>
+            <li>Flexible opening available by appointment</li>
+          </ul>
+        </div>
+
+        <div class="practical-card reveal" data-delay="160">
+          <div class="practical-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <p class="practical-title">Rental Policy</p>
+          <ul class="practical-list">
+            <li>Passport deposit — 1 per group</li>
+            <li>No cash deposit required</li>
+            <li>Rental agreement covers accidental damage</li>
+            <li>Wear &amp; tear parts are always free</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BOOKING CTA
+  =========================================== -->
+  <section id="booking-cta">
+    <div class="cta-inner">
+      <div>
+        <h2 class="cta-title">Ready to<br><span>Ride Georgia?</span></h2>
+        <p class="cta-sub">Message us on WhatsApp — tell us your city, dates, and bike preference. We'll confirm availability and have you rolling within hours.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27d%20like%20to%20rent%20a%20bike%20in%20Georgia" target="_blank" rel="noopener" class="btn-whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book on WhatsApp
+        </a>
+        <p class="cta-email">Or email us: <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+        <p class="footer-tagline">Guided cycling tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
+        <div class="footer-socials" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></span>
+            <span class="footer-social-label">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span class="footer-social-label">Facebook</span>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></span>
+            <span class="footer-social-label">WhatsApp</span>
+          </a>
+          <span class="footer-partner-divider" aria-hidden="true"></span>
+          <a href="https://www.getyourguide.com/tbilisi-l1379/tbilisi-bike-tour-peace-bridge-old-town-sameba-views-t1164852/?ranking_uuid=0132c445-e886-4253-93d0-9188ee75a85d" target="_blank" rel="noopener" aria-label="Book on GetYourGuide" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 2l-1.5 4H6l3.5 2.5-1.5 4L12 14l4 2.5-1.5-4L18 10h-4.5z"/></svg></span>
+            <span class="footer-social-label">GetYourGuide</span>
+          </a>
+          <a href="https://www.bajabikes.eu/en/tbilisi-sightseeing-tours/" target="_blank" rel="noopener" aria-label="Book on Baja Bikes" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/><path d="M15 9 L15 7"/><path d="M13.5 7 L17 7"/></svg></span>
+            <span class="footer-social-label">Baja Bikes</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tours.html">Tours</a></li>
+          <li><a href="rental.html">Bike Rental</a></li>
+          <li><a href="index.html#why">About</a></li>
+          <li><a href="index.html#cta">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-contact-list" role="list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+995599373788">+995 599 373 788</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="https://maps.app.goo.gl/dW8tMeMxYSkNPnKz7" target="_blank" rel="noopener" class="footer-map-link">Tbilisi</a> &amp; <a href="https://maps.app.goo.gl/DyHZWoafGciduHgX7" target="_blank" rel="noopener" class="footer-map-link">Kutaisi</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+  <script>
+    // ---- Loader ----
+    const loader = document.getElementById('loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); }, 800);
+    });
+    setTimeout(() => { if (loader && !loader.classList.contains('hidden')) { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); } }, 4000);
+
+    // ---- Navbar scroll ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    // ---- Hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+    // ---- Scroll reveal ----
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+  </script>
+
+</body>
+</html>
