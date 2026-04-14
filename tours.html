@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guided bike tours in Kutaisi, Tbilisi, and across Georgia. Tandro Bike Tours — local guides, flexible routes, unforgettable rides." />
+  <title>Georgia Bike Tours | Tandro</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1A3A6B;
+      --blue:   #2563EB;
+      --green:  #16A34A;
+      --dark:   #0F172A;
+      --surface:#F8FAFC;
+      --white:  #FFFFFF;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-heading: 'Barlow', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --radius: 4px;
+      --transition: 250ms ease;
+      --max-w: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
+
+    /* ============================================
+       LOADER
+    ============================================ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo { width: 80px; margin-bottom: 48px; opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards; }
+    .loader-track { width: 280px; height: 60px; position: relative; margin-bottom: 24px; }
+    .loader-road { position: absolute; bottom: 8px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.2); border-radius: 1px; }
+    .loader-bike { position: absolute; bottom: 10px; left: -60px; animation: rideAcross 1.8s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @media (prefers-reduced-motion: reduce) { .loader-bike { animation: none; left: 110px; } .loader-logo { animation: none; opacity: 1; } }
+    @keyframes rideAcross { 0% { left: -60px; } 100% { left: 310px; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .loader-text { font-family: var(--font-display); font-size: 22px; letter-spacing: 4px; color: rgba(255,255,255,0.7); opacity: 0; animation: fadeIn 0.6s ease 0.5s forwards; }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 16px;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-links { display: none; list-style: none; gap: 32px; }
+    .nav-links a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; color: var(--white); opacity: 0.85; transition: opacity var(--transition); }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-social { display: none; align-items: center; gap: 8px; }
+    .nav-social a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), background var(--transition); }
+    .nav-social a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+    .btn-book { display: flex; align-items: center; gap: 6px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 10px 18px; border-radius: var(--radius); transition: background var(--transition); min-height: 44px; cursor: pointer; }
+    .btn-book:hover { background: #15803D; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 1px; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 49; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+    #mobile-menu.open { display: flex; }
+    .mobile-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 40px; }
+    .mobile-links a { font-family: var(--font-display); font-size: 40px; letter-spacing: 2px; color: var(--white); opacity: 0.85; transition: opacity var(--transition), color var(--transition); }
+    .mobile-links a:hover, .mobile-links a.active { opacity: 1; color: var(--green); }
+    .mobile-socials { display: flex; gap: 16px; margin-top: 16px; }
+    .mobile-socials a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), border-color var(--transition); }
+    .mobile-socials a:hover { opacity: 1; border-color: var(--green); }
+    @media (min-width: 768px) { .nav-links { display: flex; } .nav-social { display: flex; } .hamburger { display: none; } }
+
+    /* ============================================
+       SHARED SECTION STYLES
+    ============================================ */
+    section { padding: 80px 16px; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+    .section-title { font-family: var(--font-display); font-size: clamp(36px, 6vw, 60px); line-height: 1; color: var(--dark); margin-bottom: 16px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: var(--radius); min-height: 52px; cursor: pointer; transition: background var(--transition), transform var(--transition); }
+    .btn-primary:hover { background: #15803D; transform: translateY(-1px); }
+
+    /* ============================================
+       PAGE HEADER
+    ============================================ */
+    #page-header {
+      background: var(--dark);
+      padding: 140px 16px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    #page-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(22,163,74,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-header-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .page-header-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .page-header-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--green);
+    }
+    .page-header-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9vw, 96px);
+      line-height: 0.95;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+    .page-header-title span { color: var(--green); }
+    .page-header-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    /* ============================================
+       TOUR SECTIONS
+    ============================================ */
+    .tours-section { padding: 72px 16px; }
+    .tours-section:nth-child(even) { background: var(--surface); }
+
+    .tour-section-header { margin-bottom: 40px; }
+
+    .tour-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ============================================
+       ACCORDION
+    ============================================ */
+    .tour-item {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(15,23,42,0.05);
+    }
+
+    .tour-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+      background: var(--dark);
+      color: var(--white);
+      cursor: pointer;
+      transition: background var(--transition);
+      text-align: left;
+    }
+
+    .tour-header:hover { background: #1a2744; }
+
+    .tour-header[aria-expanded="true"] {
+      background: #0c1829;
+      border-bottom: 2px solid var(--green);
+    }
+
+    .tour-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: var(--white);
+    }
+
+    .tour-chevron {
+      flex-shrink: 0;
+      color: var(--green);
+      transition: transform 0.3s ease;
+    }
+
+    .tour-header[aria-expanded="true"] .tour-chevron {
+      transform: rotate(90deg);
+    }
+
+    .tour-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: var(--white);
+    }
+
+    .tour-panel.open { max-height: 700px; }
+
+    .tour-panel-inner {
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    @media (min-width: 640px) {
+      .tour-panel-inner { grid-template-columns: 1fr 1fr; align-items: stretch; }
+    }
+
+    .tour-photo-placeholder {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .tour-photo-placeholder svg { opacity: 0.4; }
+
+    .tour-photo-placeholder span {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .tour-details { display: flex; flex-direction: column; gap: 16px; }
+    .tour-details .btn-primary { margin-top: auto; align-self: flex-start; }
+
+    .tour-highlights-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: -8px;
+    }
+
+    .tour-description {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 400;
+      color: #1e293b;
+      line-height: 1.75;
+    }
+
+    .tour-photo-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 260px;
+    }
+
+    .tour-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tour-photo-double {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+
+    .tour-photo-item {
+      flex: 1;
+      width: 50%;
+      min-height: 260px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .tour-highlights {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      color: rgba(15,23,42,0.8);
+    }
+    .tour-highlights li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .tour-highlights li::before {
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .tour-best-for {
+      margin-top: 14px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer { background: #060E1A; padding: 56px 16px 0; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media (min-width: 768px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr; gap: 64px; } }
+    .footer-brand img { height: 52px; margin-bottom: 16px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .footer-socials a { display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); transition: color var(--transition); cursor: pointer; }
+    .footer-social-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.12); border-radius: 50%; transition: border-color var(--transition); flex-shrink: 0; }
+    .footer-social-label { font-family: var(--font-heading); font-size: 10px; font-weight: 600; letter-spacing: 0.4px; color: rgba(255,255,255,0.35); transition: color var(--transition); white-space: nowrap; }
+    .footer-socials a:hover { color: var(--green); }
+    .footer-socials a:hover .footer-social-icon { border-color: var(--green); }
+    .footer-socials a:hover .footer-social-label { color: var(--green); }
+    .footer-partner-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); margin: 0 4px; align-self: flex-start; flex-shrink: 0; }
+    .footer-partner-link:hover { color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-icon { border-color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-label { color: #FF8000 !important; }
+    .footer-col-title { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-size: 15px; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.6); }
+    .footer-contact-list li svg { flex-shrink: 0; margin-top: 2px; color: var(--green); }
+    .footer-contact-list a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-contact-list a:hover { color: var(--white); }
+    .footer-map-link { color: var(--green) !important; text-decoration: underline; text-underline-offset: 3px; }
+    .footer-map-link:hover { color: #fff !important; }
+    .footer-bottom { margin-top: 56px; border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+
+    /* ============================================
+       HERO ATMOSPHERIC ENHANCEMENT
+    ============================================ */
+    #page-header {
+      background: linear-gradient(160deg, #07111f 0%, #0F172A 45%, #091a0d 100%);
+    }
+    #page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 15% 60%, rgba(22,163,74,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 70% at 85% 20%, rgba(37,99,235,0.1) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 32px;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-right: 32px;
+      margin-right: 32px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+    .hero-stat-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ============================================
+       TOUR BADGES
+    ============================================ */
+    .tour-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .tour-badge {
+      display: none;
+      align-items: center;
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 4px 9px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    @media (min-width: 480px) { .tour-badge { display: inline-flex; } }
+    .badge-duration { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+    .badge-easy     { background: rgba(22,163,74,0.22);  color: #4ade80; }
+    .badge-moderate { background: rgba(234,179,8,0.2);   color: #fbbf24; }
+    .badge-hard     { background: rgba(239,68,68,0.18);  color: #f87171; }
+
+    /* ============================================
+       GRADIENT PHOTO PLACEHOLDERS
+    ============================================ */
+    .tour-photo-placeholder {
+      border: none !important;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .tour-photo-placeholder .ph-icon {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 4px;
+    }
+    .tour-photo-placeholder .ph-scene {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      pointer-events: none;
+    }
+    .tour-photo-placeholder .ph-label {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.2);
+      padding: 3px 7px;
+      border-radius: 3px;
+    }
+    /* Gradient themes */
+    .ph-city      { background: linear-gradient(150deg, #0f2040 0%, #1c3d74 100%); }
+    .ph-wine      { background: linear-gradient(150deg, #340d28 0%, #662040 100%); }
+    .ph-spa       { background: linear-gradient(150deg, #0a2a38 0%, #14566c 100%); }
+    .ph-monastery { background: linear-gradient(150deg, #1a260f 0%, #374e1e 100%); }
+    .ph-mtb       { background: linear-gradient(150deg, #0c1e0d 0%, #1a4020 100%); }
+    .ph-oldtown   { background: linear-gradient(150deg, #2a1604 0%, #663a0a 100%); }
+    .ph-lake      { background: linear-gradient(150deg, #051e2e 0%, #0c4462 100%); }
+    .ph-nature    { background: linear-gradient(150deg, #052818 0%, #0e5032 100%); }
+    .ph-kazbegi   { background: linear-gradient(150deg, #0a1630 0%, #182f60 100%); }
+    .ph-svaneti   { background: linear-gradient(150deg, #180b2e 0%, #361c5c 100%); }
+    .ph-borjomi   { background: linear-gradient(150deg, #0a1c12 0%, #164832 100%); }
+    .ph-kakheti   { background: linear-gradient(150deg, #261a04 0%, #5c3f0a 100%); }
+    .ph-custom    { background: linear-gradient(150deg, #0a0a1e 0%, #161630 100%); }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Panel height increase */
+    .tour-panel.open { max-height: 900px; }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading Tandro Bike Tours">
+    <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours" class="loader-logo" />
+    <div class="loader-track">
+      <div class="loader-road"></div>
+      <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="26" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Tandro home">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tours.html" class="active">Tours</a></li>
+        <li><a href="rental.html">Bike Rental</a></li>
+        <li><a href="index.html#why">About</a></li>
+        <li><a href="index.html#cta">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-social" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book a tour on WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book Now
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-links" role="list">
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="tours.html" class="active" onclick="closeMenu()">Tours</a></li>
+      <li><a href="rental.html" onclick="closeMenu()">Bike Rental</a></li>
+      <li><a href="index.html#why" onclick="closeMenu()">About</a></li>
+      <li><a href="index.html#cta" onclick="closeMenu()">Contact</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;">Book Now</a>
+    <div class="mobile-socials" aria-label="Social media">
+      <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PAGE HEADER
+  =========================================== -->
+  <section id="page-header">
+
+    <div class="page-header-inner">
+      <p class="page-header-label">Tandro Bike Tours</p>
+      <h1 class="page-header-title">Georgia<br><span>Bike Tours</span></h1>
+      <p class="page-header-sub">Guided rides across Kutaisi, Tbilisi, and Georgia's most breathtaking landscapes — led by local cyclists who know every route, viewpoint, and hidden corner.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">11+</span>
+          <span class="hero-stat-label">Tours</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">3</span>
+          <span class="hero-stat-label">Regions</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">Local</span>
+          <span class="hero-stat-label">Guides</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">Easy</span>
+          <span class="hero-stat-label">Book via WhatsApp</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       KUTAISI TOURS
+  =========================================== -->
+  <section class="tours-section" id="kutaisi-tours" aria-labelledby="kutaisi-title">
+    <div class="container">
+      <div class="tour-section-header">
+        <p class="section-label">Kutaisi</p>
+        <h2 class="section-title" id="kutaisi-title">Bike Tours<br>in Kutaisi</h2>
+      </div>
+
+      <div class="tour-list" data-group="kutaisi">
+
+        <!-- Kutaisi City Ride -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-kutaisi-city">
+            <span class="tour-name">Kutaisi City Ride</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">2–3h</span>
+              <span class="tour-badge badge-easy">Easy</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-kutaisi-city">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-wrap">
+                <img src="Images/Kutaisi City Ride Image.jpg" alt="Kutaisi city cycling tour" class="tour-photo" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Kutaisi is one of Georgia's oldest cities — a perfect mix of history, nature, and laid-back charm. This relaxed ~2-hour city ride takes you through the heart of Kutaisi with plenty of stops and stories along the way. Scenic cycling routes, majestic cathedrals, lively markets, and riverside riding. Our most popular tour for a reason — flat roads, no fitness required.</p>
+                <p class="tour-highlights-title">City Cycling Tour Highlights</p>
+                <ul class="tour-highlights">
+                  <li><strong>City Center &amp; Colchis Fountain</strong> — The pulse of Kutaisi</li>
+                  <li><strong>Boulevard &amp; Rioni River</strong> — Ride along the river</li>
+                  <li><strong>French Quarter &amp; Jewish District</strong> — Explore Kutaisi's multicultural roots</li>
+                  <li><strong>1st &amp; 3rd Public Schools</strong> — Where Georgian education history began</li>
+                  <li><strong>Rioni Water Dam</strong> — A quiet riverside spot with great picture spots</li>
+                  <li><strong>Optional: Bagrati Cathedral</strong> — A UNESCO-listed masterpiece with sweeping views</li>
+                </ul>
+                <p class="tour-best-for">Best for: solo travelers, couples &amp; families — total beginners welcome.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Kutaisi+City+Ride+tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Winery Tour -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-winery">
+            <span class="tour-name">Winery Tour</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">4–5h</span>
+              <span class="tour-badge badge-easy">Easy</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-winery">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-wrap">
+                <img src="Images/Winery Tour image.jpeg" alt="Baia's Winery cycling tour" class="tour-photo" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Cycle 35 km from Kutaisi through quiet countryside roads to Baia's Winery in the village of Obcha — one of Georgia's most celebrated natural wine producers. A scenic, relaxed ride for casual cyclists. Once the tasting is done, a car picks you up for the ride back. The wine usually makes that part easy.</p>
+                <p class="tour-highlights-title">Winery Tour Highlights</p>
+                <ul class="tour-highlights">
+                  <li><strong>Scenic 35 km countryside ride</strong> — quiet roads, Georgian landscape</li>
+                  <li><strong>Vineyard walk</strong> — learn about grape varieties &amp; cultivation</li>
+                  <li><strong>Cellar tour</strong> — traditional kvevri &amp; modern winemaking techniques</li>
+                  <li><strong>Award-winning wine tasting</strong> — Georgia's most celebrated natural wines</li>
+                  <li><strong>Fresh local food menu</strong> — prepared on-site, all locally sourced</li>
+                  <li><strong>Car return to Kutaisi</strong> — no need to cycle back after the wine</li>
+                </ul>
+                <p class="tour-best-for">Best for: wine lovers, casual cyclists &amp; culture seekers.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Winery+Tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tskaltubo Tour -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-tskaltubo">
+            <span class="tour-name">Tskaltubo Tour</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">3h</span>
+              <span class="tour-badge badge-easy">Easy</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-tskaltubo">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-wrap">
+                <img src="Images/Tskaltubo Tour.jpeg" alt="Tskaltubo Soviet sanatoriums cycling tour" class="tour-photo" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">A relaxed 7 km ride from Kutaisi to Tskaltubo — a town famous for its grand park and hauntingly beautiful Soviet-era sanatoriums. Loop through one of Europe's largest parks, discover buildings where Stalin himself once visited, and soak in a side of Georgia most tourists never see.</p>
+                <p class="tour-highlights-title">Tskaltubo Tour Highlights</p>
+                <ul class="tour-highlights">
+                  <li><strong>Grand Park Loop</strong> — one of the largest parks in Europe, by bike</li>
+                  <li><strong>Soviet Sanatoriums</strong> — grand historic buildings visited by Stalin himself</li>
+                  <li><strong>Tskaltubo Town Bazaar</strong> — local market vibes and fresh produce</li>
+                  <li><strong>Cold Lake</strong> — a scenic spot to relax and enjoy nature</li>
+                </ul>
+                <p class="tour-best-for">Best for: history lovers, casual riders &amp; anyone curious about Soviet Georgia.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Tskaltubo+Tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monasteries -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-monasteries-k">
+            <span class="tour-name">Monasteries</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">4h</span>
+              <span class="tour-badge badge-moderate">Moderate</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-monasteries-k">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Monasteroes 1.jpeg" alt="Gelati Monastery" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Monasteroes 2.jpeg" alt="Motsameta Monastery" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Cycle through centuries of history on a half-day ride to the three pillars of Imeretian culture — Bagrati Cathedral, Motsameta Monastery, and Gelati. This isn't just sightseeing; it's a ride through the soul of Georgia.</p>
+                <p class="tour-highlights-title">Monasteries Tour Highlights</p>
+                <ul class="tour-highlights">
+                  <li><strong>Bagrati Cathedral (11th c.)</strong> — panoramic views over Kutaisi and western Georgia</li>
+                  <li><strong>Motsameta Monastery</strong> — cliffside gem above the Tskaltsitela River gorge</li>
+                  <li><strong>Gelati Monastery (UNESCO)</strong> — founded 1106 by King David the Builder</li>
+                  <li><strong>Forest &amp; mountain roads</strong> — city streets, gentle climbs, scenic paved routes</li>
+                </ul>
+                <p class="tour-best-for">Best for: history enthusiasts &amp; photographers — ideal for golden hour over Kutaisi.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Monasteries+tour+in+Kutaisi!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MTB Tour (Kutaisi) -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-mtb-k">
+            <span class="tour-name">MTB Tour</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">3–4h</span>
+              <span class="tour-badge badge-hard">Challenging</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-mtb-k">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/MTB TOUR 1.jpeg" alt="Kutaisi MTB forest trail" class="tour-photo-item" loading="lazy" />
+                <img src="Images/MTB TOUR 2.jpeg" alt="Kutaisi mountain bike downhill" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Thrilling 4km+ downhill through the forests surrounding Kutaisi — for all skill levels. Start with a stop at Motsameta Monastery and a hidden Soviet-era railroad in the woods, then hit the trail. Multiple difficulty sections, flowing singletrack, and open downhill. Bikes, helmets, and gear all available to rent — no need to bring your own.</p>
+                <p class="tour-highlights-title">Trail Highlights</p>
+                <ul class="tour-highlights">
+                  <li><strong>4km+ open downhill</strong> — smooth turns, exciting terrain, pure rush</li>
+                  <li><strong>Multiple difficulty levels</strong> — beginner paths to technical sections on one trail</li>
+                  <li><strong>Lush forest scenery</strong> — dense trees, sunlight, fresh mountain air</li>
+                  <li><strong>Motsameta Monastery stop</strong> — history in the woods before the descent</li>
+                  <li><strong>Soviet railroad hidden in the forest</strong> — a unique bonus along the route</li>
+                  <li><strong>Bike &amp; gear rental available</strong> — full-suspension, hardtails, E-bikes, helmets</li>
+                </ul>
+                <p class="tour-best-for">Best for: all levels — 1.5 to 3 hours depending on your pace.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+MTB+Tour+in+Kutaisi!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tour-list kutaisi -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       TBILISI TOURS
+  =========================================== -->
+  <section class="tours-section" id="tbilisi-tours" aria-labelledby="tbilisi-title" style="background: var(--surface);">
+    <div class="container">
+      <div class="tour-section-header">
+        <p class="section-label">Tbilisi</p>
+        <h2 class="section-title" id="tbilisi-title">Bike Tours<br>in Tbilisi</h2>
+      </div>
+
+      <div class="tour-list" data-group="tbilisi">
+
+        <!-- Tbilisi Urban Discovery -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-tbilisi-city">
+            <span class="tour-name">Tbilisi Urban Discovery</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">3h</span>
+              <span class="tour-badge badge-easy">Easy</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-tbilisi-city">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-wrap">
+                <img src="Images/Tbilisi Bike Tour 1.jpeg" alt="Tbilisi city bike tour — Bridge of Peace and Old Town" class="tour-photo" loading="lazy" style="object-position: 35% center;" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">The Ultimate City Bike &amp; E-Bike Tour of Tbilisi. Most tourists see the Georgian capital from a bus — we see it from the saddle. A high-impact 3-hour loop that connects the ancient history and the modern vibe of Tbilisi through hidden lanes, bike-friendly paths, and the eyes of a local friend who knows where to stop.</p>
+                <p class="tour-highlights-title">Tour Highlights — 4 Parts</p>
+                <ul class="tour-highlights">
+                  <li><strong>Part 1 — The Modern &amp; The Vintage</strong> — Dry Bridge Flea Market (Soviet antiques &amp; local art) and the beautiful Orbeliani Square</li>
+                  <li><strong>Part 2 — Crossing the Mtkvari</strong> — The Bridge of Peace, Rike Park, and the cliffside Metekhi Church with views of Narikala Fortress</li>
+                  <li><strong>Part 3 — The Holy Trinity (Sameba)</strong> — Avlabari's narrow alleys leading to the largest cathedral in the South Caucasus</li>
+                  <li><strong>Part 4 — Rustaveli Avenue</strong> — Georgia's Champs-Élysées: Parliament Building, National Gallery, and the Opera &amp; Ballet Theater</li>
+                  <li><strong>Fleet choice</strong> — City Hybrids or premium E-bikes with mid-drive motors for effortless climbing</li>
+                  <li><strong>[Optional] Turtle Lake upgrade</strong> — Cable car ascent, lake loop on green bike paths, and a long adrenaline descent back into the city</li>
+                </ul>
+                <p class="tour-best-for">Best for: all fitness levels — E-bikes make the hills feel flat, regular bikes make them rewarding.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Tbilisi+Urban+Discovery+tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Turtle Lake -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-turtle">
+            <span class="tour-name">Turtle Lake</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">3h</span>
+              <span class="tour-badge badge-moderate">Moderate</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-turtle">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Turtle Lake 1.jpeg" alt="Turtle Lake Tbilisi — forest climb through Vake Park" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Turtle Lake 2.jpeg" alt="Kus Tba lake shore above Tbilisi" class="tour-photo-item" loading="lazy" style="object-position: 75% center;" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Kus Tba — Turtle Lake — sits at 687 metres above Tbilisi, hidden inside a dense forest just 6 km from the city centre. This is where locals actually go on weekends; tourists almost never find it. The ride climbs through the upscale Vake district and its enormous 200-hectare park, gaining 217 metres of elevation before breaking out of the tree line at the lake. The descent is fast, long, and completely satisfying.</p>
+                <p class="tour-highlights-title">Tour Highlights</p>
+                <ul class="tour-highlights">
+                  <li><strong>Vake Park climb</strong> — one of Tbilisi's great green lungs, past cascade fountains, a WWII memorial, and open-air cafes tucked under the trees</li>
+                  <li><strong>Turtle Lake arrival</strong> — a pristine mountain lake fed by the Varaziskhevi river, circled by thick forest and almost completely quiet</li>
+                  <li><strong>The lake loop</strong> — a 1 km shoreline ride with mountain views, ducks on the water, and lakeside bars if you want to stop</li>
+                  <li><strong>Vake Cable Car</strong> — 1,140 metres of gondola over the forest canopy, 6 minutes from lake to city — an optional way down for those who want the views without the legs</li>
+                  <li><strong>The descent</strong> — a rewarding, long roll back through the park and into the Vake neighbourhood, with Tbilisi spreading out below you</li>
+                  <li><strong>Panoramic views</strong> — at the lake you're looking out over the Mtatsminda ridge and the Caucasus foothills — the city feels a world away</li>
+                </ul>
+                <p class="tour-best-for">Best for: intermediate riders and anyone who wants to see where Tbilisi residents actually spend their Sundays.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Turtle+Lake+tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bevreti & Lisi Lake -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-bevreti">
+            <span class="tour-name">Bevreti &amp; Lisi Lake</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">5–6h</span>
+              <span class="tour-badge badge-hard">Challenging</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-bevreti">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Bevreti 1.jpeg" alt="Bevreti climb — Trialeti Ridge above Tbilisi" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Bevreti 2.jpeg" alt="Lisi Lake finish — 50km Bevreti loop from Tbilisi" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">No shuttles. No shortcuts. This is 50km of pure pedaling from Tandro's location, straight into the Trialeti Range and back via Lisi Lake. You climb to the ridge, ride the spine of the hills with the Caucasus on one horizon and the entire Tbilisi valley on the other, cross the open plateau, and finish at the lake. One of the few operators in Georgia offering this full loop start-to-finish on a bike.</p>
+                <p class="tour-highlights-title">Route Breakdown</p>
+                <ul class="tour-highlights">
+                  <li><strong>The City Exit &amp; The Climb</strong> — Tbilisi pavement ends fast. The air changes as you grind toward the village of Bevreti — a solid climb that trades city noise for mountain silence</li>
+                  <li><strong>The Trialeti Ridge</strong> — The highlight of the day. Riding the spine between Mskhaldidi and Mukhattskaro with the Caucasus Mountains on your left and the full Tbilisi valley spread out on your right</li>
+                  <li><strong>The High Plateau</strong> — Fast gravel and rugged shepherd paths across open plateau tracks, past the Bevreti Monastery area, before the long descent begins</li>
+                  <li><strong>The Finish at Lisi</strong> — The 50km loop closes at Lisi Lake. Victory lap around the water, cold drink, then the roll back into Tbilisi</li>
+                  <li><strong>MTB or E-bike</strong> — 600m+ of climbing on high-spec MTBs, or Bosch/Yamaha-powered E-bikes with full eco mode for those who want the challenge dialled back. Your call</li>
+                  <li><strong>Local Intelligence</strong> — These trails are a maze of Soviet tracks and grazing paths. We know the exact lines. You follow the guide, not a confusing offline map</li>
+                </ul>
+                <p class="tour-best-for">50km · 5–6 hours · 600m+ elevation · Mixed asphalt, gravel, dirt ridgelines. High fitness required — book an E-bike if you're not a regular climber.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Bevreti+%26+Lisi+Lake+tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tour-list tbilisi -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       GEORGIA-WIDE TOURS
+  =========================================== -->
+  <section class="tours-section" id="georgia-tours" aria-labelledby="georgia-title">
+    <div class="container">
+      <div class="tour-section-header">
+        <p class="section-label">Georgia</p>
+        <h2 class="section-title" id="georgia-title">Bike Tours<br>across Georgia</h2>
+      </div>
+
+      <div class="tour-list" data-group="georgia">
+
+        <!-- Kazbegi -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-kazbegi">
+            <span class="tour-name">Kazbegi &amp; Gudauri — 7-Day Tour</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">7 Days</span>
+              <span class="tour-badge badge-hard">Challenging</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-kazbegi">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Kazbegi Tour 1.jpeg" alt="Kazbegi cycling tour — Georgian Military Highway under Mt. Kazbek" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Kazbegi Tour 2.jpeg" alt="Gudauri high-altitude mountain biking — Greater Caucasus ridgelines" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">The ultimate Caucasus adventure. Seven days on the road from Tbilisi to Kazbegi and Gudauri — riding in the shadow of Mt. Kazbek (5,050m), through glacial valleys, over 2,200m passes, and into terrain that tour buses can't reach. Routes hand-mapped by local riders, not AI. A dedicated 4x4 support vehicle handles your gear every day. Your choice of premium MTB or Bosch/Yamaha 500Wh E-bikes built for the mountains.</p>
+                <p class="tour-highlights-title">7-Day Itinerary</p>
+                <ul class="tour-highlights">
+                  <li><strong>Day 1 — Arrival</strong> — Private airport pickup, hotel transfer to central Tbilisi, bike fitting, and route briefing with your Tandro guide</li>
+                  <li><strong>Day 2 — Tbilisi on Two Wheels</strong> — A full city ride through Old Tbilisi's historic alleys, modern parks, and iconic landmarks — the perfect warm-up before the mountains</li>
+                  <li><strong>Day 3 — The Ascent to Kazbegi</strong> — Early departure north on the Georgian Military Highway. 30–50 km of riding toward the Russian border, mixing smooth asphalt and challenging gravel under the permanently snow-capped walls of Mt. Kazbek</li>
+                  <li><strong>Day 4 — Into the Silent Valleys</strong> — Deep into the glacial valleys around Stepantsminda. Routes toward the "Dolomites of Georgia" in Juta or the ancient defensive towers of Sno — the real Caucasus, not the postcard</li>
+                  <li><strong>Day 5 — Gudauri High-Altitude</strong> — Short transfer to Gudauri at 2,200m. Ridgeline riding and panoramic views that the tour bus crowds will never access</li>
+                  <li><strong>Day 6 — Gudauri Trails</strong> — Summer singletrack, gravel patches, and forest trails across a completely different face of the mountain resort</li>
+                  <li><strong>Day 7 — The Bevreti Finale</strong> — Back in Tbilisi for a 50km loop to Bevreti — steep climbs, fast descents, and the occasional tailwind. The perfect send-off before your departure</li>
+                </ul>
+                <p class="tour-best-for">Best for: experienced cyclists and adventure travelers — E-bikes available for all fitness levels. Includes 4x4 support, airport transfers, and full technical assistance throughout.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+7-Day+Kazbegi+%26+Gudauri+Tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mestia -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-mestia">
+            <span class="tour-name">Mestia &amp; Svaneti — 7-Day Expedition</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">7 Days</span>
+              <span class="tour-badge badge-hard">Challenging</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-mestia">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Mestia Tour 1.jpeg" alt="Mestia Svaneti cycling — medieval towers and glaciers" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Mestia Tour 2.jpeg" alt="Svaneti high-altitude E-bike expedition — Ushguli descent" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">The Svaneti Legend. Seven days into the most remote, UNESCO-protected mountain landscapes on Earth — from Kutaisi through the Colchic forests, up to Mestia's 9th-century Svan Towers at 1,500m, across the 45km ride to Ushguli (the highest continuously inhabited settlement in Europe), and over the Zagari Pass on an exclusive gravel descent to Lentekhi that no standard tour operator runs. Full-suspension Bosch and Yamaha 500Wh–625Wh E-bikes. 4x4 support vehicle on every stage. Private group bookings for 10–15 riders available.</p>
+                <p class="tour-highlights-title">7-Day Itinerary</p>
+                <ul class="tour-highlights">
+                  <li><strong>Day 1 — Imereti Warm-up</strong> — Kutaisi to Martvili Canyon: 30km on rolling gravel backroads through the Colchic forests, sidestepping the tourist crowds entirely</li>
+                  <li><strong>Day 2 — Gateway to the Giants</strong> — Bikes off at the Enguri Dam (one of the world's highest arch dams) and onto the scenic old road toward Khaishi, guided by the Nakra and Enguri rivers into the Svaneti range</li>
+                  <li><strong>Day 3 — Koruldi Lakes Challenge</strong> — The climb from Mestia to the Koruldi Lakes at 2,850m: 1,400m of vertical gain with Mt. Ushba in your face, followed by a 15km descent past 9th-century Svan towers back into Mestia</li>
+                  <li><strong>Day 4 — The Tower Road</strong> — The iconic 45km ride to Ushguli through Mulakhi and Ipari, mixing fresh asphalt and classic gravel with the glaciers of Mt. Tetnuldi ahead</li>
+                  <li><strong>Day 5 — Shkhara &amp; Zagari Pass</strong> — Ride to the base of the Shkhara Glacier where the Enguri river begins, then tackle the Zagari Pass — the high-altitude gateway between Upper and Lower Svaneti</li>
+                  <li><strong>Day 6 — The Endless Downhill</strong> — 50km gravity day: 1,500m of descent from the pass into the Lentekhi valley, dropping through alpine zones into lush river lowlands on a route no standard operator touches</li>
+                  <li><strong>Day 7 — Tskaltubo &amp; Return</strong> — A final roll through the grand Soviet-era sanatoriums of Tskaltubo before returning to Kutaisi to close the full Svaneti loop</li>
+                </ul>
+                <p class="tour-best-for">Best for: experienced riders and private groups — Kosher-style, vegetarian, and vegan meal packages available. Hand-picked guesthouses with Svan Tower views on request.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+7-Day+Mestia+%26+Svaneti+Expedition!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zekari & Borjomi -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-zekari">
+            <span class="tour-name">Zekari Pass &amp; Borjomi</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">3 Days</span>
+              <span class="tour-badge badge-hard">Challenging</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-zekari">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Zekari&Borjomi 1.jpeg" alt="Zekari Pass descent — 1,200m of mountain gravel toward Akhaltsikhe" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Zekari&Borjomi 2.jpeg" alt="Borjomi canyon riding — Kura River gorge on asphalt and gravel" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Three days in the Lesser Caucasus — no tourist crowds, no museum queues. We shuttle to the summit of Zekari Pass at 2,000m+ on Day 1 and then it's all riding: a 1,200m descent to Akhaltsikhe, a fast canyon day following the Kura River to Borjomi, and a flexible finale in the Borjomi-Kharagauli National Park — singletrack for the MTB crowd, a scenic leisure ride for everyone else.</p>
+                <p class="tour-highlights-title">3-Day Ride Plan</p>
+                <ul class="tour-highlights">
+                  <li><strong>Day 1 — Zekari Pass Descent</strong> — 4x4 shuttle to the 2,000m+ summit, bikes unloaded at the top. 1,200m of descent on rugged mountain gravel through Abastumani and into Akhaltsikhe — pure gravity all day</li>
+                  <li><strong>Day 2 — Akhaltsikhe to Borjomi</strong> — Mixed asphalt and gravel following the Kura River through the canyon. Fast-paced, landscape-heavy riding with the gorge walls either side</li>
+                  <li><strong>Day 3A — MTB Singletrack</strong> — For experienced riders: deep forest climbs and flowing descents inside Borjomi-Kharagauli National Park, one of Europe's largest protected forests</li>
+                  <li><strong>Day 3B — Leisure Ride</strong> — Scenic asphalt to the Borjomi Sulfur Baths or the Green Monastery, then bikes packed and return to Kutaisi or Tbilisi</li>
+                  <li><strong>Full 4x4 Support</strong> — The support truck follows every stage with spare parts, extra batteries, and your gear — you carry nothing but yourself</li>
+                  <li><strong>MTB or E-bike</strong> — High-spec mountain bikes or Bosch/Yamaha 500Wh E-bikes for riders who want the views without the suffering on the climb-free shuttle day</li>
+                </ul>
+                <p class="tour-best-for">Best for: riders who want the real Georgia — long descents, canyon riding, and national park trails with zero tourist traps.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Zekari+Pass+%26+Borjomi+tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kakheti -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-kakheti">
+            <span class="tour-name">Kakheti 550km Loop</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">7 Days</span>
+              <span class="tour-badge badge-hard">Pro Level</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-kakheti">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-double">
+                <img src="Images/Kakheti 1.jpeg" alt="Kakheti cycling — Gombori Pass descent through Georgian forest" class="tour-photo-item" loading="lazy" />
+                <img src="Images/Kakheti 2.jpeg" alt="Vashlovani steppe — desert plains near the southern border on bike" class="tour-photo-item" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">Our most demanding itinerary. A 550km loop of Kakheti with 6,545m of total elevation gain — averaging 78km per day across 7 days. This isn't a vineyard ride. The route covers the full geographical range of the region: the steep forests of the Gombori Pass, the flat speed of the Alazani Valley wine corridor, the exposed desert plains near the southern border, and the remote steppe tracks of Vashlovani and David Gareji. Gravel or hardtail MTB recommended. Fully customizable to 5 or 10 days.</p>
+                <p class="tour-highlights-title">7-Day Itinerary</p>
+                <ul class="tour-highlights">
+                  <li><strong>Day 1 — The Gombori Ascent</strong> — Tbilisi to Telavi via the Gombori Pass: steep climbs, fast descents, dense Georgian forest</li>
+                  <li><strong>Day 2 — The Alazani Valley</strong> — Telavi to Lagodekhi: flat, high-speed riding through the heart of the wine region with the Caucasus ridge on the horizon</li>
+                  <li><strong>Day 3 — The Ridge Climb</strong> — Lagodekhi to Sighnaghi: a steady climb to the walled hilltop city above the Alazani plain</li>
+                  <li><strong>Day 4 — Transition to the Steppe</strong> — Sighnaghi to Dedoplistskaro: the landscape opens up and the road south begins to feel serious</li>
+                  <li><strong>Day 5 — Vashlovani Loop</strong> — Rolling hills and remote tracks on the edge of Vashlovani National Park — exposed, quiet, unlike anything else in Georgia</li>
+                  <li><strong>Day 6 — The Desert Stretch</strong> — Dedoplistskaro to Udabno: moon-like terrain, desert plains, and the David Gareji cave monastery complex cut into the cliffs near the border</li>
+                  <li><strong>Day 7 — The Return</strong> — Udabno back to Tbilisi: steppe tracks fading into the final paved climb back into the capital</li>
+                </ul>
+                <p class="tour-best-for">550km · 6,545m elevation · 7 days (customizable to 5 or 10) · Gravel or hardtail MTB · Optional 4x4 support vehicle available for gear and spare parts.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Kakheti+550km+Loop+tour!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Book This Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Tour -->
+        <div class="tour-item">
+          <button class="tour-header" aria-expanded="false" aria-controls="panel-custom">
+            <span class="tour-name">Custom Tour</span>
+            <div class="tour-header-meta">
+              <span class="tour-badge badge-duration">Your pace</span>
+              <span class="tour-badge badge-easy">Flexible</span>
+              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+          <div class="tour-panel" id="panel-custom">
+            <div class="tour-panel-inner">
+              <div class="tour-photo-wrap">
+                <img src="Images/For the Custom.jpeg" alt="Custom bike tour in Georgia — tailored routes for any group or destination" class="tour-photo" loading="lazy" />
+              </div>
+              <div class="tour-details">
+                <p class="tour-description">None of the tours above quite fit? We build fully bespoke itineraries from scratch. Tell us your destination, your group size, your fitness level, and how many days you have — and we'll map a route that no one else is running. We've planned private group rides for 2 people and corporate expeditions for 15. Single-day rides and multi-week adventures. Flat leisure routes and technical mountain missions. If it can be done on a bike in Georgia, we can organise it.</p>
+                <p class="tour-highlights-title">What We Can Customise</p>
+                <ul class="tour-highlights">
+                  <li><strong>Destination &amp; Route</strong> — Any region in Georgia: Tbilisi, Kakheti, Svaneti, Racha, Adjara, the border areas. You name it, we map it</li>
+                  <li><strong>Duration</strong> — Half a day to two weeks. We adjust daily distance and elevation to match your fitness and schedule</li>
+                  <li><strong>Group Size</strong> — Solo riders to private groups of 15+. Full fleet of E-bikes and MTBs available for large bookings</li>
+                  <li><strong>Pace &amp; Difficulty</strong> — Leisure family ride or professional-grade challenge. E-bike, gravel, hardtail, or full-suspension — your choice</li>
+                  <li><strong>Support Level</strong> — Guide only, or guide plus 4x4 support vehicle with gear, spare parts, and on-trail assistance</li>
+                  <li><strong>Add-ons</strong> — Accommodation, meal packages (including Kosher-style, vegetarian, and vegan), airport transfers, and photography stops on request</li>
+                </ul>
+                <p class="tour-best-for">Message us on WhatsApp with your idea — a rough destination and number of days is enough to get started.</p>
+                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'd+like+to+plan+a+custom+bike+tour+in+Georgia!" target="_blank" rel="noopener" class="btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  Plan My Tour
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tour-list georgia -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+        <p class="footer-tagline">Guided cycling tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
+        <div class="footer-socials" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></span>
+            <span class="footer-social-label">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span class="footer-social-label">Facebook</span>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></span>
+            <span class="footer-social-label">WhatsApp</span>
+          </a>
+          <span class="footer-partner-divider" aria-hidden="true"></span>
+          <a href="https://www.getyourguide.com/tbilisi-l1379/tbilisi-bike-tour-peace-bridge-old-town-sameba-views-t1164852/?ranking_uuid=0132c445-e886-4253-93d0-9188ee75a85d" target="_blank" rel="noopener" aria-label="Book on GetYourGuide" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 2l-1.5 4H6l3.5 2.5-1.5 4L12 14l4 2.5-1.5-4L18 10h-4.5z"/></svg></span>
+            <span class="footer-social-label">GetYourGuide</span>
+          </a>
+          <a href="https://www.bajabikes.eu/en/tbilisi-sightseeing-tours/" target="_blank" rel="noopener" aria-label="Book on Baja Bikes" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/><path d="M15 9 L15 7"/><path d="M13.5 7 L17 7"/></svg></span>
+            <span class="footer-social-label">Baja Bikes</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tours.html">Tours</a></li>
+          <li><a href="rental.html">Bike Rental</a></li>
+          <li><a href="index.html#why">About</a></li>
+          <li><a href="index.html#cta">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-contact-list" role="list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+995599373788">+995 599 373 788</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="https://maps.app.goo.gl/dW8tMeMxYSkNPnKz7" target="_blank" rel="noopener" class="footer-map-link">Tbilisi</a> &amp; <a href="https://maps.app.goo.gl/DyHZWoafGciduHgX7" target="_blank" rel="noopener" class="footer-map-link">Kutaisi</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+  <script>
+    // ---- Loader ----
+    const loader = document.getElementById('loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); }, 800);
+    });
+    setTimeout(() => { if (loader && !loader.classList.contains('hidden')) { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); } }, 4000);
+
+    // ---- Navbar scroll ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    // ---- Hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+    // ---- Scroll reveal ----
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.tour-item').forEach((el, i) => {
+      el.classList.add('reveal');
+      el.dataset.delay = (i % 5) * 80;
+      revealObserver.observe(el);
+    });
+
+    document.querySelectorAll('.tour-section-header, .hero-stats').forEach(el => {
+      el.classList.add('reveal');
+      el.dataset.delay = 0;
+      revealObserver.observe(el);
+    });
+
+    // ---- Accordion ----
+    document.querySelectorAll('.tour-list').forEach(group => {
+      group.querySelectorAll('.tour-header').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          // Close all in this group
+          group.querySelectorAll('.tour-header').forEach(b => {
+            b.setAttribute('aria-expanded', 'false');
+            const p = document.getElementById(b.getAttribute('aria-controls'));
+            if (p) p.classList.remove('open');
+          });
+
+          // Open clicked if it was closed
+          if (!isOpen) {
+            btn.setAttribute('aria-expanded', 'true');
+            const panel = document.getElementById(btn.getAttribute('aria-controls'));
+            if (panel) panel.classList.add('open');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
