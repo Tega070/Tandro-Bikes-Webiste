@@ -89,7 +89,11 @@
       box-shadow: 0 1px 0 rgba(255,255,255,0.06);
     }
     .nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
     .nav-logo img { height: 44px; width: auto; }
+    .nav-logo-name { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 1px; line-height: 1; display: flex; align-items: flex-end; gap: 5px; }
+    .nav-logo-bike-stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .nav-logo-bike-stack svg { width: 18px; height: 18px; opacity: 0.9; }
     .nav-links { display: none; list-style: none; gap: 32px; }
     .nav-links a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; color: var(--white); opacity: 0.85; transition: opacity var(--transition); }
     .nav-links a:hover { opacity: 1; }
@@ -100,6 +104,15 @@
     .nav-social a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
     .btn-book { display: flex; align-items: center; gap: 6px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 10px 18px; border-radius: var(--radius); transition: background var(--transition); min-height: 44px; cursor: pointer; }
     .btn-book:hover { background: #15803D; }
+    .lang-dropdown { position: relative; }
+    .lang-current { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius); padding: 5px 10px; cursor: pointer; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; transition: border-color var(--transition); }
+    .lang-current:hover { border-color: rgba(255,255,255,0.6); }
+    .lang-chevron { transition: transform var(--transition); flex-shrink: 0; }
+    .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+    .lang-menu { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); overflow: hidden; min-width: 100%; }
+    .lang-dropdown.open .lang-menu { display: block; }
+    .lang-menu-item { display: block; width: 100%; padding: 7px 14px; background: none; border: none; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; cursor: pointer; text-align: center; transition: color var(--transition), background var(--transition); }
+    .lang-menu-item:hover { color: var(--white); background: rgba(255,255,255,0.05); }
     .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
     .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 1px; transition: transform var(--transition), opacity var(--transition); }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -294,6 +307,8 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
       transition: box-shadow var(--transition), transform var(--transition);
     }
     .price-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,0.08); transform: translateY(-2px); }
@@ -326,7 +341,8 @@
     .badge-ebike  { background: rgba(234,179,8,0.2);  color: #fbbf24; }
     .badge-city   { background: rgba(148,163,184,0.15); color: #94a3b8; }
 
-    .price-card-body { padding: 20px 24px; }
+    .price-card-body { padding: 20px 24px; display: flex; flex-direction: column; flex: 1; }
+    .price-card-body .btn-rent { margin-top: auto; align-self: flex-start; }
     .price-daily {
       display: flex;
       align-items: baseline;
@@ -376,6 +392,9 @@
     .price-discounts .no-discount::before {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
     }
+
+    .btn-rent { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; padding: 8px 16px; border-radius: var(--radius); transition: background var(--transition); }
+    .btn-rent:hover { background: #15803d; }
 
     .pricing-includes {
       margin-top: 48px;
@@ -567,9 +586,47 @@
       object-fit: cover;
       border-radius: 6px;
       display: block;
+      cursor: zoom-in;
       transition: transform var(--transition), opacity var(--transition);
     }
     .photo-grid img:hover { transform: scale(1.03); opacity: 0.9; }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      animation: lbFadeIn 0.2s ease;
+    }
+    @keyframes lbFadeIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    #lightbox-close {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      color: #fff;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      background: none;
+      border: none;
+      padding: 8px;
+    }
+    #lightbox-close:hover { opacity: 1; }
 
     .photo-grid-tbilisi {
       grid-template-columns: repeat(2, 1fr);
@@ -804,7 +861,7 @@
 
   <!-- LOADER -->
   <div id="loader" role="status" aria-label="Loading Tandro Bike Rental">
-    <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours" class="loader-logo" />
+    <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours" class="loader-logo" />
     <div class="loader-track">
       <div class="loader-road"></div>
       <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -830,14 +887,21 @@
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="Tandro home">
-        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <span class="nav-logo-name">
+          Tandro
+          <span class="nav-logo-bike-stack">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M9 10.5l3 6.5H5.5"/><path d="M9 10.5l7-1"/><path d="M16 9.5l-4 7.5"/><path d="M16 9.5l2.5 7.5"/><path d="M7.5 9.5h3.5"/><path d="M9 9.5v1"/><path d="M15 7.5h3"/><path d="M16.5 7.5l-.5 2"/></svg>
+            Bikes
+          </span>
+        </span>
       </a>
       <ul class="nav-links" role="list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="tours.html">Tours</a></li>
-        <li><a href="rental.html" class="active">Bike Rental</a></li>
-        <li><a href="index.html#why">About</a></li>
-        <li><a href="index.html#cta">Contact</a></li>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="tours.html" data-i18n="nav_tours">Tours</a></li>
+        <li><a href="rental.html" class="active" data-i18n="nav_rental">Bike Rental</a></li>
+        <li><a href="index.html#why" data-i18n="nav_about">About</a></li>
+        <li><a href="index.html#cta" data-i18n="nav_contact">Contact</a></li>
       </ul>
       <div class="nav-right">
         <div class="nav-social" aria-label="Social media links">
@@ -851,9 +915,21 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
           </a>
         </div>
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button class="lang-current" id="lang-btn" onclick="toggleLangMenu()" aria-label="Switch language">
+            <span id="lo-current">EN</span>
+            <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="lang-menu" id="lang-menu">
+            <button class="lang-menu-item" id="lo-other" onclick="selectLang()">RU</button>
+          </div>
+        </div>
+
         <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book on WhatsApp">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-          Book Now
+          <span data-i18n="btn_book">Book Now</span>
         </a>
         <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
@@ -865,13 +941,13 @@
   <!-- MOBILE MENU -->
   <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <ul class="mobile-links" role="list">
-      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
-      <li><a href="tours.html" onclick="closeMenu()">Tours</a></li>
-      <li><a href="rental.html" class="active" onclick="closeMenu()">Bike Rental</a></li>
-      <li><a href="index.html#why" onclick="closeMenu()">About</a></li>
-      <li><a href="index.html#cta" onclick="closeMenu()">Contact</a></li>
+      <li><a href="index.html" onclick="closeMenu()" data-i18n="nav_home">Home</a></li>
+      <li><a href="tours.html" onclick="closeMenu()" data-i18n="nav_tours">Tours</a></li>
+      <li><a href="rental.html" class="active" onclick="closeMenu()" data-i18n="nav_rental">Bike Rental</a></li>
+      <li><a href="index.html#why" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
+      <li><a href="index.html#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
     </ul>
-    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;">Book Now</a>
+    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;" data-i18n="btn_book">Book Now</a>
     <div class="mobile-socials" aria-label="Social media">
       <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
@@ -890,25 +966,21 @@
   =========================================== -->
   <section id="page-header">
     <div class="page-header-inner">
-      <p class="page-header-label">Tandro Bikes</p>
-      <h1 class="page-header-title">Bike Rental<br><span>in Georgia</span></h1>
-      <p class="page-header-sub">The only specialized provider in Tbilisi and Kutaisi offering a professionally tuned, elite fleet — for serious explorers, gravel adventurers, and city riders alike.</p>
+      <p class="page-header-label" data-i18n="hero_label">Tandro Bikes</p>
+      <h1 class="page-header-title" data-i18n-html="hero_title">Bike Rental<br><span>in Georgia</span></h1>
+      <p class="page-header-sub" data-i18n="hero_sub">The only specialized provider in Tbilisi and Kutaisi offering a professionally tuned, elite fleet — for serious explorers, gravel adventurers, and city riders alike.</p>
       <div class="hero-stats">
         <div class="hero-stat">
           <span class="hero-stat-num">6</span>
-          <span class="hero-stat-label">Bike Types</span>
+          <span class="hero-stat-label" data-i18n="stat_bike_types">Bike Types</span>
         </div>
         <div class="hero-stat">
-          <span class="hero-stat-num">2</span>
-          <span class="hero-stat-label">City Locations</span>
+          <span class="hero-stat-num">3</span>
+          <span class="hero-stat-label" data-i18n="stat_city_locs">City Locations</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">24/7</span>
-          <span class="hero-stat-label">Support</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">150</span>
-          <span class="hero-stat-label">GEL Insurance</span>
+          <span class="hero-stat-label" data-i18n="stat_support">Support</span>
         </div>
       </div>
     </div>
@@ -919,9 +991,9 @@
   =========================================== -->
   <section id="why-tandro">
     <div class="container">
-      <p class="section-label">The Tandro Difference</p>
-      <h2 class="section-title">Why Riders Choose Us</h2>
-      <p class="section-sub">Stop settling for generic rentals and unreliable maintenance. Here's what sets Tandro apart from every other shop in Georgia.</p>
+      <p class="section-label" data-i18n="why_label">The Tandro Difference</p>
+      <h2 class="section-title" data-i18n="why_title">Why Riders Choose Us</h2>
+      <p class="section-sub" data-i18n="why_sub">Stop settling for generic rentals and unreliable maintenance. Here's what sets Tandro apart from every other shop in Georgia.</p>
 
       <div class="features-grid">
 
@@ -930,8 +1002,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L9.5 9l9 8.5"/><path d="M9.5 9l3.5 4"/><path d="M8 12l4 0"/><path d="M9.5 9h5.5"/><path d="M15 9l3.5 8.5"/><path d="M15 9V7"/><path d="M13.5 7h3"/></svg>
           </div>
           <div>
-            <p class="feature-title">Elite Bike Fleet</p>
-            <p class="feature-text">We exclusively stock Cube, Trek, Specialized, Stevens, KTM, Orbea, and Haibike. Every bike is inspected and serviced after every rental by professional mechanics.</p>
+            <p class="feature-title" data-i18n="feat1_title">Elite Bike Fleet</p>
+            <p class="feature-text" data-i18n="feat1_text">We exclusively stock Cube, Trek, Specialized, Stevens, KTM, Orbea, and Haibike. Every bike is inspected and serviced after every rental by professional mechanics.</p>
           </div>
         </div>
 
@@ -940,8 +1012,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <div>
-            <p class="feature-title">Country-Wide Insurance</p>
-            <p class="feature-text">For a flat 150 GEL, get Georgia's only full-coverage guarantee. From Mestia to Kakheti — if you have a mechanical issue, we come to you with parts or a bike swap.</p>
+            <p class="feature-title" data-i18n="feat2_title">Country-Wide Insurance</p>
+            <p class="feature-text" data-i18n="feat2_text">For a flat 150 GEL, get Georgia's only full-coverage guarantee. From Mestia to Kakheti — if you have a mechanical issue, we come to you with parts or a bike swap.</p>
           </div>
         </div>
 
@@ -950,8 +1022,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </div>
           <div>
-            <p class="feature-title">Inter-City Drop-Off</p>
-            <p class="feature-text">Pick up at our Kutaisi branch, drop off in Tbilisi — or vice versa. We are the only provider in Georgia offering seamless one-way inter-city rentals.</p>
+            <p class="feature-title" data-i18n="feat3_title">Inter-City Drop-Off</p>
+            <p class="feature-text" data-i18n="feat3_text">Pick up at our Kutaisi branch, drop off in Tbilisi — or vice versa. We are the only provider in Georgia offering seamless one-way inter-city rentals.</p>
           </div>
         </div>
 
@@ -960,8 +1032,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </div>
           <div>
-            <p class="feature-title">Safety & Tech Gold Standard</p>
-            <p class="feature-text">Every rental includes a full puncture kit with lock, helmet (optional), multi-tool, pump, spare tube, tire levers, and rear rack — all at no extra charge.</p>
+            <p class="feature-title" data-i18n="feat4_title">Safety & Tech Gold Standard</p>
+            <p class="feature-text" data-i18n="feat4_text">Every rental includes a full puncture kit with lock, helmet (optional), multi-tool, pump, spare tube, tire levers, and rear rack — all at no extra charge.</p>
           </div>
         </div>
 
@@ -970,8 +1042,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
           <div>
-            <p class="feature-title">24/7 WhatsApp + GPX Maps</p>
-            <p class="feature-text">You're never alone on the trail. All customers get a direct line to our Live Support Team and access to Digital Trail Maps (GPX/Komoot) pre-loaded with Georgia's best routes.</p>
+            <p class="feature-title" data-i18n="feat5_title">24/7 WhatsApp + GPX Maps</p>
+            <p class="feature-text" data-i18n="feat5_text">You're never alone on the trail. All customers get a direct line to our Live Support Team and access to Digital Trail Maps (GPX/Komoot) pre-loaded with Georgia's best routes.</p>
           </div>
         </div>
 
@@ -980,8 +1052,8 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
           <div>
-            <p class="feature-title">Flexible Rental Durations</p>
-            <p class="feature-text">Single-day urban rides to multi-week cross-country expeditions. Transparent discount tiers for longer rentals — the more days, the lower your daily rate.</p>
+            <p class="feature-title" data-i18n="feat6_title">Flexible Rental Durations</p>
+            <p class="feature-text" data-i18n="feat6_text">Single-day urban rides to multi-week cross-country expeditions. Transparent discount tiers for longer rentals — the more days, the lower your daily rate.</p>
           </div>
         </div>
 
@@ -994,108 +1066,114 @@
   =========================================== -->
   <section id="pricing">
     <div class="container">
-      <p class="section-label">Rental Prices</p>
-      <h2 class="section-title">Bikes & Daily Rates</h2>
-      <p class="section-sub">All prices in Georgian Lari (GEL). Discounts apply automatically for longer rentals — no negotiation needed.</p>
+      <p class="section-label" data-i18n="pricing_label">Rental Prices</p>
+      <h2 class="section-title" data-i18n="pricing_title">Bikes & Daily Rates</h2>
+      <p class="section-sub" data-i18n="pricing_sub">All prices in Georgian Lari (GEL). Discounts apply automatically for longer rentals — no negotiation needed.</p>
 
       <div class="pricing-grid">
 
         <div class="price-card reveal">
           <div class="price-card-head">
-            <p class="price-bike-type">City Bike</p>
+            <p class="price-bike-type" data-i18n="bike1_name">City Bike</p>
             <span class="price-badge badge-city">Urban</span>
           </div>
           <div class="price-card-body">
             <div class="price-daily">
               <span class="price-amount">50</span>
-              <span class="price-unit">GEL / day</span>
+              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
             </div>
             <ul class="price-discounts">
-              <li>40 GEL / day — 10+ days</li>
+              <li data-i18n="bike1_disc1">40 GEL / day — 10+ days</li>
             </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20City%20Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
           </div>
         </div>
 
         <div class="price-card reveal" data-delay="60">
           <div class="price-card-head">
-            <p class="price-bike-type">Hardtail MTB</p>
+            <p class="price-bike-type" data-i18n="bike2_name">Hardtail MTB</p>
             <span class="price-badge badge-mtb">MTB</span>
           </div>
           <div class="price-card-body">
             <div class="price-daily">
               <span class="price-amount">70</span>
-              <span class="price-unit">GEL / day</span>
+              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
             </div>
             <ul class="price-discounts">
-              <li>60 GEL / day — 10+ days</li>
+              <li data-i18n="bike2_disc1">60 GEL / day — 10+ days</li>
             </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Hardtail%20MTB&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
           </div>
         </div>
 
         <div class="price-card reveal" data-delay="120">
           <div class="price-card-head">
-            <p class="price-bike-type">Gravel Bike</p>
+            <p class="price-bike-type" data-i18n="bike3_name">Gravel Bike</p>
             <span class="price-badge badge-gravel">Gravel</span>
           </div>
           <div class="price-card-body">
             <div class="price-daily">
               <span class="price-amount">100</span>
-              <span class="price-unit">GEL / day</span>
+              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
             </div>
             <ul class="price-discounts">
-              <li>90 GEL / day — 6+ days</li>
-              <li>80 GEL / day — 13+ days</li>
+              <li data-i18n="bike3_disc1">90 GEL / day — 6+ days</li>
+              <li data-i18n="bike3_disc2">80 GEL / day — 13+ days</li>
             </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Gravel%20Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
           </div>
         </div>
 
         <div class="price-card reveal" data-delay="0">
           <div class="price-card-head">
-            <p class="price-bike-type">Full-Sus MTB</p>
+            <p class="price-bike-type" data-i18n="bike4_name">Full Suspension MTB</p>
             <span class="price-badge badge-mtb">MTB</span>
           </div>
           <div class="price-card-body">
             <div class="price-daily">
               <span class="price-amount">120</span>
-              <span class="price-unit">GEL / day</span>
+              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
             </div>
             <ul class="price-discounts">
-              <li>100 GEL / day — 10+ days</li>
+              <li data-i18n="bike4_disc1">100 GEL / day — 10+ days</li>
             </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Full-Sus%20MTB&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
           </div>
         </div>
 
         <div class="price-card reveal" data-delay="60">
           <div class="price-card-head">
-            <p class="price-bike-type">Hardtail E-Bike</p>
+            <p class="price-bike-type" data-i18n="bike5_name">Hardtail E-Bike</p>
             <span class="price-badge badge-ebike">E-Bike</span>
           </div>
           <div class="price-card-body">
             <div class="price-daily">
               <span class="price-amount">150</span>
-              <span class="price-unit">GEL / day</span>
+              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
             </div>
             <ul class="price-discounts">
-              <li>135 GEL / day — 3+ days</li>
-              <li>120 GEL / day — 7+ days</li>
+              <li data-i18n="bike5_disc1">135 GEL / day — 3+ days</li>
+              <li data-i18n="bike5_disc2">120 GEL / day — 7+ days</li>
             </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Hardtail%20E-Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
           </div>
         </div>
 
         <div class="price-card reveal" data-delay="120">
           <div class="price-card-head">
-            <p class="price-bike-type">Full-Sus E-Bike</p>
+            <p class="price-bike-type" data-i18n="bike6_name">Full Suspension E-Bike</p>
             <span class="price-badge badge-ebike">E-Bike</span>
           </div>
           <div class="price-card-body">
             <div class="price-daily">
               <span class="price-amount">240</span>
-              <span class="price-unit">GEL / day</span>
+              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
             </div>
             <ul class="price-discounts">
-              <li>220 GEL / day — 3+ days</li>
-              <li>195 GEL / day — 7+ days</li>
+              <li data-i18n="bike6_disc1">220 GEL / day — 3+ days</li>
+              <li data-i18n="bike6_disc2">195 GEL / day — 7+ days</li>
             </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Full-Sus%20E-Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
           </div>
         </div>
 
@@ -1103,318 +1181,48 @@
 
       <div class="pricing-includes">
         <div class="includes-block reveal">
-          <p class="includes-title">Always Included — Free</p>
+          <p class="includes-title" data-i18n="inc1_title">Always Included — Free</p>
           <ul class="includes-list">
-            <li>Lock</li>
-            <li>Multi-tool</li>
-            <li>Pump</li>
-            <li>Spare tube &amp; tire levers</li>
-            <li>Rear rack</li>
+            <li data-i18n="inc1_lock">Lock</li>
+            <li data-i18n="inc1_tool">Multi-tool</li>
+            <li data-i18n="inc1_pump">Pump</li>
+            <li data-i18n="inc1_tube">Spare tube &amp; tire levers</li>
+            <li data-i18n="inc1_rack">Rear rack</li>
           </ul>
         </div>
         <div class="includes-block reveal" data-delay="80">
-          <p class="includes-title">Optional Add-Ons</p>
+          <p class="includes-title" data-i18n="inc2_title">Optional Add-Ons</p>
           <ul class="includes-list">
-            <li>Helmet — 5 GEL / day</li>
-            <li>Country-Wide Insurance — 150 GEL flat</li>
-            <li>Inter-City Drop-Off — ask us</li>
+            <li data-i18n="inc2_helmet">Helmet — 5 GEL / day</li>
+            <li data-i18n="inc2_insurance">Country-Wide Insurance — 150 GEL flat</li>
+            <li data-i18n="inc2_dropoff">Inter-City Drop-Off — ask us</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==========================================
-       BIKE RENTAL IN KUTAISI
-  =========================================== -->
-  <section class="city-section" id="kutaisi-rental">
-    <div class="city-section-inner">
-
-      <div class="city-intro">
-        <div>
-          <p class="section-label" style="color:var(--green);">Western Georgia</p>
-          <h2 class="section-title section-title-light">Bike Rental<br><span style="color:var(--green);">in Kutaisi</span></h2>
-        </div>
-        <div>
-          <p style="font-size:16px; color:rgba(255,255,255,0.6); line-height:1.75; margin-top:8px;">Tandro Bikes is the only specialized, high-performance bike provider in Kutaisi. We don't just rent bikes — we provide an elite fleet of MTBs, Gravel bikes, and E-bikes engineered for the demanding terrain of Western Georgia. From the Imereti canyon trails to the 2,182m Zekari Pass, our bikes are built to perform.</p>
-        </div>
+  <!-- BIKE PHOTOS -->
+  <section style="padding: 64px 16px; background: var(--surface);">
+    <div class="container">
+      <h2 class="section-title" style="margin-bottom: 32px;">A few bikes from our fleet</h2>
+      <div class="photo-grid">
+        <img src="Images/Tbilisi Bike Rent 1.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Tbilisi Bike Rent 2.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Tbilisi Bike Rent 3.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Tbilisi Bike Rent 4.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Tbilisi Bike Rent 5.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Tbilisi Bike Rent 6.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Tbilisi Bike Rent 7.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 1.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 2.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 3.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 4.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 5.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 7.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 8.jpeg" alt="Bike rental fleet" loading="lazy" />
+        <img src="Images/Kutaisi Bike Rent 9.jpeg" alt="Bike rental fleet" loading="lazy" />
       </div>
-
-      <div class="city-advantages">
-
-        <div class="advantage-card reveal">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Never Stranded Guarantee</p>
-            <p class="advantage-desc">150 GEL flat fee. Mechanical failure anywhere from Mestia to Zekari Pass? We dispatch a replacement bike or technician to your location.</p>
-          </div>
-        </div>
-
-        <div class="advantage-card reveal" data-delay="80">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Kutaisi-to-Tbilisi One-Way</p>
-            <p class="advantage-desc">Start your journey in Kutaisi, end it in Tbilisi. We are the only shop in Georgia offering a true inter-city drop-off.</p>
-          </div>
-        </div>
-
-        <div class="advantage-card reveal" data-delay="160">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L9.5 9l9 8.5"/><path d="M9.5 9l3.5 4"/><path d="M8 12l4 0"/><path d="M9.5 9h5.5"/><path d="M15 9l3.5 8.5"/><path d="M15 9V7"/><path d="M13.5 7h3"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Pro-Grade Fleet</p>
-            <p class="advantage-desc">Cube, Stevens, Trek, Orbea, Haibike and more. Every bike features a perfectly tuned drivetrain, brakes, and mountain-ready tires with sealants.</p>
-          </div>
-        </div>
-
-        <div class="advantage-card reveal" data-delay="240">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Digital Concierge</p>
-            <p class="advantage-desc">24/7 WhatsApp support line and pre-loaded GPS/GPX Route Maps for your smartphone — Georgia's best trails, ready to go.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Routes -->
-      <div class="routes-block">
-        <p class="routes-title">Kutaisi Expedition Routes</p>
-        <div class="routes-list">
-
-          <div class="route-item reveal">
-            <span class="route-num">01</span>
-            <div class="route-content">
-              <p class="route-name">Tandro Signature Trails <span style="font-size:11px; color:var(--green); font-family:var(--font-heading); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-left:6px;">Exclusive</span></p>
-              <p class="route-desc">MTB singletracks and banked flow trails hand-built by the Tandro team for 2026. Available only to Tandro riders.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="60">
-            <span class="route-num">02</span>
-            <div class="route-content">
-              <p class="route-name">Zekari E-MTB Challenge</p>
-              <p class="route-desc">Ascent of the 2,182m Zekari Pass — the Baghdati-Abastumani crossing. Perfect for our Full-Suspension E-bikes.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="120">
-            <span class="route-num">03</span>
-            <div class="route-content">
-              <p class="route-name">The Monastery Loop — Gelati &amp; Motsameta</p>
-              <p class="route-desc">1-day technical UNESCO climbs. Also great on E-bikes for a sweat-free cultural ride through Imereti's medieval heritage.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="180">
-            <span class="route-num">04</span>
-            <div class="route-content">
-              <p class="route-name">The Dinosaur Trail — Sataplia</p>
-              <p class="route-desc">A brutal 2km climb followed by a high-speed descent. Perfect for testing our Gravel and Hybrid fleets.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="240">
-            <span class="route-num">05</span>
-            <div class="route-content">
-              <p class="route-name">Imereti Canyon Run — Okatse &amp; Martvili</p>
-              <p class="route-desc">Long-distance endurance route through Western Georgia's water wonders. Recommended for our Premium Gravel bikes.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Gallery -->
-      <div class="gallery-block">
-        <p class="gallery-label">Our Fleet &amp; Location — Kutaisi</p>
-        <div class="photo-grid">
-          <img src="Images/Kutaisi Bike Rent 1.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 2.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 3.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 4.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 5.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 6.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 7.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 8.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-          <img src="Images/Kutaisi Bike Rent 9.jpeg" alt="Bike rental Kutaisi" loading="lazy" />
-        </div>
-      </div>
-
-      <!-- City CTA -->
-      <div class="city-cta">
-        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20bike%20rental%20in%20Kutaisi" target="_blank" rel="noopener" class="btn-primary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-          Book Kutaisi Rental
-        </a>
-        <span style="font-size:13px; color:rgba(255,255,255,0.35);">26 May Street, N10 — Inside Hotel Terrace Kutaisi</span>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==========================================
-       BIKE RENTAL IN TBILISI
-  =========================================== -->
-  <section class="city-section" id="tbilisi-rental">
-    <div class="city-section-inner">
-
-      <div class="city-intro">
-        <div>
-          <p class="section-label" style="color:var(--green);">Capital City</p>
-          <h2 class="section-title section-title-light">Bike Rental<br><span style="color:var(--green);">in Tbilisi</span></h2>
-        </div>
-        <div>
-          <p style="font-size:16px; color:rgba(255,255,255,0.6); line-height:1.75; margin-top:8px;">Tandro Bikes is Tbilisi's premium provider for high-performance Gravel Bikes, E-bikes, and MTBs. From the flowing singletracks at Udzo &amp; Tsodoreti to the scenic Lisi Lake loop, we provide elite bikes for everything the capital and its surrounding terrain has to offer.</p>
-        </div>
-      </div>
-
-      <div class="city-advantages">
-
-        <div class="advantage-card reveal">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Never Stranded Guarantee</p>
-            <p class="advantage-desc">150 GEL flat fee. Mechanical issue anywhere from Kojori Fortress to Gudauri? We send replacement parts or a bike straight to you.</p>
-          </div>
-        </div>
-
-        <div class="advantage-card reveal" data-delay="80">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Tbilisi-to-Kutaisi One-Way</p>
-            <p class="advantage-desc">Planning a cross-country ride? Pick up in Tbilisi, drop off at our Kutaisi branch. Georgia's only inter-city one-way rental service.</p>
-          </div>
-        </div>
-
-        <div class="advantage-card reveal" data-delay="160">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5L9.5 9l9 8.5"/><path d="M9.5 9l3.5 4"/><path d="M8 12l4 0"/><path d="M9.5 9h5.5"/><path d="M15 9l3.5 8.5"/><path d="M15 9V7"/><path d="M13.5 7h3"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Pro-Grade Fleet</p>
-            <p class="advantage-desc">Cube, Stevens, Trek, Specialized, KTM and more. Clean, tuned drivetrains, brakes, and trail-ready tires on every bike, every rental.</p>
-          </div>
-        </div>
-
-        <div class="advantage-card reveal" data-delay="240">
-          <div class="advantage-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="advantage-text">
-            <p class="advantage-title">Digital Concierge</p>
-            <p class="advantage-desc">24/7 WhatsApp support and GPX/Komoot Route Maps for your smartphone. Georgia's most iconic trails, mapped and ready.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Routes -->
-      <div class="routes-block">
-        <p class="routes-title">Tbilisi Bike Routes</p>
-        <div class="routes-list">
-
-          <div class="route-item reveal">
-            <span class="route-num">01</span>
-            <div class="route-content">
-              <p class="route-name">Udzo &amp; Tsodoreti Trails</p>
-              <p class="route-desc">High-speed flowing singletrack and forest tracks. Best experienced on our Specialized or Cube MTBs.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="60">
-            <span class="route-num">02</span>
-            <div class="route-content">
-              <p class="route-name">Mtskheta &amp; Jvari Monastery</p>
-              <p class="route-desc">A riverside flat-run followed by the scenic Jvari climb. Optimized for our Premium Gravel and E-bike fleets.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="120">
-            <span class="route-num">03</span>
-            <div class="route-content">
-              <p class="route-name">The Three Lakes Loop — Lisi, Turtle, Tbilisi Sea</p>
-              <p class="route-desc">Sunset views and skyline photos. Perfect for a fast Hybrid or E-bike city tour around Tbilisi's iconic lakes.</p>
-            </div>
-          </div>
-
-          <div class="route-item reveal" data-delay="180">
-            <span class="route-num">04</span>
-            <div class="route-content">
-              <p class="route-name">Kojori &amp; Shavnabada Ridge</p>
-              <p class="route-desc">High-altitude ridge roads with panoramic views over the capital. We recommend our Gravel bikes for these punchy dirt-asphalt mixes.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Pro Logistics -->
-      <div class="routes-block">
-        <p class="routes-title">Pro Logistics — More Than Bike Rental</p>
-        <div class="logistics-grid">
-
-          <div class="logistics-card reveal">
-            <div class="logistics-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 4H5a2 2 0 0 0-2 2v14"/><path d="m6 19 4-4"/><path d="m10 19-4-4"/><path d="m10 15 4 4"/><path d="m14 19-4-4"/></svg>
-            </div>
-            <p class="logistics-title">Airport Bike Transfers</p>
-            <p class="logistics-desc">Dedicated transport for you and your bike box to and from Tbilisi (TBS) and Kutaisi (KUT) airports.</p>
-          </div>
-
-          <div class="logistics-card reveal" data-delay="80">
-            <div class="logistics-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <p class="logistics-title">Custom Shuttles</p>
-            <p class="logistics-desc">Point-to-point rides made easy. Bike shuttles to high-altitude drop points — Omalo, Kazbegi, Mestia, Tusheti, and more.</p>
-          </div>
-
-          <div class="logistics-card reveal" data-delay="160">
-            <div class="logistics-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <p class="logistics-title">Event &amp; Group Support</p>
-            <p class="logistics-desc">Bike logistics and support vehicles for corporate retreats and cycling clubs across Georgia.</p>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Gallery -->
-      <div class="gallery-block">
-        <p class="gallery-label">Our Fleet &amp; Location — Tbilisi</p>
-        <div class="photo-grid photo-grid-tbilisi">
-          <img src="Images/Tbilisi Bike Rent 1.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-          <img src="Images/Tbilisi Bike Rent 2.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-          <img src="Images/Tbilisi Bike Rent 3.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-          <img src="Images/Tbilisi Bike Rent 4.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-          <img src="Images/Tbilisi Bike Rent 5.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-          <img src="Images/Tbilisi Bike Rent 6.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-          <img src="Images/Tbilisi Bike Rent 7.jpeg" alt="Bike rental Tbilisi" loading="lazy" />
-        </div>
-      </div>
-
-      <!-- City CTA -->
-      <div class="city-cta">
-        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20bike%20rental%20in%20Tbilisi" target="_blank" rel="noopener" class="btn-primary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-          Book Tbilisi Rental
-        </a>
-        <span style="font-size:13px; color:rgba(255,255,255,0.35);">David Aghmashenebeli 211, Tbilisi</span>
-      </div>
-
     </div>
   </section>
 
@@ -1423,8 +1231,8 @@
   =========================================== -->
   <section id="practical">
     <div class="container">
-      <p class="section-label">Before You Ride</p>
-      <h2 class="section-title">Practical Information</h2>
+      <p class="section-label" data-i18n="practical_label">Before You Ride</p>
+      <h2 class="section-title" data-i18n="practical_title">Practical Information</h2>
 
       <div class="practical-grid">
 
@@ -1432,10 +1240,10 @@
           <div class="practical-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
-          <p class="practical-title">Our Locations</p>
+          <p class="practical-title" data-i18n="loc_title">Our Locations</p>
           <ul class="practical-list">
-            <li><strong style="color:var(--dark);">Tbilisi:</strong> David Aghmashenebeli 211</li>
-            <li><strong style="color:var(--dark);">Kutaisi:</strong> 26 May Street, N10<br>Inside Hotel Terrace Kutaisi</li>
+            <li data-i18n-html="loc_tbilisi_html"><strong style="color:var(--dark);">Tbilisi:</strong> 8 Peristsvaleba Street, Tbilisi 0179</li>
+            <li data-i18n-html="loc_kutaisi_html"><strong style="color:var(--dark);">Kutaisi:</strong> 26 May Street, N10<br>Inside Hotel Terrace Kutaisi</li>
           </ul>
         </div>
 
@@ -1443,10 +1251,11 @@
           <div class="practical-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
-          <p class="practical-title">Opening Hours</p>
+          <p class="practical-title" data-i18n="hours_title">Opening Hours</p>
           <ul class="practical-list">
-            <li>09:00 – 21:00 daily</li>
-            <li>Flexible opening available by appointment</li>
+            <li data-i18n-html="hours1"><strong>Kutaisi:</strong> 09:00 – 21:00 daily</li>
+            <li data-i18n-html="hours2"><strong>Tbilisi:</strong> 09:00 – 15:00 daily</li>
+            <li data-i18n="hours3">Flexible opening available by appointment</li>
           </ul>
         </div>
 
@@ -1454,12 +1263,11 @@
           <div class="practical-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           </div>
-          <p class="practical-title">Rental Policy</p>
+          <p class="practical-title" data-i18n="policy_title">Rental Policy</p>
           <ul class="practical-list">
-            <li>Passport deposit — 1 per group</li>
-            <li>No cash deposit required</li>
-            <li>Rental agreement covers accidental damage</li>
-            <li>Wear &amp; tear parts are always free</li>
+            <li data-i18n="policy1">Passport deposit — 1 per group</li>
+            <li data-i18n="policy2">No cash deposit required</li>
+            <li data-i18n="policy3">Wear &amp; tear parts are always free</li>
           </ul>
         </div>
 
@@ -1473,15 +1281,15 @@
   <section id="booking-cta">
     <div class="cta-inner">
       <div>
-        <h2 class="cta-title">Ready to<br><span>Ride Georgia?</span></h2>
-        <p class="cta-sub">Message us on WhatsApp — tell us your city, dates, and bike preference. We'll confirm availability and have you rolling within hours.</p>
+        <h2 class="cta-title" data-i18n-html="cta_title_html">Ready to<br><span>Ride Georgia?</span></h2>
+        <p class="cta-sub" data-i18n="cta_sub">Message us on WhatsApp — tell us your city, dates, and bike preference. We'll confirm availability and have you rolling within hours.</p>
       </div>
       <div class="cta-actions">
         <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27d%20like%20to%20rent%20a%20bike%20in%20Georgia" target="_blank" rel="noopener" class="btn-whatsapp">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-          Book on WhatsApp
+          <span data-i18n="btn_whatsapp">Book on WhatsApp</span>
         </a>
-        <p class="cta-email">Or email us: <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a></p>
+        <p class="cta-email" data-i18n-html="cta_email_html">Or email us: <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a></p>
       </div>
     </div>
   </section>
@@ -1492,8 +1300,8 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
-        <p class="footer-tagline">Guided cycling tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <p class="footer-tagline" data-i18n="footer_tagline">Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
         <div class="footer-socials" aria-label="Social media links">
           <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
             <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></span>
@@ -1520,18 +1328,18 @@
       </div>
 
       <div>
-        <p class="footer-col-title">Navigate</p>
+        <p class="footer-col-title" data-i18n="footer_nav">Navigate</p>
         <ul class="footer-links" role="list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="tours.html">Tours</a></li>
-          <li><a href="rental.html">Bike Rental</a></li>
-          <li><a href="index.html#why">About</a></li>
-          <li><a href="index.html#cta">Contact</a></li>
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="tours.html" data-i18n="nav_tours">Tours</a></li>
+          <li><a href="rental.html" data-i18n="nav_rental">Bike Rental</a></li>
+          <li><a href="index.html#why" data-i18n="nav_about">About</a></li>
+          <li><a href="index.html#cta" data-i18n="nav_contact">Contact</a></li>
         </ul>
       </div>
 
       <div>
-        <p class="footer-col-title">Contact</p>
+        <p class="footer-col-title" data-i18n="footer_contact">Contact</p>
         <ul class="footer-contact-list" role="list">
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -1550,9 +1358,172 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+      <p class="footer-copy" data-i18n="footer_copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- ==========================================
+       TRANSLATIONS
+  =========================================== -->
+  <script>
+    const T = {
+      en: {
+        nav_home: 'Home', nav_tours: 'Tours', nav_rental: 'Bike Rental', nav_about: 'About', nav_contact: 'Contact',
+        btn_book: 'Book Now',
+        hero_label: 'Tandro Bikes',
+        hero_title: 'Bike Rental<br><span>in Georgia</span>',
+        hero_sub: 'The only specialized provider in Tbilisi and Kutaisi offering a professionally tuned, elite fleet — for serious explorers, gravel adventurers, and city riders alike.',
+        stat_bike_types: 'Bike Types', stat_city_locs: 'City Locations', stat_support: 'Support',
+        why_label: 'The Tandro Difference', why_title: 'Why Riders Choose Us',
+        why_sub: "Stop settling for generic rentals and unreliable maintenance. Here's what sets Tandro apart from every other shop in Georgia.",
+        feat1_title: 'Elite Bike Fleet',
+        feat1_text: 'We exclusively stock Cube, Trek, Specialized, Stevens, KTM, Orbea, and Haibike. Every bike is inspected and serviced after every rental by professional mechanics.',
+        feat2_title: 'Country-Wide Insurance',
+        feat2_text: "For a flat 150 GEL, get Georgia's only full-coverage guarantee. From Mestia to Kakheti — if you have a mechanical issue, we come to you with parts or a bike swap.",
+        feat3_title: 'Inter-City Drop-Off',
+        feat3_text: 'Pick up at our Kutaisi branch, drop off in Tbilisi — or vice versa. We are the only provider in Georgia offering seamless one-way inter-city rentals.',
+        feat4_title: 'Safety & Tech Gold Standard',
+        feat4_text: 'Every rental includes a full puncture kit with lock, helmet (optional), multi-tool, pump, spare tube, tire levers, and rear rack — all at no extra charge.',
+        feat5_title: '24/7 WhatsApp + GPX Maps',
+        feat5_text: "You're never alone on the trail. All customers get a direct line to our Live Support Team and access to Digital Trail Maps (GPX/Komoot) pre-loaded with Georgia's best routes.",
+        feat6_title: 'Flexible Rental Durations',
+        feat6_text: 'Single-day urban rides to multi-week cross-country expeditions. Transparent discount tiers for longer rentals — the more days, the lower your daily rate.',
+        pricing_label: 'Rental Prices', pricing_title: 'Bikes & Daily Rates',
+        pricing_sub: 'All prices in Georgian Lari (GEL). Discounts apply automatically for longer rentals — no negotiation needed.',
+        bike1_name: 'City Bike', bike2_name: 'Hardtail MTB', bike3_name: 'Gravel Bike',
+        bike4_name: 'Full Suspension MTB', bike5_name: 'Hardtail E-Bike', bike6_name: 'Full Suspension E-Bike',
+        price_unit: 'GEL / day',
+        bike1_disc1: '40 GEL / day — 10+ days',
+        bike2_disc1: '60 GEL / day — 10+ days',
+        bike3_disc1: '90 GEL / day — 6+ days', bike3_disc2: '80 GEL / day — 13+ days',
+        bike4_disc1: '100 GEL / day — 10+ days',
+        bike5_disc1: '135 GEL / day — 3+ days', bike5_disc2: '120 GEL / day — 7+ days',
+        bike6_disc1: '220 GEL / day — 3+ days', bike6_disc2: '195 GEL / day — 7+ days',
+        btn_rent: 'Rent Now ↗',
+        inc1_title: 'Always Included — Free',
+        inc1_lock: 'Lock', inc1_tool: 'Multi-tool', inc1_pump: 'Pump',
+        inc1_tube: 'Spare tube & tire levers', inc1_rack: 'Rear rack',
+        inc2_title: 'Optional Add-Ons',
+        inc2_helmet: 'Helmet — 5 GEL / day',
+        inc2_insurance: 'Country-Wide Insurance — 150 GEL flat',
+        inc2_dropoff: 'Inter-City Drop-Off — ask us',
+        tbilisi_label: 'Tbilisi', tbilisi_fleet: 'Our Tbilisi Fleet',
+        kutaisi_label: 'Kutaisi', kutaisi_fleet: 'Our Kutaisi Fleet',
+        practical_label: 'Before You Ride', practical_title: 'Practical Information',
+        loc_title: 'Our Locations',
+        loc_tbilisi_html: '<strong style="color:var(--dark);">Tbilisi:</strong> 8 Peristsvaleba Street, Tbilisi 0179',
+        loc_kutaisi_html: '<strong style="color:var(--dark);">Kutaisi:</strong> 26 May Street, N10<br>Inside Hotel Terrace Kutaisi',
+        hours_title: 'Opening Hours',
+        hours1: '<strong>Kutaisi:</strong> 09:00 – 21:00 daily', hours2: '<strong>Tbilisi:</strong> 09:00 – 15:00 daily', hours3: 'Flexible opening available by appointment',
+        policy_title: 'Rental Policy',
+        policy1: 'Passport deposit — 1 per group', policy2: 'No cash deposit required',
+        policy3: 'Wear & tear parts are always free',
+        cta_title_html: 'Ready to<br><span>Ride Georgia?</span>',
+        cta_sub: "Message us on WhatsApp — tell us your city, dates, and bike preference. We'll confirm availability and have you rolling within hours.",
+        btn_whatsapp: 'Book on WhatsApp',
+        cta_email_html: 'Or email us: <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>',
+        footer_tagline: 'Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.',
+        footer_nav: 'Navigate', footer_contact: 'Contact',
+        footer_copy: '© 2026 Tandro Bike Tours & Bike Rent Georgia. All rights reserved.',
+      },
+      ru: {
+        nav_home: 'Главная', nav_tours: 'Туры', nav_rental: 'Аренда велосипедов', nav_about: 'О нас', nav_contact: 'Контакты',
+        btn_book: 'Забронировать',
+        hero_label: 'Tandro Bikes',
+        hero_title: 'Аренда<br><span>велосипедов в Грузии</span>',
+        hero_sub: 'Единственный специализированный прокат в Тбилиси и Кутаиси с профессионально настроенным элитным парком — для серьёзных путешественников, гравийщиков и городских райдеров.',
+        stat_bike_types: 'Типов велосипедов', stat_city_locs: 'Города', stat_support: 'Поддержка',
+        why_label: 'Преимущества Tandro', why_title: 'Почему выбирают нас',
+        why_sub: 'Хватит мириться с дешёвыми прокатами и ненадёжным обслуживанием. Вот что отличает Tandro от всех остальных магазинов в Грузии.',
+        feat1_title: 'Элитный парк велосипедов',
+        feat1_text: 'Мы предлагаем исключительно Cube, Trek, Specialized, Stevens, KTM, Orbea и Haibike. Каждый велосипед проходит осмотр и обслуживание после каждой аренды профессиональными механиками.',
+        feat2_title: 'Страховка по всей Грузии',
+        feat2_text: 'За фиксированные 150 ГЕЛ получите единственную в Грузии полную страховку. От Местии до Кахетии — при любой неисправности мы приедем с запчастями или заменим велосипед.',
+        feat3_title: 'Межгородской возврат',
+        feat3_text: 'Берите в Кутаиси — сдавайте в Тбилиси, или наоборот. Мы единственный провайдер в Грузии, предлагающий удобные однонаправленные межгородские аренды.',
+        feat4_title: 'Золотой стандарт безопасности',
+        feat4_text: 'Каждая аренда включает набор для ремонта проколов: замок, шлем (по желанию), мультитул, насос, запасную камеру, монтажки и задний багажник — всё бесплатно.',
+        feat5_title: 'WhatsApp 24/7 + GPX-карты',
+        feat5_text: 'Вы никогда не одни на маршруте. Все клиенты получают прямую связь с нашей службой поддержки и доступ к цифровым картам (GPX/Komoot) с лучшими трассами Грузии.',
+        feat6_title: 'Гибкие сроки аренды',
+        feat6_text: 'От однодневных городских прогулок до многонедельных экспедиций. Прозрачные скидки при длительной аренде — чем больше дней, тем ниже дневная ставка.',
+        pricing_label: 'Цены на аренду', pricing_title: 'Велосипеды и дневные тарифы',
+        pricing_sub: 'Все цены в грузинских лари (ГЕЛ). Скидки применяются автоматически при длительной аренде — никаких торгов.',
+        bike1_name: 'Городской велосипед', bike2_name: 'Хардтейл МТБ', bike3_name: 'Гравийный велосипед',
+        bike4_name: 'Двухподвес МТБ', bike5_name: 'Хардтейл E-Bike', bike6_name: 'Двухподвес E-Bike',
+        price_unit: 'ГЕЛ / день',
+        bike1_disc1: '40 ГЕЛ / день — от 10 дней',
+        bike2_disc1: '60 ГЕЛ / день — от 10 дней',
+        bike3_disc1: '90 ГЕЛ / день — от 6 дней', bike3_disc2: '80 ГЕЛ / день — от 13 дней',
+        bike4_disc1: '100 ГЕЛ / день — от 10 дней',
+        bike5_disc1: '135 ГЕЛ / день — от 3 дней', bike5_disc2: '120 ГЕЛ / день — от 7 дней',
+        bike6_disc1: '220 ГЕЛ / день — от 3 дней', bike6_disc2: '195 ГЕЛ / день — от 7 дней',
+        btn_rent: 'Арендовать ↗',
+        inc1_title: 'Всегда включено — Бесплатно',
+        inc1_lock: 'Замок', inc1_tool: 'Мультитул', inc1_pump: 'Насос',
+        inc1_tube: 'Запасная камера и монтажки', inc1_rack: 'Задний багажник',
+        inc2_title: 'Дополнительные услуги',
+        inc2_helmet: 'Шлем — 5 ГЕЛ / день',
+        inc2_insurance: 'Страховка по всей Грузии — 150 ГЕЛ',
+        inc2_dropoff: 'Межгородской возврат — уточняйте',
+        tbilisi_label: 'Тбилиси', tbilisi_fleet: 'Наш тбилисский парк',
+        kutaisi_label: 'Кутаиси', kutaisi_fleet: 'Наш кутаисский парк',
+        practical_label: 'Перед поездкой', practical_title: 'Практическая информация',
+        loc_title: 'Наши адреса',
+        loc_tbilisi_html: '<strong style="color:var(--dark);">Тбилиси:</strong> проспект Давида Агмашенебели 211',
+        loc_kutaisi_html: '<strong style="color:var(--dark);">Кутаиси:</strong> улица 26 Мая, N10<br>В отеле Terrace Kutaisi',
+        hours_title: 'Часы работы',
+        hours1: '<strong>Кутаиси:</strong> 09:00 – 21:00 ежедневно', hours2: '<strong>Тбилиси:</strong> 09:00 – 15:00 ежедневно', hours3: 'Гибкое время по договорённости',
+        policy_title: 'Условия аренды',
+        policy1: 'Залог паспорт — 1 на группу', policy2: 'Денежный залог не требуется',
+        policy3: 'Расходные части всегда бесплатны',
+        cta_title_html: 'Готов к<br><span>поездке по Грузии?</span>',
+        cta_sub: 'Напишите нам в WhatsApp — укажите город, даты и предпочтения. Мы подтвердим наличие и в течение нескольких часов вы будете в седле.',
+        btn_whatsapp: 'Написать в WhatsApp',
+        cta_email_html: 'Или напишите на почту: <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>',
+        footer_tagline: 'Велотуры и аренда велосипедов по всей Грузии — от древнего Тбилиси до Кутаиси, Местии, Боржоми и не только.',
+        footer_nav: 'Навигация', footer_contact: 'Контакты',
+        footer_copy: '© 2026 Tandro Велотуры & Аренда велосипедов в Грузии. Все права защищены.',
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+      });
+      const current = document.getElementById('lo-current');
+      const other = document.getElementById('lo-other');
+      if (current && other) {
+        current.textContent = lang === 'en' ? 'EN' : 'RU';
+        other.textContent = lang === 'en' ? 'RU' : 'EN';
+      }
+      document.documentElement.lang = lang;
+      localStorage.setItem('tandro_lang', lang);
+    }
+
+    function toggleLangMenu() {
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function selectLang() {
+      const current = localStorage.getItem('tandro_lang') || 'en';
+      applyLang(current === 'en' ? 'ru' : 'en');
+      document.getElementById('lang-dropdown').classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const dd = document.getElementById('lang-dropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    const _saved = localStorage.getItem('tandro_lang');
+    if (_saved && _saved !== 'en') applyLang(_saved);
+  </script>
 
   <!-- ==========================================
        JAVASCRIPT
@@ -1601,6 +1572,34 @@
     document.querySelectorAll('.reveal').forEach(el => {
       revealObserver.observe(el);
     });
+
+  </script>
+
+  <div id="lightbox" role="dialog" aria-modal="true">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="Bike photo enlarged" />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.photo-grid img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 
 </body>

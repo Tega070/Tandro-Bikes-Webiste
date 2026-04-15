@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Tandro Bike Tours & Bike Rent Georgia — Guided cycling tours and bike rentals in Tbilisi, Kutaisi & across Georgia." />
+  <meta name="description" content="Tandro Bike Tours & Bike Rent Georgia — Guided bike tours and bike rentals in Tbilisi, Kutaisi & across Georgia." />
   <title>Tandro Bike Tours & Bike Rent Georgia</title>
 
   <!-- Google Fonts -->
@@ -182,10 +182,14 @@
       gap: 16px;
     }
 
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
     .nav-logo img {
       height: 44px;
       width: auto;
     }
+    .nav-logo-name { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 1px; line-height: 1; display: flex; align-items: flex-end; gap: 5px; }
+    .nav-logo-bike-stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .nav-logo-bike-stack svg { width: 18px; height: 18px; opacity: 0.9; }
 
     .nav-links {
       display: none;
@@ -256,6 +260,16 @@
     .btn-book:hover {
       background: #15803D;
     }
+
+    .lang-dropdown { position: relative; }
+    .lang-current { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius); padding: 5px 10px; cursor: pointer; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; transition: border-color var(--transition); }
+    .lang-current:hover { border-color: rgba(255,255,255,0.6); }
+    .lang-chevron { transition: transform var(--transition); flex-shrink: 0; }
+    .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+    .lang-menu { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); overflow: hidden; min-width: 100%; }
+    .lang-dropdown.open .lang-menu { display: block; }
+    .lang-menu-item { display: block; width: 100%; padding: 7px 14px; background: none; border: none; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; cursor: pointer; text-align: center; transition: color var(--transition), background var(--transition); }
+    .lang-menu-item:hover { color: var(--white); background: rgba(255,255,255,0.05); }
 
     .hamburger {
       display: flex;
@@ -1298,7 +1312,7 @@
   <div id="loader" role="status" aria-label="Loading Tandro Bike Tours">
     <img
       src="Images/Tandro Logo Without BG.png"
-      alt="Tandro Cycling Tours"
+      alt="Tandro Bike Tours"
       class="loader-logo"
     />
     <div class="loader-track">
@@ -1335,15 +1349,22 @@
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="#" class="nav-logo" aria-label="Tandro home">
-        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <span class="nav-logo-name">
+          Tandro
+          <span class="nav-logo-bike-stack">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M9 10.5l3 6.5H5.5"/><path d="M9 10.5l7-1"/><path d="M16 9.5l-4 7.5"/><path d="M16 9.5l2.5 7.5"/><path d="M7.5 9.5h3.5"/><path d="M9 9.5v1"/><path d="M15 7.5h3"/><path d="M16.5 7.5l-.5 2"/></svg>
+            Bikes
+          </span>
+        </span>
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#">Home</a></li>
-        <li><a href="tours.html">Tours</a></li>
-        <li><a href="rental.html">Bike Rental</a></li>
-        <li><a href="#why">About</a></li>
-        <li><a href="#cta">Contact</a></li>
+        <li><a href="#" data-i18n="nav_home">Home</a></li>
+        <li><a href="tours.html" data-i18n="nav_tours">Tours</a></li>
+        <li><a href="rental.html" data-i18n="nav_rental">Bike Rental</a></li>
+        <li><a href="#why" data-i18n="nav_about">About</a></li>
+        <li><a href="#cta" data-i18n="nav_contact">Contact</a></li>
       </ul>
 
       <div class="nav-right">
@@ -1360,6 +1381,18 @@
           <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
           </a>
+        </div>
+
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button class="lang-current" id="lang-btn" onclick="toggleLangMenu()" aria-label="Switch language">
+            <span id="lo-current">EN</span>
+            <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="lang-menu" id="lang-menu">
+            <button class="lang-menu-item" id="lo-other" onclick="selectLang()">RU</button>
+          </div>
         </div>
 
         <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book a tour on WhatsApp">
@@ -1379,14 +1412,14 @@
   <!-- Mobile Menu -->
   <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <ul class="mobile-links" role="list">
-      <li><a href="#" onclick="closeMenu()">Home</a></li>
-      <li><a href="tours.html" onclick="closeMenu()">Tours</a></li>
-      <li><a href="rental.html" onclick="closeMenu()">Bike Rental</a></li>
-      <li><a href="#why" onclick="closeMenu()">About</a></li>
-      <li><a href="#cta" onclick="closeMenu()">Contact</a></li>
+      <li><a href="#" onclick="closeMenu()" data-i18n="nav_home">Home</a></li>
+      <li><a href="tours.html" onclick="closeMenu()" data-i18n="nav_tours">Tours</a></li>
+      <li><a href="rental.html" onclick="closeMenu()" data-i18n="nav_rental">Bike Rental</a></li>
+      <li><a href="#why" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
+      <li><a href="#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
     </ul>
     <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;">
-      Book Now
+      <span data-i18n="btn_book">Book Now</span>
     </a>
     <div class="mobile-socials" aria-label="Social media">
       <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -1408,17 +1441,17 @@
     <div class="hero-bg" id="hero-bg" role="img" aria-label="Group of cyclists on a scenic mountain road in Georgia"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <p class="hero-label">Georgia · Tbilisi · Kutaisi</p>
-      <h1 class="hero-title">Explore<br><span>Georgia</span><br>by Bike</h1>
-      <p class="hero-sub">Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
+      <p class="hero-label" data-i18n="hero_label">Georgia · Tbilisi · Kutaisi</p>
+      <h1 class="hero-title" data-i18n-html="hero_title">Explore<br><span>Georgia</span><br>by Bike</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
       <div class="hero-ctas">
         <a href="tours.html" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          View Tours
+          <span data-i18n="btn_view_tours">View Tours</span>
         </a>
         <a href="rental.html" class="btn-outline">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-          Rent a Bike
+          <span data-i18n="btn_rent_bike">Rent a Bike</span>
         </a>
       </div>
     </div>
@@ -1433,9 +1466,9 @@
   <section id="services" aria-labelledby="services-title">
     <div class="container">
       <div class="services-header">
-        <p class="section-label">What We Do</p>
-        <h2 class="section-title" id="services-title">Two Wheels,<br>Endless Roads</h2>
-        <p class="section-sub">Whether you want a guided tour through history or the freedom of your own two wheels, we've got you covered.</p>
+        <p class="section-label" data-i18n="svc_label">What We Do</p>
+        <h2 class="section-title" id="services-title" data-i18n-html="svc_title">Two Wheels,<br>Endless Roads</h2>
+        <p class="section-sub" data-i18n="svc_sub">Whether you want a guided tour through history or the freedom of your own bike ride, we've got you covered.</p>
       </div>
 
       <div class="services-grid">
@@ -1444,11 +1477,11 @@
           <div class="service-icon-wrap">
             <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 20 9 4 12 10 15 7 21 20 3 20"/></svg>
           </div>
-          <h3 class="service-title">Guided Tours</h3>
-          <p class="service-text">City tours, mountain adventures, and more! Explore Georgia's best routes with a local guide who knows every corner.</p>
+          <h3 class="service-title" data-i18n="svc1_title">Guided Tours</h3>
+          <p class="service-text" data-i18n="svc1_text">City tours, mountain adventures, and more! Explore Georgia's best routes with a local guide who knows every corner.</p>
           <div class="service-divider"></div>
           <span class="service-link">
-            Explore tours
+            <span data-i18n="svc1_link">Explore tours</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
@@ -1468,11 +1501,11 @@
               <path d="M13.5 7 L17 7"/>
             </svg>
           </div>
-          <h3 class="service-title">Bike Rentals</h3>
-          <p class="service-text">Well-maintained bikes for every rider. Flexible pickup and drop-off in Tbilisi and Kutaisi. Explore at your own pace.</p>
+          <h3 class="service-title" data-i18n="svc2_title">Bike Rentals</h3>
+          <p class="service-text" data-i18n="svc2_text">Well-maintained bikes for every rider. Flexible pickup and drop-off in Tbilisi and Kutaisi. Explore at your own pace.</p>
           <div class="service-divider"></div>
           <span class="service-link">
-            Rent a Bike
+            <span data-i18n="svc2_link">Rent a Bike</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
@@ -1582,28 +1615,28 @@
   =========================================== -->
   <section id="why" aria-labelledby="why-title">
     <div class="container">
-      <p class="section-label">Why Choose Us</p>
-      <h2 class="section-title" id="why-title">Ride With<br>The Locals</h2>
+      <p class="section-label" data-i18n="why_label">Why Choose Us</p>
+      <h2 class="section-title" id="why-title" data-i18n-html="why_title">Ride With<br>The Locals</h2>
       <div class="why-grid">
         <div class="why-item">
           <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          <h3 class="why-title">Local Expertise</h3>
-          <p class="why-text">Born and raised in Georgia. We know the routes, the stories, and the best spots that no guidebook will tell you.</p>
+          <h3 class="why-title" data-i18n="why1_title">Local Expertise</h3>
+          <p class="why-text" data-i18n="why1_text">Born and raised in Georgia. We know the routes, the stories, and the best spots that no guidebook will tell you.</p>
         </div>
         <div class="why-item">
           <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-          <h3 class="why-title">All Levels Welcome</h3>
-          <p class="why-text">From casual city rides to demanding mountain trails — we have tours and bikes suited to every rider's ability.</p>
+          <h3 class="why-title" data-i18n="why2_title">All Levels Welcome</h3>
+          <p class="why-text" data-i18n="why2_text">From casual city rides to demanding mountain trails — we have tours and bikes suited to every rider's ability.</p>
         </div>
         <div class="why-item">
           <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <h3 class="why-title">Quality Bikes</h3>
-          <p class="why-text">Our fleet is regularly serviced and maintained. Locks and spare parts included — your safety comes first.</p>
+          <h3 class="why-title" data-i18n="why3_title">Quality Bikes</h3>
+          <p class="why-text" data-i18n="why3_text">Our fleet is regularly serviced and maintained. Locks and spare parts included — your safety comes first.</p>
         </div>
         <div class="why-item">
           <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          <h3 class="why-title">Flexible Pickup</h3>
-          <p class="why-text">We come to your hotel or meeting point in Tbilisi and Kutaisi. A small delivery fee applies based on location.</p>
+          <h3 class="why-title" data-i18n="why4_title">Flexible Pickup & Drop-Off</h3>
+          <p class="why-text" data-i18n="why4_text">Pick up in Tbilisi, drop off in Kutaisi — or the other way around. We also deliver bikes to your hotel or meeting point in Tbilisi. Small fees apply.</p>
         </div>
       </div>
     </div>
@@ -1615,8 +1648,8 @@
   <section id="experiences" aria-labelledby="exp-title">
     <div class="container">
       <div class="exp-header">
-        <p class="section-label">Our Tours</p>
-        <h2 class="section-title" id="exp-title">A Taste of<br>What's Waiting</h2>
+        <p class="section-label" data-i18n="exp_label">Our Tours</p>
+        <h2 class="section-title" id="exp-title" data-i18n-html="exp_title">A Taste of<br>What's Waiting</h2>
       </div>
       <div class="exp-grid">
 
@@ -1624,10 +1657,10 @@
           <img src="Images/Imige 1.jpeg" alt="Cyclists riding through Tbilisi with Metekhi Church in the background" loading="lazy" />
           <div class="exp-overlay" aria-hidden="true"></div>
           <div class="exp-info">
-            <span class="exp-tag">City Tour</span>
-            <h3 class="exp-title">Tbilisi by Bike</h3>
+            <span class="exp-tag" data-i18n="exp1_tag">City Tour</span>
+            <h3 class="exp-title" data-i18n="exp1_title">Tbilisi by Bike</h3>
             <span class="exp-arrow">
-              Explore
+              <span data-i18n="btn_explore">Explore</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
@@ -1637,10 +1670,10 @@
           <img src="Images/Imige 2.jpeg" alt="Mountain bikers grouped together in front of lush Caucasus peaks" loading="lazy" />
           <div class="exp-overlay" aria-hidden="true"></div>
           <div class="exp-info">
-            <span class="exp-tag">Mountain</span>
-            <h3 class="exp-title">Caucasus Trails</h3>
+            <span class="exp-tag" data-i18n="exp2_tag">Mountain</span>
+            <h3 class="exp-title" data-i18n="exp2_title">Caucasus Trails</h3>
             <span class="exp-arrow">
-              Explore
+              <span data-i18n="btn_explore">Explore</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
@@ -1650,10 +1683,10 @@
           <img src="Images/Imige 3.jpeg" alt="Two cyclists with loaded bikes at a high mountain pass in Georgia" loading="lazy" />
           <div class="exp-overlay" aria-hidden="true"></div>
           <div class="exp-info">
-            <span class="exp-tag">Multi-Day</span>
-            <h3 class="exp-title">Epic Bikepacking</h3>
+            <span class="exp-tag" data-i18n="exp3_tag">Multi-Day</span>
+            <h3 class="exp-title" data-i18n="exp3_title">Epic Bikepacking</h3>
             <span class="exp-arrow">
-              Explore
+              <span data-i18n="btn_explore">Explore</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
@@ -1684,19 +1717,19 @@
     <div class="stats-grid">
       <div class="stat">
         <div class="stat-number">500<span>+</span></div>
-        <div class="stat-label">Happy Riders</div>
+        <div class="stat-label" data-i18n="stat1">Happy Riders</div>
       </div>
       <div class="stat">
         <div class="stat-number">25<span>+</span></div>
-        <div class="stat-label">Tour Routes</div>
+        <div class="stat-label" data-i18n="stat2">Tour Routes</div>
       </div>
       <div class="stat">
         <div class="stat-number">2</div>
-        <div class="stat-label">Cities Covered</div>
+        <div class="stat-label" data-i18n="stat3">Cities Covered</div>
       </div>
       <div class="stat">
         <div class="stat-number">5<span>★</span></div>
-        <div class="stat-label">Rated Experience</div>
+        <div class="stat-label" data-i18n="stat4">Rated Experience</div>
       </div>
     </div>
   </section>
@@ -1706,17 +1739,17 @@
   =========================================== -->
   <section id="cta" aria-labelledby="cta-title">
     <div class="cta-inner">
-      <h2 class="cta-title" id="cta-title">Ready to Ride<br><span>Georgia?</span></h2>
-      <p class="cta-sub">Get in touch and we'll plan the perfect ride for you — whether it's a morning city tour or a week-long Caucasus expedition.</p>
+      <h2 class="cta-title" id="cta-title" data-i18n-html="cta_title">Ready to Ride<br><span>Georgia?</span></h2>
+      <p class="cta-sub" data-i18n="cta_sub">Get in touch and we'll plan the perfect ride for you — whether it's a morning city tour or a week-long Caucasus expedition.</p>
       <a href="tel:+995599373788" class="cta-phone" aria-label="Call us at +995 599 373 788">+995 599 373 788</a>
       <div class="cta-buttons">
         <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Message us on WhatsApp">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-          Message on WhatsApp
+          <span data-i18n="cta_wa">Message on WhatsApp</span>
         </a>
         <a href="mailto:kvkcycling@gmail.com" class="btn-email" aria-label="Send us an email">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Send an Email
+          <span data-i18n="cta_email">Send an Email</span>
         </a>
       </div>
     </div>
@@ -1729,8 +1762,8 @@
     <div class="footer-inner">
 
       <div class="footer-brand">
-        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Cycling Tours logo" />
-        <p class="footer-tagline">Guided cycling tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <p class="footer-tagline" data-i18n="footer_tagline">Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
         <div class="footer-socials" aria-label="Social media links">
           <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
             <span class="footer-social-icon">
@@ -1777,18 +1810,18 @@
       </div>
 
       <div>
-        <p class="footer-col-title">Navigate</p>
+        <p class="footer-col-title" data-i18n="footer_nav">Navigate</p>
         <ul class="footer-links" role="list">
-          <li><a href="#">Home</a></li>
-          <li><a href="tours.html">Tours</a></li>
-          <li><a href="rental.html">Bike Rental</a></li>
-          <li><a href="#why">About</a></li>
-          <li><a href="#cta">Contact</a></li>
+          <li><a href="#" data-i18n="nav_home">Home</a></li>
+          <li><a href="tours.html" data-i18n="nav_tours">Tours</a></li>
+          <li><a href="rental.html" data-i18n="nav_rental">Bike Rental</a></li>
+          <li><a href="#why" data-i18n="nav_about">About</a></li>
+          <li><a href="#cta" data-i18n="nav_contact">Contact</a></li>
         </ul>
       </div>
 
       <div>
-        <p class="footer-col-title">Contact</p>
+        <p class="footer-col-title" data-i18n="nav_contact">Contact</p>
         <ul class="footer-contact-list" role="list">
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -1808,9 +1841,107 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+      <p class="footer-copy" data-i18n="footer_copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- ==========================================
+       LANGUAGE SWITCHER
+  =========================================== -->
+  <script>
+    const T = {
+      en: {
+        nav_home:'Home', nav_tours:'Tours', nav_rental:'Bike Rental', nav_about:'About', nav_contact:'Contact',
+        btn_book:'Book Now', btn_view_tours:'View Tours', btn_rent_bike:'Rent a Bike', btn_explore:'Explore',
+        hero_label:'Georgia · Tbilisi · Kutaisi',
+        hero_title:'Explore<br><span>Georgia</span><br>by Bike',
+        hero_sub:"Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.",
+        svc_label:'What We Do', svc_title:'Two Wheels,<br>Endless Roads',
+        svc_sub:"Whether you want a guided tour through history or the freedom of your own bike ride, we've got you covered.",
+        svc1_title:'Guided Tours', svc1_text:"City tours, mountain adventures, and more! Explore Georgia's best routes with a local guide who knows every corner.", svc1_link:'Explore tours',
+        svc2_title:'Bike Rentals', svc2_text:'Well-maintained bikes for every rider. Flexible pickup and drop-off in Tbilisi and Kutaisi. Explore at your own pace.', svc2_link:'Rent a Bike',
+        why_label:'Why Choose Us', why_title:'Ride With<br>The Locals',
+        why1_title:'Local Expertise', why1_text:'Born and raised in Georgia. We know the routes, the stories, and the best spots that no guidebook will tell you.',
+        why2_title:'All Levels Welcome', why2_text:'From casual city rides to demanding mountain trails — we have tours and bikes suited to every rider\'s ability.',
+        why3_title:'Quality Bikes', why3_text:'Our fleet is regularly serviced and maintained. Locks and spare parts included — your safety comes first.',
+        why4_title:'Flexible Pickup & Drop-Off', why4_text:'Pick up in Tbilisi, drop off in Kutaisi — or the other way around. We also deliver bikes to your hotel or meeting point in Tbilisi. Small fees apply.',
+        exp_label:'Our Tours', exp_title:"A Taste of<br>What's Waiting",
+        exp1_tag:'City Tour', exp1_title:'Tbilisi by Bike',
+        exp2_tag:'Mountain', exp2_title:'Caucasus Trails',
+        exp3_tag:'Multi-Day', exp3_title:'Epic Bikepacking',
+        stat1:'Happy Riders', stat2:'Tour Routes', stat3:'Cities Covered', stat4:'Rated Experience',
+        cta_title:'Ready to Ride<br><span>Georgia?</span>',
+        cta_sub:"Get in touch and we'll plan the perfect ride for you — whether it's a morning city tour or a week-long Caucasus expedition.",
+        cta_wa:'Message on WhatsApp', cta_email:'Send an Email',
+        footer_tagline:'Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.',
+        footer_nav:'Navigate', footer_copy:'© 2026 Tandro Bike Tours & Bike Rent Georgia. All rights reserved.'
+      },
+      ru: {
+        nav_home:'Главная', nav_tours:'Туры', nav_rental:'Аренда велосипеда', nav_about:'О нас', nav_contact:'Контакт',
+        btn_book:'Забронировать', btn_view_tours:'Смотреть туры', btn_rent_bike:'Арендовать велосипед', btn_explore:'Смотреть',
+        hero_label:'Грузия · Тбилиси · Кутаиси',
+        hero_title:'Исследуй<br><span>Грузию</span><br>на велосипеде',
+        hero_sub:'Велотуры с гидом и аренда велосипедов по самым живописным маршрутам Грузии — от древних улиц Тбилиси до вершин Кавказа.',
+        svc_label:'Что мы делаем', svc_title:'Два колеса,<br>бесконечные дороги',
+        svc_sub:'Хотите тур с гидом или самостоятельную поездку — у нас есть всё.',
+        svc1_title:'Туры с гидом', svc1_text:'Городские туры, горные приключения и не только! Исследуйте лучшие маршруты Грузии с местным гидом.', svc1_link:'Смотреть туры',
+        svc2_title:'Аренда велосипедов', svc2_text:'Ухоженные велосипеды для любого уровня. Гибкий выезд и возврат в Тбилиси и Кутаиси. Езди в своём темпе.', svc2_link:'Арендовать велосипед',
+        why_label:'Почему мы', why_title:'Езди с<br>местными',
+        why1_title:'Местная экспертиза', why1_text:'Родились и выросли в Грузии. Мы знаем маршруты, истории и лучшие места, о которых не расскажет ни один путеводитель.',
+        why2_title:'Для всех уровней', why2_text:'От прогулок по городу до сложных горных маршрутов — у нас есть туры и велосипеды для каждого.',
+        why3_title:'Качественные велосипеды', why3_text:'Наш парк регулярно обслуживается. Замки и запасные части включены — ваша безопасность прежде всего.',
+        why4_title:'Гибкий выезд и возврат', why4_text:'Возьмите велосипед в Тбилиси, верните в Кутаиси — или наоборот. Также доставляем велосипеды к вашему отелю или точке встречи в Тбилиси. Небольшая плата.',
+        exp_label:'Наши туры', exp_title:'Почувствуй,<br>что вас ждёт',
+        exp1_tag:'Городской тур', exp1_title:'Тбилиси на велосипеде',
+        exp2_tag:'Горы', exp2_title:'Тропы Кавказа',
+        exp3_tag:'Многодневный', exp3_title:'Эпик байкпекинг',
+        stat1:'Довольных велосипедистов', stat2:'Маршрутов', stat3:'Города', stat4:'Оценённый опыт',
+        cta_title:'Готов кататься<br><span>по Грузии?</span>',
+        cta_sub:'Свяжитесь с нами — мы спланируем идеальный маршрут для вас, будь то утренний городской тур или недельная экспедиция по Кавказу.',
+        cta_wa:'Написать в WhatsApp', cta_email:'Написать на email',
+        footer_tagline:'Велотуры с гидом и аренда велосипедов по Грузии — от древнего Тбилиси до Кутаиси, Местии, Боржоми и других мест.',
+        footer_nav:'Навигация', footer_copy:'© 2026 Tandro Bike Tours & Bike Rent Georgia. Все права защищены.'
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+      });
+      const current = document.getElementById('lo-current');
+      const other = document.getElementById('lo-other');
+      if (current && other) {
+        current.textContent = lang === 'en' ? 'EN' : 'RU';
+        other.textContent = lang === 'en' ? 'RU' : 'EN';
+      }
+      document.documentElement.lang = lang;
+      localStorage.setItem('tandro_lang', lang);
+    }
+
+    function toggleLangMenu() {
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function selectLang() {
+      const current = localStorage.getItem('tandro_lang') || 'en';
+      applyLang(current === 'en' ? 'ru' : 'en');
+      document.getElementById('lang-dropdown').classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const dd = document.getElementById('lang-dropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    // Always default to English on first load; respect saved preference afterwards
+    const saved = localStorage.getItem('tandro_lang');
+    if (saved && saved !== 'en') applyLang(saved);
+  </script>
 
   <!-- ==========================================
        JAVASCRIPT
