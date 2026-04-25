@@ -108,7 +108,9 @@
     .nav-social a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
     .btn-book { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 0 20px; height: 40px; border-radius: var(--radius); transition: background var(--transition); white-space: nowrap; cursor: pointer; }
     .btn-book:hover { background: #15803D; }
-    .lang-dropdown { position: relative; }
+    .lang-dropdown { position: relative; display: none; }
+    .mobile-lang-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: var(--white); font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; padding: 12px 32px; cursor: pointer; transition: background var(--transition); }
+    .mobile-lang-toggle:hover { background: rgba(255,255,255,0.1); }
     .lang-current { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius); padding: 5px 10px; cursor: pointer; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; transition: border-color var(--transition); }
     .lang-current:hover { border-color: rgba(255,255,255,0.6); }
     .lang-chevron { transition: transform var(--transition); flex-shrink: 0; }
@@ -130,7 +132,7 @@
     .mobile-socials { display: flex; gap: 16px; margin-top: 16px; }
     .mobile-socials a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), border-color var(--transition); }
     .mobile-socials a:hover { opacity: 1; border-color: var(--green); }
-    @media (min-width: 768px) { .nav-links { display: flex; } .nav-social { display: flex; } .hamburger { display: none; } }
+    @media (min-width: 768px) { .nav-links { display: flex; } .nav-social { display: flex; } .hamburger { display: none; } .lang-dropdown { display: block; } .mobile-lang-toggle { display: none; } }
 
     /* ============================================
        SHARED SECTION STYLES
@@ -952,6 +954,9 @@
       <li><a href="index.html#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
     </ul>
     <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;" data-i18n="btn_book">Book Now</a>
+    <button class="mobile-lang-toggle" onclick="selectLang()">
+      Switch to <span id="lo-mobile-other">RU</span>
+    </button>
     <div class="mobile-socials" aria-label="Social media">
       <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
@@ -1506,6 +1511,8 @@
         current.textContent = lang === 'en' ? 'EN' : 'RU';
         other.textContent = lang === 'en' ? 'RU' : 'EN';
       }
+      const mobileOther = document.getElementById('lo-mobile-other');
+      if (mobileOther) mobileOther.textContent = lang === 'en' ? 'RU' : 'EN';
       document.documentElement.lang = lang;
       localStorage.setItem('tandro_lang', lang);
     }

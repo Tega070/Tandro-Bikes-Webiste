@@ -267,7 +267,9 @@
       background: #15803D;
     }
 
-    .lang-dropdown { position: relative; }
+    .lang-dropdown { position: relative; display: none; }
+    .mobile-lang-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: var(--white); font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; padding: 12px 32px; cursor: pointer; transition: background var(--transition); }
+    .mobile-lang-toggle:hover { background: rgba(255,255,255,0.1); }
     .lang-current { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius); padding: 5px 10px; cursor: pointer; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; transition: border-color var(--transition); }
     .lang-current:hover { border-color: rgba(255,255,255,0.6); }
     .lang-chevron { transition: transform var(--transition); flex-shrink: 0; }
@@ -371,6 +373,8 @@
       .nav-links { display: flex; }
       .nav-social { display: flex; }
       .hamburger { display: none; }
+      .lang-dropdown { display: block; }
+      .mobile-lang-toggle { display: none; }
     }
 
     /* ============================================
@@ -1427,6 +1431,9 @@
     <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;">
       <span data-i18n="btn_book">Book Now</span>
     </a>
+    <button class="mobile-lang-toggle" onclick="selectLang()">
+      Switch to <span id="lo-mobile-other">RU</span>
+    </button>
     <div class="mobile-socials" aria-label="Social media">
       <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
@@ -1925,6 +1932,8 @@
         current.textContent = lang === 'en' ? 'EN' : 'RU';
         other.textContent = lang === 'en' ? 'RU' : 'EN';
       }
+      const mobileOther = document.getElementById('lo-mobile-other');
+      if (mobileOther) mobileOther.textContent = lang === 'en' ? 'RU' : 'EN';
       document.documentElement.lang = lang;
       localStorage.setItem('tandro_lang', lang);
     }
