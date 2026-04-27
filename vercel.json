@@ -16,6 +16,11 @@
       "source": "/bike-rental-prices-georgia",
       "destination": "/rental",
       "permanent": true
+    },
+    {
+      "source": "/kazbegi-bike-tour",
+      "destination": "/tours",
+      "permanent": true
     }
   ]
 }
