@@ -11,6 +11,11 @@
       "source": "/tbilisi-bike-rental",
       "destination": "/rental",
       "permanent": true
+    },
+    {
+      "source": "/bike-rental-prices-georgia",
+      "destination": "/rental",
+      "permanent": true
     }
   ]
 }
