@@ -1,4 +1,11 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/georgia-bike-tours",
+      "destination": "/tours",
+      "permanent": true
+    }
+  ]
 }
