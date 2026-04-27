@@ -21,6 +21,31 @@
       "source": "/kazbegi-bike-tour",
       "destination": "/tours",
       "permanent": true
+    },
+    {
+      "source": "/mestia-bike-tour",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/kutaisi-bike-tour",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/tbilisi-bike-tour",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/wine-bike-tour",
+      "destination": "/tours",
+      "permanent": true
+    },
+    {
+      "source": "/bike-rent-georgia",
+      "destination": "/rental",
+      "permanent": true
     }
   ]
 }
