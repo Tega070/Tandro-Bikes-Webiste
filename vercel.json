@@ -6,6 +6,11 @@
       "source": "/georgia-bike-tours",
       "destination": "/tours",
       "permanent": true
+    },
+    {
+      "source": "/tbilisi-bike-rental",
+      "destination": "/rental",
+      "permanent": true
     }
   ]
 }
