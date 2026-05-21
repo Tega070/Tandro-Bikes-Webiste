@@ -1313,6 +1313,43 @@
       color: var(--white);
     }
 
+    /* ── Tour Promo Banner ── */
+    .tour-promo {
+      background: linear-gradient(160deg, #0F172A 0%, #1A3A6B 60%, #16A34A 100%);
+      padding: 48px 16px;
+    }
+    .tour-promo-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .tour-promo-label {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ade80;
+      margin-bottom: 8px;
+    }
+    .tour-promo-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 52px);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .tour-promo-sub {
+      font-family: var(--font-body);
+      font-size: 18px;
+      color: rgba(255,255,255,0.75);
+    }
+    @media (max-width: 640px) {
+      .tour-promo-inner { flex-direction: column; align-items: flex-start; }
+    }
+
   </style>
 </head>
 <body>
@@ -1471,6 +1508,21 @@
     </div>
     <div class="hero-scroll" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </section>
+
+  <!-- ── Group Tour Promo Banner ── -->
+  <section class="tour-promo">
+    <div class="tour-promo-inner container">
+      <div class="tour-promo-text">
+        <p class="tour-promo-label">&#128690; Group Tours</p>
+        <h2 class="tour-promo-title">Join Our Tbilisi Bike Tour</h2>
+        <p class="tour-promo-sub">Every Saturday &nbsp;·&nbsp; 50$ per person</p>
+      </div>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I+am+interested+in+the+Tbilisi+Bike+Tour&type=phone_number&app_absent=0"
+         target="_blank" rel="noopener" class="btn-whatsapp">
+        Book on WhatsApp ↗
+      </a>
     </div>
   </section>
 
