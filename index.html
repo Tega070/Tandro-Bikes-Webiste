@@ -1349,6 +1349,13 @@
     @media (max-width: 640px) {
       .tour-promo-inner { flex-direction: column; align-items: flex-start; }
     }
+    @keyframes tourFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .tour-promo-text {
+      animation: tourFloat 3s ease-in-out infinite;
+    }
 
   </style>
 </head>
