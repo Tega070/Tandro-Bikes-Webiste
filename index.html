@@ -530,30 +530,13 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       cursor: pointer;
-      z-index: 4;
+      z-index: 2;
       animation: bounce 2s ease infinite;
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50%       { transform: translateX(-50%) translateY(6px); }
-    }
-
-    .hero-wave {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 100%;
-      line-height: 0;
-      z-index: 2;
-    }
-    .hero-wave svg {
-      display: block;
-      width: 100%;
-      height: 80px;
-    }
-    @media (max-width: 640px) {
-      .hero-wave svg { height: 50px; }
     }
 
     /* ============================================
@@ -1334,6 +1317,7 @@
     .tour-promo {
       background: linear-gradient(160deg, #0F172A 0%, #1A3A6B 60%, #16A34A 100%);
       padding: 48px 16px;
+      margin-top: 40px;
     }
     .tour-promo-inner {
       display: flex;
@@ -1532,11 +1516,6 @@
     </div>
     <div class="hero-scroll" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="hero-wave" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
-        <path d="M0,80 L1440,0 L1440,80 Z" fill="#0F172A"/>
-      </svg>
     </div>
   </section>
 
