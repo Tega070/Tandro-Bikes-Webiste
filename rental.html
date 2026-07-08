@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G51R4FERYB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-G51R4FERYB');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="Favicons/favicon.ico" />
@@ -950,6 +959,7 @@
         <li><a href="/" data-i18n="nav_home">Home</a></li>
         <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
         <li><a href="/rental" class="active" data-i18n="nav_rental">Bike Rental</a></li>
+        <li><a href="/self-service" data-i18n="nav_selfservice">Self-Service</a></li>
         <li><a href="/#why" data-i18n="nav_about">About</a></li>
         <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
       </ul>
@@ -994,6 +1004,7 @@
       <li><a href="/" onclick="closeMenu()" data-i18n="nav_home">Home</a></li>
       <li><a href="/tours" onclick="closeMenu()" data-i18n="nav_tours">Tours</a></li>
       <li><a href="/rental" class="active" onclick="closeMenu()" data-i18n="nav_rental">Bike Rental</a></li>
+      <li><a href="/self-service" onclick="closeMenu()" data-i18n="nav_selfservice">Self-Service</a></li>
       <li><a href="/#why" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
       <li><a href="/#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
     </ul>
@@ -1402,6 +1413,7 @@
           <li><a href="/" data-i18n="nav_home">Home</a></li>
           <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
           <li><a href="/rental" data-i18n="nav_rental">Bike Rental</a></li>
+          <li><a href="/self-service" data-i18n="nav_selfservice">Self-Service</a></li>
           <li><a href="/#why" data-i18n="nav_about">About</a></li>
           <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
         </ul>
@@ -1437,7 +1449,7 @@
   <script>
     const T = {
       en: {
-        nav_home: 'Home', nav_tours: 'Tours', nav_rental: 'Bike Rental', nav_about: 'About', nav_contact: 'Contact',
+        nav_home: 'Home', nav_tours: 'Tours', nav_rental: 'Bike Rental', nav_selfservice: 'Self-Service', nav_about: 'About', nav_contact: 'Contact',
         btn_book: 'Book Now',
         hero_label: 'Tandro Bikes',
         hero_title: 'Bike Rental<br><span>in Georgia</span>',
@@ -1496,7 +1508,7 @@
         footer_copy: '© 2026 Tandro Bike Tours & Bike Rent Georgia. All rights reserved.',
       },
       ru: {
-        nav_home: 'Главная', nav_tours: 'Туры', nav_rental: 'Аренда велосипедов', nav_about: 'О нас', nav_contact: 'Контакты',
+        nav_home: 'Главная', nav_tours: 'Туры', nav_rental: 'Аренда велосипедов', nav_selfservice: 'Самообслуживание', nav_about: 'О нас', nav_contact: 'Контакты',
         btn_book: 'Забронировать',
         hero_label: 'Tandro Bikes',
         hero_title: 'Аренда<br><span>велосипедов в Грузии</span>',

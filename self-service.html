@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G51R4FERYB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-G51R4FERYB');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="Favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="Favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="Favicons/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="Favicons/apple-touch-icon.png" />
+  <meta name="description" content="Bring your own bike to Georgia? Get fixed-price own-bike insurance and inter-city bike transportation with Tandro — flat pricing, fast WhatsApp booking." />
+  <title>Own-Bike Insurance & Bike Transportation | Tandro</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1A3A6B;
+      --blue:   #2563EB;
+      --green:  #16A34A;
+      --dark:   #0F172A;
+      --surface:#F8FAFC;
+      --white:  #FFFFFF;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-heading: 'Barlow', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --radius: 4px;
+      --transition: 250ms ease;
+      --max-w: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
+
+    /* ============================================
+       LOADER
+    ============================================ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo { width: 80px; margin-bottom: 48px; opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards; }
+    .loader-track { width: 280px; height: 60px; position: relative; margin-bottom: 24px; }
+    .loader-road { position: absolute; bottom: 8px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.2); border-radius: 1px; }
+    .loader-bike { position: absolute; bottom: 10px; left: -60px; animation: rideAcross 1.8s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @media (prefers-reduced-motion: reduce) { .loader-bike { animation: none; left: 110px; } .loader-logo { animation: none; opacity: 1; } }
+    @keyframes rideAcross { 0% { left: -60px; } 100% { left: 310px; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .loader-text { font-family: var(--font-display); font-size: 22px; letter-spacing: 4px; color: rgba(255,255,255,0.7); opacity: 0; animation: fadeIn 0.6s ease 0.5s forwards; }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 16px;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-logo-name { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 1px; line-height: 1; display: flex; align-items: flex-end; gap: 5px; }
+    .nav-logo-bike-stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .nav-logo-bike-stack svg { width: 18px; height: 18px; opacity: 0.9; }
+    .nav-links { display: none; list-style: none; gap: 28px; }
+    .nav-links a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; color: var(--white); opacity: 0.85; transition: opacity var(--transition); }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-social { display: none; align-items: center; gap: 8px; }
+    .nav-social a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), background var(--transition); }
+    .nav-social a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+    .btn-book { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 0 20px; height: 40px; border-radius: var(--radius); transition: background var(--transition); white-space: nowrap; cursor: pointer; }
+    .btn-book:hover { background: #15803D; }
+    .lang-dropdown { position: relative; display: none; }
+    .mobile-lang-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: var(--white); font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; padding: 12px 32px; cursor: pointer; transition: background var(--transition); }
+    .mobile-lang-toggle:hover { background: rgba(255,255,255,0.1); }
+    .lang-current { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius); padding: 5px 10px; cursor: pointer; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; transition: border-color var(--transition); }
+    .lang-current:hover { border-color: rgba(255,255,255,0.6); }
+    .lang-chevron { transition: transform var(--transition); flex-shrink: 0; }
+    .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+    .lang-menu { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); overflow: hidden; min-width: 100%; }
+    .lang-dropdown.open .lang-menu { display: block; }
+    .lang-menu-item { display: block; width: 100%; padding: 7px 14px; background: none; border: none; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; cursor: pointer; text-align: center; transition: color var(--transition), background var(--transition); }
+    .lang-menu-item:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 1px; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 49; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+    #mobile-menu.open { display: flex; }
+    .mobile-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 40px; }
+    .mobile-links a { font-family: var(--font-display); font-size: 36px; letter-spacing: 2px; color: var(--white); opacity: 0.85; transition: opacity var(--transition), color var(--transition); }
+    .mobile-links a:hover, .mobile-links a.active { opacity: 1; color: var(--green); }
+    .mobile-socials { display: flex; gap: 16px; margin-top: 16px; }
+    .mobile-socials a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), border-color var(--transition); }
+    .mobile-socials a:hover { opacity: 1; border-color: var(--green); }
+    @media (min-width: 768px) { .nav-links { display: flex; } .nav-social { display: flex; } .hamburger { display: none; } .lang-dropdown { display: block; } .mobile-lang-toggle { display: none; } }
+
+    /* ============================================
+       SHARED SECTION STYLES
+    ============================================ */
+    section { padding: 80px 16px; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+    .section-title { font-family: var(--font-display); font-size: clamp(36px, 6vw, 60px); line-height: 1; color: var(--dark); margin-bottom: 16px; }
+    .section-title-light { color: var(--white); }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .section-sub-light { color: rgba(255,255,255,0.6); }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: var(--radius); min-height: 52px; cursor: pointer; transition: background var(--transition), transform var(--transition); }
+    .btn-primary:hover { background: #15803D; transform: translateY(-1px); }
+
+    /* ============================================
+       PAGE HEADER
+    ============================================ */
+    #page-header {
+      background: linear-gradient(160deg, #07111f 0%, #0F172A 45%, #091a0d 100%);
+      padding: 140px 16px 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    #page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 15% 60%, rgba(22,163,74,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 70% at 85% 20%, rgba(37,99,235,0.1) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #page-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(22,163,74,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-header-inner { max-width: var(--max-w); margin: 0 auto; position: relative; z-index: 2; }
+    .page-header-label { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+    .page-header-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+    .page-header-title { font-family: var(--font-display); font-size: clamp(44px, 8vw, 88px); line-height: 0.98; color: var(--white); letter-spacing: 1px; }
+    .page-header-title span { color: var(--green); }
+    .page-header-sub { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 540px; line-height: 1.7; margin-top: 20px; }
+    .hero-stats { display: flex; gap: 0; flex-wrap: wrap; margin-top: 48px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 32px; }
+    .hero-stat { display: flex; flex-direction: column; gap: 4px; padding-right: 32px; margin-right: 32px; border-right: 1px solid rgba(255,255,255,0.1); margin-bottom: 16px; }
+    .hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .hero-stat-num { font-family: var(--font-display); font-size: 36px; color: var(--white); line-height: 1; letter-spacing: 1px; }
+    .hero-stat-label { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+    /* ============================================
+       FEATURE CARDS (Why section)
+    ============================================ */
+    #why-self-service { background: var(--surface); }
+    .features-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+    @media (min-width: 480px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .features-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .feature-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; transition: box-shadow var(--transition), transform var(--transition); }
+    .feature-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,0.08); transform: translateY(-2px); }
+    .feature-icon-wrap { width: 48px; height: 48px; border-radius: 10px; background: rgba(22,163,74,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--green); }
+    .feature-title { font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--dark); line-height: 1.3; }
+    .feature-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ============================================
+       INSURANCE PRICING
+    ============================================ */
+    #insurance { background: var(--white); }
+    .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 48px; }
+    @media (min-width: 600px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .price-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow var(--transition), transform var(--transition); }
+    .price-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,0.08); transform: translateY(-2px); }
+    .price-card-head { background: var(--dark); padding: 20px 24px 16px; }
+    .price-bike-type { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.5px; color: var(--white); line-height: 1; margin-bottom: 6px; }
+    .price-badge { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+    .badge-mtb    { background: rgba(22,163,74,0.2);  color: #4ade80; }
+    .badge-gravel { background: rgba(37,99,235,0.2);  color: #93c5fd; }
+    .badge-ebike  { background: rgba(234,179,8,0.2);  color: #fbbf24; }
+    .badge-city   { background: rgba(148,163,184,0.15); color: #94a3b8; }
+
+    .price-card-body { padding: 20px 24px; display: flex; flex-direction: column; flex: 1; }
+    .price-card-body .btn-rent { margin-top: auto; align-self: flex-start; }
+    .price-daily { display: flex; align-items: baseline; gap: 4px; margin-bottom: 12px; }
+    .price-amount { font-family: var(--font-display); font-size: 40px; color: var(--dark); line-height: 1; }
+    .price-unit { font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--muted); }
+    .price-discounts { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .price-discounts li { display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 13px; color: var(--muted); }
+    .price-discounts li::before { content: ''; display: block; flex-shrink: 0; width: 16px; height: 16px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316A34A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+    .btn-rent { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; padding: 8px 16px; border-radius: var(--radius); transition: background var(--transition); }
+    .btn-rent:hover { background: #15803d; }
+
+    .pricing-includes { margin-top: 48px; display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 640px) { .pricing-includes { grid-template-columns: 1fr 1fr; } }
+
+    .includes-block { background: var(--surface); border-radius: 8px; padding: 24px; }
+    .includes-title { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+    .includes-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .includes-list li { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 14px; color: var(--dark); }
+    .includes-list li::before { content: ''; display: block; flex-shrink: 0; width: 16px; height: 16px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316A34A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+    .includes-list.excludes li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E"); }
+    .includes-list.excludes li { color: var(--muted); }
+    .pricing-note { margin-top: 20px; font-size: 13px; color: var(--muted); font-style: italic; }
+
+    /* ============================================
+       TRANSPORTATION (dark)
+    ============================================ */
+    #transportation { background: #060E1A; }
+    .logistics-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 48px 0; }
+    @media (min-width: 640px) { .logistics-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .logistics-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 24px 20px; display: flex; flex-direction: column; gap: 12px; transition: background var(--transition), border-color var(--transition), transform var(--transition); }
+    .logistics-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(37,99,235,0.4); transform: translateY(-2px); }
+    .logistics-icon { width: 44px; height: 44px; border-radius: 8px; background: rgba(37,99,235,0.15); display: flex; align-items: center; justify-content: center; color: #93c5fd; }
+    .logistics-title { font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--white); line-height: 1.3; }
+    .logistics-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+    .routes-title { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+    .routes-title::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+    .routes-list { display: flex; flex-direction: column; gap: 12px; }
+    .route-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 6px; padding: 16px 20px; display: flex; gap: 16px; align-items: center; transition: border-color var(--transition), background var(--transition); }
+    .route-item:hover { border-color: rgba(22,163,74,0.35); background: rgba(255,255,255,0.06); }
+    .route-name { font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .route-price { font-family: var(--font-display); font-size: 20px; color: var(--green); letter-spacing: 0.5px; white-space: nowrap; margin-left: auto; padding-left: 16px; }
+    .route-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .routes-note { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.4); font-style: italic; }
+
+    .transport-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 32px 24px; margin-top: 48px; display: flex; flex-direction: column; gap: 20px; }
+    .transport-form-title { font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--white); }
+    .transport-form-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 600px) { .transport-form-grid { grid-template-columns: 1fr 1fr; } }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field label { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+    .form-field input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 12px 14px; color: var(--white); font-family: var(--font-body); font-size: 15px; transition: border-color var(--transition), background var(--transition); width: 100%; }
+    .form-field input::placeholder { color: rgba(255,255,255,0.3); }
+    .form-field input:focus { outline: none; border-color: var(--green); background: rgba(255,255,255,0.06); }
+    .form-field input[type="date"] { color-scheme: dark; }
+    .form-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 4px; }
+
+    /* ============================================
+       FAQ ACCORDION
+    ============================================ */
+    #faq { background: var(--surface); }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 48px; }
+    .faq-item { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(15,23,42,0.05); background: var(--white); }
+    .faq-header { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; background: var(--dark); color: var(--white); cursor: pointer; transition: background var(--transition); text-align: left; }
+    .faq-header:hover { background: #1a2744; }
+    .faq-header[aria-expanded="true"] { background: #0c1829; border-bottom: 2px solid var(--green); }
+    .faq-question { font-family: var(--font-heading); font-weight: 700; font-size: 15px; letter-spacing: 0.2px; color: var(--white); }
+    .faq-chevron { flex-shrink: 0; color: var(--green); transition: transform 0.3s ease; }
+    .faq-header[aria-expanded="true"] .faq-chevron { transform: rotate(90deg); }
+    .faq-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-panel-inner { padding: 24px; }
+    .faq-answer { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ============================================
+       BOOKING CTA
+    ============================================ */
+    #booking-cta { background: linear-gradient(160deg, #07111f 0%, #0F172A 55%, #091a0d 100%); position: relative; overflow: hidden; }
+    #booking-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 10% 50%, rgba(22,163,74,0.12) 0%, transparent 55%), radial-gradient(ellipse 50% 60% at 90% 30%, rgba(37,99,235,0.08) 0%, transparent 55%); pointer-events: none; }
+    .cta-inner { max-width: var(--max-w); margin: 0 auto; position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 32px; }
+    @media (min-width: 768px) { .cta-inner { flex-direction: row; align-items: center; justify-content: space-between; } }
+    .cta-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px); color: var(--white); line-height: 1; letter-spacing: 0.5px; }
+    .cta-title span { color: var(--green); }
+    .cta-sub { font-size: 15px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 400px; }
+    .cta-actions { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 16px; padding: 16px 32px; border-radius: var(--radius); min-height: 56px; transition: background var(--transition), transform var(--transition); white-space: nowrap; }
+    .btn-whatsapp:hover { background: #15803D; transform: translateY(-1px); }
+    .btn-whatsapp:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .cta-email { font-family: var(--font-heading); font-size: 14px; color: rgba(255,255,255,0.4); text-align: center; }
+    .cta-email a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .cta-email a:hover { color: var(--white); }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer { background: #060E1A; padding: 56px 16px 0; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media (min-width: 768px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr; gap: 64px; } }
+    .footer-brand img { height: 52px; margin-bottom: 16px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+    .footer-socials a { display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); transition: color var(--transition); cursor: pointer; }
+    .footer-social-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.12); border-radius: 50%; transition: border-color var(--transition); flex-shrink: 0; }
+    .footer-social-icon svg { width: 22px; height: 22px; }
+    .footer-social-label { font-family: var(--font-heading); font-size: 10px; font-weight: 600; letter-spacing: 0.4px; color: rgba(255,255,255,0.35); transition: color var(--transition); white-space: nowrap; }
+    .footer-socials a:hover { color: var(--green); }
+    .footer-socials a:hover .footer-social-icon { border-color: var(--green); }
+    .footer-socials a:hover .footer-social-label { color: var(--green); }
+    .footer-partner-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); margin: 0 4px; align-self: flex-start; flex-shrink: 0; }
+    .footer-partner-link:hover { color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-icon { border-color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-label { color: #FF8000 !important; }
+    .footer-col-title { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-size: 15px; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-links a.active { color: var(--green); }
+    .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.6); }
+    .footer-contact-list li svg { flex-shrink: 0; margin-top: 2px; color: var(--green); }
+    .footer-contact-list a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-contact-list a:hover { color: var(--white); }
+    .footer-map-link { color: var(--green) !important; text-decoration: underline; text-underline-offset: 3px; }
+    .footer-map-link:hover { color: #fff !important; }
+    .footer-bottom { margin-top: 56px; border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .tour-promo { background: linear-gradient(160deg, #0F172A 0%, #1A3A6B 60%, #16A34A 100%); padding: 48px 16px; }
+    .tour-promo-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .tour-promo-label { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4ade80; margin-bottom: 8px; }
+    .tour-promo-title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); color: #fff; line-height: 1; margin-bottom: 10px; }
+    .tour-promo-sub { font-family: var(--font-body); font-size: 18px; color: rgba(255,255,255,0.75); }
+    @media (max-width: 640px) { .tour-promo-inner { flex-direction: column; align-items: flex-start; } }
+    @keyframes tourFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .tour-promo-text { animation: tourFloat 3s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .tour-promo-text { animation: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading Tandro">
+    <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours" class="loader-logo" />
+    <div class="loader-track">
+      <div class="loader-road"></div>
+      <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="26" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="Tandro home">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <span class="nav-logo-name">
+          Tandro
+          <span class="nav-logo-bike-stack">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M9 10.5l3 6.5H5.5"/><path d="M9 10.5l7-1"/><path d="M16 9.5l-4 7.5"/><path d="M16 9.5l2.5 7.5"/><path d="M7.5 9.5h3.5"/><path d="M9 9.5v1"/><path d="M15 7.5h3"/><path d="M16.5 7.5l-.5 2"/></svg>
+            Bikes
+          </span>
+        </span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="/" data-i18n="nav_home">Home</a></li>
+        <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
+        <li><a href="/rental" data-i18n="nav_rental">Bike Rental</a></li>
+        <li><a href="/self-service" class="active" data-i18n="nav_selfservice">Self-Service</a></li>
+        <li><a href="/#why" data-i18n="nav_about">About</a></li>
+        <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-social" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button class="lang-current" id="lang-btn" onclick="toggleLangMenu()" aria-label="Switch language">
+            <span id="lo-current">EN</span>
+            <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="lang-menu" id="lang-menu">
+            <button class="lang-menu-item" id="lo-other" onclick="selectLang()">RU</button>
+          </div>
+        </div>
+
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book on WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          <span data-i18n="btn_book">Book Now</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-links" role="list">
+      <li><a href="/" onclick="closeMenu()" data-i18n="nav_home">Home</a></li>
+      <li><a href="/tours" onclick="closeMenu()" data-i18n="nav_tours">Tours</a></li>
+      <li><a href="/rental" onclick="closeMenu()" data-i18n="nav_rental">Bike Rental</a></li>
+      <li><a href="/self-service" class="active" onclick="closeMenu()" data-i18n="nav_selfservice">Self-Service</a></li>
+      <li><a href="/#why" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
+      <li><a href="/#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;" data-i18n="btn_book">Book Now</a>
+    <button class="mobile-lang-toggle" onclick="selectLang()">
+      Switch to <span id="lo-mobile-other">RU</span>
+    </button>
+    <div class="mobile-socials" aria-label="Social media">
+      <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PAGE HEADER
+  =========================================== -->
+  <section id="page-header">
+    <div class="page-header-inner">
+      <p class="page-header-label">For Your Own Bike</p>
+      <h1 class="page-header-title">Ride Your Own Bike.<br><span>We've Got The Rest.</span></h1>
+      <p class="page-header-sub">Touring Georgia with your own bike? Get fixed-price insurance against theft and mechanical damage, or let us move your bike between cities — so you can fly in, ride, and fly out from somewhere else.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">2</span>
+          <span class="hero-stat-label">Services Offered</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">4+</span>
+          <span class="hero-stat-label">Cities Covered</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">24/7</span>
+          <span class="hero-stat-label">WhatsApp Support</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       WHY USE TANDRO FOR THIS
+  =========================================== -->
+  <section id="why-self-service">
+    <div class="container">
+      <p class="section-label">Why Go Through Us</p>
+      <h2 class="section-title">Not A DIY Job In A Foreign Country</h2>
+      <p class="section-sub">Sorting out insurance or logistics for your own bike in a country you don't know is a headache. We make it a flat price and one WhatsApp message.</p>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Local Expertise</p>
+            <p class="feature-text">We know every road, workshop, and shipping route in Georgia — knowledge you can't get from an international insurer.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="80">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Direct WhatsApp Support</p>
+            <p class="feature-text">No call centers, no ticket queues. Message us directly and get a real answer, usually within minutes.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="160">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Flat Pricing, No Haggling</p>
+            <p class="feature-text">Every tier and route has one price. What we quote is what you pay — no surprise fees at drop-off.</p>
+          </div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div>
+            <p class="feature-title">Trusted Driver Network</p>
+            <p class="feature-text">Whether we drive it or a vetted local partner does, we manage the full handoff and confirm safe arrival.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       OWN-BIKE INSURANCE
+  =========================================== -->
+  <section id="insurance">
+    <div class="container">
+      <p class="section-label">Own-Bike Insurance</p>
+      <h2 class="section-title">Protect Your Ride</h2>
+      <p class="section-sub">This covers bikes you bring yourself — it's separate from the 150 GEL insurance add-on offered on rental bikes. Pick a tier before you start riding.</p>
+
+      <!-- PLACEHOLDER PRICING: confirm with owner before launch -->
+      <div class="pricing-grid">
+
+        <div class="price-card reveal">
+          <div class="price-card-head">
+            <p class="price-bike-type">Basic</p>
+            <span class="price-badge badge-city">Essentials</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">120</span>
+              <span class="price-unit">GEL flat / up to 14 days</span>
+            </div>
+            <ul class="price-discounts">
+              <li>Roadside mechanical assistance</li>
+              <li>Spare parts delivered to you</li>
+              <li>24/7 WhatsApp support</li>
+            </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20the%20Basic%20Own-Bike%20Insurance%20plan" target="_blank" rel="noopener" class="btn-rent">Get Basic ↗</a>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="60">
+          <div class="price-card-head">
+            <p class="price-bike-type">Standard</p>
+            <span class="price-badge badge-mtb">Most Popular</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">220</span>
+              <span class="price-unit">GEL flat / up to 14 days</span>
+            </div>
+            <ul class="price-discounts">
+              <li>Everything in Basic</li>
+              <li>Accidental damage — up to 1,500 GEL</li>
+              <li>One bike swap or loaner if unrideable</li>
+            </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20the%20Standard%20Own-Bike%20Insurance%20plan" target="_blank" rel="noopener" class="btn-rent">Get Standard ↗</a>
+          </div>
+        </div>
+
+        <div class="price-card reveal" data-delay="120">
+          <div class="price-card-head">
+            <p class="price-bike-type">Premium</p>
+            <span class="price-badge badge-ebike">Full Coverage</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-daily">
+              <span class="price-amount">350</span>
+              <span class="price-unit">GEL flat / up to 14 days</span>
+            </div>
+            <ul class="price-discounts">
+              <li>Everything in Standard</li>
+              <li>Theft coverage — up to 4,000 GEL</li>
+              <li>Priority same-day response</li>
+            </ul>
+            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20the%20Premium%20Own-Bike%20Insurance%20plan" target="_blank" rel="noopener" class="btn-rent">Get Premium ↗</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pricing-includes">
+        <div class="includes-block reveal">
+          <p class="includes-title">What's Always Excluded</p>
+          <ul class="includes-list excludes">
+            <li>Normal wear and tear — tires, brake pads, chains</li>
+            <li>Pre-existing damage before registration</li>
+            <li>Racing or competitive use</li>
+          </ul>
+        </div>
+        <div class="includes-block reveal" data-delay="80">
+          <p class="includes-title">How To Claim</p>
+          <ul class="includes-list">
+            <li>Message us on WhatsApp immediately</li>
+            <li>Send photos and your location</li>
+            <li>We coordinate repair, parts, or a swap</li>
+          </ul>
+        </div>
+      </div>
+      <p class="pricing-note">Placeholder pricing shown — final tier prices to be confirmed before launch.</p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BIKE TRANSPORTATION
+  =========================================== -->
+  <section id="transportation">
+    <div class="container">
+      <p class="section-label">Bike Transportation</p>
+      <h2 class="section-title section-title-light">We'll Get Your Bike There.</h2>
+      <p class="section-sub section-sub-light">Touring one-way? Flying out of a different city? We handle the logistics — sometimes we drive it ourselves, sometimes a trusted local partner does — either way, your bike arrives safely, on schedule.</p>
+
+      <div class="logistics-grid">
+        <div class="logistics-card reveal">
+          <div class="logistics-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <p class="logistics-title">Point-to-Point Pickup</p>
+          <p class="logistics-desc">We collect your bike from your hotel, guesthouse, or our shop and take it directly to the drop-off city.</p>
+        </div>
+        <div class="logistics-card reveal" data-delay="80">
+          <div class="logistics-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+          </div>
+          <p class="logistics-title">Careful Handling & Padding</p>
+          <p class="logistics-desc">Bikes are padded and secured for the road — no dropped derailleurs, no scratched frames.</p>
+        </div>
+        <div class="logistics-card reveal" data-delay="160">
+          <div class="logistics-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <p class="logistics-title">Tracked Arrival Window</p>
+          <p class="logistics-desc">We confirm a pickup time and give you a realistic arrival window, with a WhatsApp update along the way.</p>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER PRICING: confirm with owner before launch -->
+      <p class="routes-title">Sample Routes & Flat Estimates</p>
+      <div class="routes-list">
+        <div class="route-item reveal">
+          <div>
+            <p class="route-name">Tbilisi ↔ Kutaisi</p>
+            <p class="route-desc">Time and vehicle depend on group size</p>
+          </div>
+          <span class="route-price">150–250 GEL</span>
+        </div>
+        <div class="route-item reveal" data-delay="40">
+          <div>
+            <p class="route-name">Kutaisi ↔ Batumi</p>
+            <p class="route-desc">Time and vehicle depend on group size</p>
+          </div>
+          <span class="route-price">120–200 GEL</span>
+        </div>
+        <div class="route-item reveal" data-delay="80">
+          <div>
+            <p class="route-name">Tbilisi ↔ Batumi</p>
+            <p class="route-desc">Time and vehicle depend on group size</p>
+          </div>
+          <span class="route-price">250–400 GEL</span>
+        </div>
+        <div class="route-item reveal" data-delay="120">
+          <div>
+            <p class="route-name">Tbilisi ↔ Mestia</p>
+            <p class="route-desc">Time and vehicle depend on group size</p>
+          </div>
+          <span class="route-price">400–600 GEL</span>
+        </div>
+        <div class="route-item reveal" data-delay="160">
+          <div>
+            <p class="route-name">Kutaisi ↔ Mestia</p>
+            <p class="route-desc">Time and vehicle depend on group size</p>
+          </div>
+          <span class="route-price">300–500 GEL</span>
+        </div>
+      </div>
+      <p class="routes-note">Exact price depends on number of bikes, exact pickup/drop-off points, and timing. Message us for a firm quote.</p>
+
+      <form class="transport-form reveal" id="transport-form">
+        <p class="transport-form-title">Request Transportation</p>
+        <div class="transport-form-grid">
+          <div class="form-field">
+            <label for="ts-pickup">Pickup Location</label>
+            <input type="text" id="ts-pickup" name="pickup" placeholder="e.g. Tbilisi city center" required />
+          </div>
+          <div class="form-field">
+            <label for="ts-dropoff">Drop-off Location</label>
+            <input type="text" id="ts-dropoff" name="dropoff" placeholder="e.g. Kutaisi airport" required />
+          </div>
+          <div class="form-field">
+            <label for="ts-date">Date</label>
+            <input type="date" id="ts-date" name="date" required />
+          </div>
+          <div class="form-field">
+            <label for="ts-bikes">Number of Bikes</label>
+            <input type="number" id="ts-bikes" name="bikes" min="1" value="1" required />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-whatsapp" id="ts-submit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            <span>Request via WhatsApp</span>
+          </button>
+          <p class="cta-email">or <a href="mailto:kvkcycling@gmail.com" id="ts-mailto">email us instead</a></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FAQ
+  =========================================== -->
+  <section id="faq">
+    <div class="container">
+      <p class="section-label">Common Questions</p>
+      <h2 class="section-title">Insurance & Transport FAQ</h2>
+      <p class="section-sub">Everything cyclists ask us before insuring or shipping their own bike in Georgia.</p>
+
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-header" aria-expanded="false" aria-controls="faq-panel-1">
+            <span class="faq-question">Is this insurance different from the rental bike insurance?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="faq-panel" id="faq-panel-1">
+            <div class="faq-panel-inner">
+              <p class="faq-answer">Yes — this covers bikes you bring yourself. The 150 GEL rental add-on only applies to bikes rented directly from Tandro.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="40">
+          <button class="faq-header" aria-expanded="false" aria-controls="faq-panel-2">
+            <span class="faq-question">What's not covered by Own-Bike Insurance?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="faq-panel" id="faq-panel-2">
+            <div class="faq-panel-inner">
+              <p class="faq-answer">Normal wear and tear (tires, brake pads, chains), pre-existing damage, and racing or competitive use are excluded from every tier.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="80">
+          <button class="faq-header" aria-expanded="false" aria-controls="faq-panel-3">
+            <span class="faq-question">How do I make a claim?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="faq-panel" id="faq-panel-3">
+            <div class="faq-panel-inner">
+              <p class="faq-answer">Message us on WhatsApp immediately with photos and your location — we coordinate parts, repair, or a swap from there.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="120">
+          <button class="faq-header" aria-expanded="false" aria-controls="faq-panel-4">
+            <span class="faq-question">Who actually drives my bike during transport?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="faq-panel" id="faq-panel-4">
+            <div class="faq-panel-inner">
+              <p class="faq-answer">Either our own team or a trusted, vetted local partner driver — we manage the handoff and confirm arrival either way.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="160">
+          <button class="faq-header" aria-expanded="false" aria-controls="faq-panel-5">
+            <span class="faq-question">Can I book transportation for multiple bikes or a group?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="faq-panel" id="faq-panel-5">
+            <div class="faq-panel-inner">
+              <p class="faq-answer">Yes — use the form above and set the bike count. Pricing scales with group size, and larger groups often get a better per-bike rate.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="0">
+          <button class="faq-header" aria-expanded="false" aria-controls="faq-panel-6">
+            <span class="faq-question">How far in advance should I book transport?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="faq-panel" id="faq-panel-6">
+            <div class="faq-panel-inner">
+              <p class="faq-answer">At least 48 hours' notice is recommended, especially for less common routes like Mestia/Svaneti.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BOOKING CTA
+  =========================================== -->
+  <section id="booking-cta">
+    <div class="cta-inner">
+      <div>
+        <h2 class="cta-title">Own Your Bike?<br><span>We'll Handle The Rest.</span></h2>
+        <p class="cta-sub">Message us for insurance pricing or a transportation quote — we reply fast on WhatsApp.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27d%20like%20to%20ask%20about%20own-bike%20insurance%20or%20transportation" target="_blank" rel="noopener" class="btn-whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          <span>Message on WhatsApp</span>
+        </a>
+        <p class="cta-email">Or email us: <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cross-sell: Guided Tours ── -->
+  <section class="tour-promo">
+    <div class="tour-promo-inner container">
+      <div class="tour-promo-text">
+        <p class="tour-promo-label">&#128690; Prefer Not To Ride Alone?</p>
+        <h2 class="tour-promo-title">Want A Guided Tour Instead?</h2>
+        <p class="tour-promo-sub">Let a local lead the way — city rides, mountain routes, and multi-day trips</p>
+      </div>
+      <a href="/tours" class="btn-whatsapp">
+        See Our Tours ↗
+      </a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <p class="footer-tagline">Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
+        <div class="footer-socials" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="footer-social-icon" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-color:transparent;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none"/></svg></span>
+            <span class="footer-social-label">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <span class="footer-social-icon" style="background:#1877F2;border-color:#1877F2;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span class="footer-social-label">Facebook</span>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="footer-social-icon" style="background:#25D366;border-color:#25D366;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></span>
+            <span class="footer-social-label">WhatsApp</span>
+          </a>
+          <span class="footer-partner-divider" aria-hidden="true"></span>
+          <a href="https://www.getyourguide.com/tbilisi-l1379/tbilisi-bike-tour-peace-bridge-old-town-sameba-views-t1164852/?ranking_uuid=0132c445-e886-4253-93d0-9188ee75a85d" target="_blank" rel="noopener" aria-label="Book on GetYourGuide" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 2l-1.5 4H6l3.5 2.5-1.5 4L12 14l4 2.5-1.5-4L18 10h-4.5z"/></svg></span>
+            <span class="footer-social-label">GetYourGuide</span>
+          </a>
+          <a href="https://www.bajabikes.eu/en/tbilisi-sightseeing-tours/" target="_blank" rel="noopener" aria-label="Book on Baja Bikes" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/><path d="M15 9 L15 7"/><path d="M13.5 7 L17 7"/></svg></span>
+            <span class="footer-social-label">Baja Bikes</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links" role="list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/tours">Tours</a></li>
+          <li><a href="/rental">Bike Rental</a></li>
+          <li><a href="/self-service" class="active">Self-Service</a></li>
+          <li><a href="/#why">About</a></li>
+          <li><a href="/#cta">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-contact-list" role="list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+995599373788">+995 599 373 788</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="https://maps.app.goo.gl/dW8tMeMxYSkNPnKz7" target="_blank" rel="noopener" class="footer-map-link">Tbilisi</a> &amp; <a href="https://maps.app.goo.gl/DyHZWoafGciduHgX7" target="_blank" rel="noopener" class="footer-map-link">Kutaisi</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       TRANSLATIONS (shared nav/footer only — body copy on this page is English-only for now)
+       TODO: full RU translation not yet written for self-service.html body copy; only nav/footer keys are translated
+  =========================================== -->
+  <script>
+    const T = {
+      en: {
+        nav_home: 'Home', nav_tours: 'Tours', nav_rental: 'Bike Rental', nav_selfservice: 'Self-Service', nav_about: 'About', nav_contact: 'Contact',
+        btn_book: 'Book Now',
+      },
+      ru: {
+        nav_home: 'Главная', nav_tours: 'Туры', nav_rental: 'Аренда', nav_selfservice: 'Самообслуживание', nav_about: 'О нас', nav_contact: 'Контакты',
+        btn_book: 'Забронировать',
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+      });
+      const current = document.getElementById('lo-current');
+      const other = document.getElementById('lo-other');
+      if (current && other) {
+        current.textContent = lang === 'en' ? 'EN' : 'RU';
+        other.textContent = lang === 'en' ? 'RU' : 'EN';
+      }
+      const mobileOther = document.getElementById('lo-mobile-other');
+      if (mobileOther) mobileOther.textContent = lang === 'en' ? 'RU' : 'EN';
+      document.documentElement.lang = lang;
+      localStorage.setItem('tandro_lang', lang);
+    }
+
+    function toggleLangMenu() {
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function selectLang() {
+      const current = localStorage.getItem('tandro_lang') || 'en';
+      applyLang(current === 'en' ? 'ru' : 'en');
+      document.getElementById('lang-dropdown').classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const dd = document.getElementById('lang-dropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    const _saved = localStorage.getItem('tandro_lang');
+    if (_saved && _saved !== 'en') applyLang(_saved);
+  </script>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+  <script>
+    // ---- Loader ----
+    const loader = document.getElementById('loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); }, 800);
+    });
+    setTimeout(() => { if (loader && !loader.classList.contains('hidden')) { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); } }, 4000);
+
+    // ---- Navbar scroll ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    // ---- Hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+    // ---- Scroll reveal ----
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ---- FAQ accordion (independent toggle, no auto-close of siblings) ----
+    document.querySelectorAll('.faq-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        if (panel) {
+          if (!isOpen) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          } else {
+            panel.style.maxHeight = '0';
+          }
+        }
+      });
+    });
+
+    // ---- Transport request form: WhatsApp deep link + live mailto fallback ----
+    const transportForm = document.getElementById('transport-form');
+    if (transportForm) {
+      const mailtoLink = document.getElementById('ts-mailto');
+
+      function buildTransportMessage() {
+        const pickup = document.getElementById('ts-pickup').value.trim();
+        const dropoff = document.getElementById('ts-dropoff').value.trim();
+        const date = document.getElementById('ts-date').value;
+        const bikes = document.getElementById('ts-bikes').value;
+        return `Hi, I would like to request bike transportation.\nPickup: ${pickup}\nDrop-off: ${dropoff}\nDate: ${date}\nNumber of bikes: ${bikes}`;
+      }
+
+      transportForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!transportForm.reportValidity()) return;
+        const message = buildTransportMessage();
+        const url = `https://api.whatsapp.com/send/?phone=995599373788&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+        window.open(url, '_blank', 'noopener');
+      });
+
+      ['ts-pickup', 'ts-dropoff', 'ts-date', 'ts-bikes'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+          const subject = encodeURIComponent('Bike Transportation Request');
+          const body = encodeURIComponent(buildTransportMessage());
+          mailtoLink.href = `mailto:kvkcycling@gmail.com?subject=${subject}&body=${body}`;
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
