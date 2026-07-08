@@ -959,7 +959,6 @@
         <li><a href="/" data-i18n="nav_home">Home</a></li>
         <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
         <li><a href="/rental" class="active" data-i18n="nav_rental">Bike Rental</a></li>
-        <li><a href="/self-service" data-i18n="nav_selfservice">Self-Service</a></li>
         <li><a href="/#why" data-i18n="nav_about">About</a></li>
         <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
       </ul>
@@ -1004,7 +1003,6 @@
       <li><a href="/" onclick="closeMenu()" data-i18n="nav_home">Home</a></li>
       <li><a href="/tours" onclick="closeMenu()" data-i18n="nav_tours">Tours</a></li>
       <li><a href="/rental" class="active" onclick="closeMenu()" data-i18n="nav_rental">Bike Rental</a></li>
-      <li><a href="/self-service" onclick="closeMenu()" data-i18n="nav_selfservice">Self-Service</a></li>
       <li><a href="/#why" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
       <li><a href="/#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
     </ul>
@@ -1413,7 +1411,6 @@
           <li><a href="/" data-i18n="nav_home">Home</a></li>
           <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
           <li><a href="/rental" data-i18n="nav_rental">Bike Rental</a></li>
-          <li><a href="/self-service" data-i18n="nav_selfservice">Self-Service</a></li>
           <li><a href="/#why" data-i18n="nav_about">About</a></li>
           <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
         </ul>
@@ -1449,7 +1446,7 @@
   <script>
     const T = {
       en: {
-        nav_home: 'Home', nav_tours: 'Tours', nav_rental: 'Bike Rental', nav_selfservice: 'Self-Service', nav_about: 'About', nav_contact: 'Contact',
+        nav_home: 'Home', nav_tours: 'Tours', nav_rental: 'Bike Rental', nav_about: 'About', nav_contact: 'Contact',
         btn_book: 'Book Now',
         hero_label: 'Tandro Bikes',
         hero_title: 'Bike Rental<br><span>in Georgia</span>',
@@ -1508,7 +1505,7 @@
         footer_copy: '© 2026 Tandro Bike Tours & Bike Rent Georgia. All rights reserved.',
       },
       ru: {
-        nav_home: 'Главная', nav_tours: 'Туры', nav_rental: 'Аренда велосипедов', nav_selfservice: 'Самообслуживание', nav_about: 'О нас', nav_contact: 'Контакты',
+        nav_home: 'Главная', nav_tours: 'Туры', nav_rental: 'Аренда велосипедов', nav_about: 'О нас', nav_contact: 'Контакты',
         btn_book: 'Забронировать',
         hero_label: 'Tandro Bikes',
         hero_title: 'Аренда<br><span>велосипедов в Грузии</span>',
@@ -1683,6 +1680,40 @@
     document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+
+  <!-- WhatsApp click tracking (GA4) -->
+  <script>
+    function isCardEl(el) {
+      return Array.from(el.classList).some(function (c) {
+        const parts = c.split('-');
+        const last = parts[parts.length - 1].toLowerCase();
+        return last === 'card' || last === 'item';
+      });
+    }
+
+    function findCard(link) {
+      let el = link.parentElement;
+      while (el && el !== document.body) {
+        if (isCardEl(el)) return el;
+        el = el.parentElement;
+      }
+      return null;
+    }
+
+    document.addEventListener('click', function (e) {
+      const link = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (!link) return;
+
+      const card = findCard(link);
+      const heading = card && card.querySelector('h1, h2, h3, h4, h5, h6, [class*="name"], [class*="title"], [class*="heading"], [class*="type"]');
+      const product = (heading ? heading.textContent : link.textContent).trim().toUpperCase();
+
+      gtag('event', 'whatsapp_click', {
+        'page': location.pathname,
+        'product': product
+      });
+    });
   </script>
 
 </body>
