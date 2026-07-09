@@ -1403,19 +1403,49 @@
       animation: tourFloat 3s ease-in-out infinite;
     }
 
-    /* ── Svaneti-Racha Promo Banner (October, autumn palette) ── */
-    .tour-promo--svaneti {
-      background: linear-gradient(160deg, #4A1A0F 0%, #B3400F 55%, #E08A1E 100%);
-      margin-top: 0;
+    /* ── Hero Promo Badge (Svaneti-Racha tour teaser) ── */
+    .hero-promo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      max-width: 100%;
+      transition: background var(--transition), border-color var(--transition);
     }
-    .tour-promo--svaneti .tour-promo-label {
-      color: #FFD9A0;
+    .hero-promo:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.4);
     }
-    .tour-promo--svaneti .btn-primary {
-      background: #16A34A;
+    .hero-promo-tag {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid var(--green);
+      border-radius: 3px;
+      padding: 2px 7px;
+      flex-shrink: 0;
     }
-    .tour-promo--svaneti .btn-primary:hover {
-      background: #15803D;
+    .hero-promo-text {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.4;
+    }
+    .hero-promo svg {
+      color: var(--green);
+      flex-shrink: 0;
+    }
+    @media (max-width: 480px) {
+      .hero-promo-text { font-size: 13px; }
     }
 
   </style>
@@ -1563,6 +1593,11 @@
       <p class="hero-label" data-i18n="hero_label">Georgia · Tbilisi · Kutaisi</p>
       <h1 class="hero-title" data-i18n-html="hero_title">Bike Rental<br><span>& Tours</span><br>in Georgia</h1>
       <p class="hero-sub" data-i18n="hero_sub">Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
+      <a href="svaneti-racha-tour.html" class="hero-promo">
+        <span class="hero-promo-tag">New</span>
+        <span class="hero-promo-text">Svaneti&ndash;Racha Tour &middot; October &mdash; View Full Tour Details</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
       <div class="hero-ctas">
         <a href="/tours" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -1576,21 +1611,6 @@
     </div>
     <div class="hero-scroll" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-  </section>
-
-  <!-- ── Svaneti-Racha October Tour Promo Banner ── -->
-  <section class="tour-promo tour-promo--svaneti">
-    <div class="tour-promo-inner container">
-      <div class="tour-promo-text">
-        <p class="tour-promo-label">&#127810; Limited Time &middot; October 2026</p>
-        <h2 class="tour-promo-title">Svaneti&ndash;Racha Tour</h2>
-        <p class="tour-promo-sub">8-Day Adventure &nbsp;&middot;&nbsp; Svaneti + Racha Wine Extension</p>
-      </div>
-      <a href="svaneti-racha-tour.html" class="btn-primary">
-        <span>View Full Tour Details</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
     </div>
   </section>
 
