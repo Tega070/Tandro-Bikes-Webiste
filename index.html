@@ -1412,47 +1412,65 @@
     }
 
     /* ── Hero Promo Badge (Svaneti-Racha tour teaser) ── */
+    @keyframes heroPromoGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0.55), 0 4px 18px rgba(22,163,74,0.35); }
+      50% { box-shadow: 0 0 0 10px rgba(22,163,74,0), 0 4px 18px rgba(22,163,74,0.35); }
+    }
+    @keyframes heroPromoDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
     .hero-promo {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      margin-bottom: 20px;
+      background: var(--green);
+      border: none;
+      border-radius: 999px;
+      padding: 12px 20px;
+      margin-bottom: 24px;
       max-width: 100%;
-      transition: background var(--transition), border-color var(--transition);
+      cursor: pointer;
+      animation: heroPromoGlow 2.2s ease-in-out infinite;
+      transition: transform var(--transition), background var(--transition);
     }
     .hero-promo:hover {
-      background: rgba(255,255,255,0.14);
-      border-color: rgba(255,255,255,0.4);
+      background: #15803D;
+      transform: translateY(-2px) scale(1.02);
+    }
+    .hero-promo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      flex-shrink: 0;
+      animation: heroPromoDot 1.4s ease-in-out infinite;
     }
     .hero-promo-tag {
       font-family: var(--font-heading);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--green);
-      border: 1px solid var(--green);
+      background: #fff;
       border-radius: 3px;
-      padding: 2px 7px;
+      padding: 3px 8px;
       flex-shrink: 0;
     }
     .hero-promo-text {
-      font-family: var(--font-body);
-      font-size: 14px;
-      color: rgba(255,255,255,0.9);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
       line-height: 1.4;
     }
     .hero-promo svg {
-      color: var(--green);
+      color: #fff;
       flex-shrink: 0;
     }
     @media (max-width: 480px) {
+      .hero-promo { padding: 10px 16px; }
       .hero-promo-text { font-size: 13px; }
     }
 
@@ -1598,14 +1616,15 @@
     <div class="hero-bg" id="hero-bg" role="img" aria-label="Group of cyclists on a scenic mountain road in Georgia"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
+      <a href="svaneti-racha-tour.html" class="hero-promo">
+        <span class="hero-promo-dot"></span>
+        <span class="hero-promo-tag">New</span>
+        <span class="hero-promo-text">Svaneti&ndash;Racha Tour &middot; September &mdash; View Full Tour Details</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
       <p class="hero-label" data-i18n="hero_label">Georgia · Tbilisi · Kutaisi</p>
       <h1 class="hero-title" data-i18n-html="hero_title">Bike Rental<br><span>& Tours</span><br>in Georgia</h1>
       <p class="hero-sub" data-i18n="hero_sub">Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
-      <a href="svaneti-racha-tour.html" class="hero-promo">
-        <span class="hero-promo-tag">New</span>
-        <span class="hero-promo-text">Svaneti&ndash;Racha Tour &middot; September &mdash; View Full Tour Details</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
       <div class="hero-ctas">
         <a href="/tours" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
