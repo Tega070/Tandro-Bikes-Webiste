@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G51R4FERYB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-G51R4FERYB');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="Favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="Favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="Favicons/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="Favicons/apple-touch-icon.png" />
+  <meta name="description" content="Svaneti-Racha 8-Day Bike Tour in October — Svaneti + Racha Wine Extension. Full itinerary and pricing coming soon. Ask us on WhatsApp." />
+  <title>Svaneti-Racha 8-Day Tour | Tandro Bikes</title>
+
+  <!-- LocalBusiness structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BikeStore",
+    "name": "Tandro Bikes",
+    "image": "https://www.tandrobikes.com/Images/Tandro%20Logo%20Without%20BG.png",
+    "url": "https://www.tandrobikes.com/",
+    "telephone": "+995599373788",
+    "priceRange": "50-200 GEL",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "8 Peristsvaleba Street",
+      "addressLocality": "Tbilisi",
+      "postalCode": "0179",
+      "addressCountry": "GE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 41.721046,
+      "longitude": 44.7896721
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "09:00",
+      "closes": "15:00"
+    },
+    "sameAs": [
+      "https://www.instagram.com/tandrobikes/",
+      "https://www.facebook.com/profile.php?id=100087942223965",
+      "https://maps.app.goo.gl/dW8tMeMxYSkNPnKz7"
+    ]
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1A3A6B;
+      --blue:   #2563EB;
+      --green:  #16A34A;
+      --dark:   #0F172A;
+      --surface:#F8FAFC;
+      --white:  #FFFFFF;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-heading: 'Barlow', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --radius: 4px;
+      --transition: 250ms ease;
+      --max-w: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
+
+    /* ============================================
+       LOADER
+    ============================================ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo { width: 80px; margin-bottom: 48px; opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards; }
+    .loader-track { width: 280px; height: 60px; position: relative; margin-bottom: 24px; }
+    .loader-road { position: absolute; bottom: 8px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.2); border-radius: 1px; }
+    .loader-bike { position: absolute; bottom: 10px; left: -60px; animation: rideAcross 1.8s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @media (prefers-reduced-motion: reduce) { .loader-bike { animation: none; left: 110px; } .loader-logo { animation: none; opacity: 1; } }
+    @keyframes rideAcross { 0% { left: -60px; } 100% { left: 310px; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .loader-text { font-family: var(--font-display); font-size: 22px; letter-spacing: 4px; color: rgba(255,255,255,0.7); opacity: 0; animation: fadeIn 0.6s ease 0.5s forwards; }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 16px;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-logo-name { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 1px; line-height: 1; display: flex; align-items: flex-end; gap: 5px; }
+    .nav-logo-bike-stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .nav-logo-bike-stack svg { width: 18px; height: 18px; opacity: 0.9; }
+    .nav-links { display: none; list-style: none; gap: 32px; }
+    .nav-links a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; color: var(--white); opacity: 0.85; transition: opacity var(--transition); }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-social { display: none; align-items: center; gap: 8px; }
+    .nav-social a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), background var(--transition); }
+    .nav-social a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+    .btn-book { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 0 20px; height: 40px; border-radius: var(--radius); transition: background var(--transition); white-space: nowrap; cursor: pointer; }
+    .btn-book:hover { background: #15803D; }
+    .lang-dropdown { position: relative; display: none; }
+    .mobile-lang-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: var(--white); font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; padding: 12px 32px; cursor: pointer; transition: background var(--transition); }
+    .mobile-lang-toggle:hover { background: rgba(255,255,255,0.1); }
+    .lang-current { display: flex; align-items: center; gap: 5px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius); padding: 5px 10px; cursor: pointer; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; transition: border-color var(--transition); }
+    .lang-current:hover { border-color: rgba(255,255,255,0.6); }
+    .lang-chevron { transition: transform var(--transition); flex-shrink: 0; }
+    .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+    .lang-menu { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); overflow: hidden; min-width: 100%; }
+    .lang-dropdown.open .lang-menu { display: block; }
+    .lang-menu-item { display: block; width: 100%; padding: 7px 14px; background: none; border: none; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; cursor: pointer; text-align: center; transition: color var(--transition), background var(--transition); }
+    .lang-menu-item:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 1px; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 49; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+    #mobile-menu.open { display: flex; }
+    .mobile-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 40px; }
+    .mobile-links a { font-family: var(--font-display); font-size: 40px; letter-spacing: 2px; color: var(--white); opacity: 0.85; transition: opacity var(--transition), color var(--transition); }
+    .mobile-links a:hover, .mobile-links a.active { opacity: 1; color: var(--green); }
+    .mobile-socials { display: flex; gap: 16px; margin-top: 16px; }
+    .mobile-socials a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: var(--white); opacity: 0.75; transition: opacity var(--transition), border-color var(--transition); }
+    .mobile-socials a:hover { opacity: 1; border-color: var(--green); }
+    @media (min-width: 768px) { .nav-links { display: flex; } .nav-social { display: flex; } .hamburger { display: none; } .lang-dropdown { display: block; } .mobile-lang-toggle { display: none; } }
+
+    /* ============================================
+       SHARED SECTION STYLES
+    ============================================ */
+    section { padding: 80px 16px; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+    .section-title { font-family: var(--font-display); font-size: clamp(36px, 6vw, 60px); line-height: 1; color: var(--dark); margin-bottom: 16px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: var(--radius); min-height: 52px; cursor: pointer; transition: background var(--transition), transform var(--transition); }
+    .btn-primary:hover { background: #15803D; transform: translateY(-1px); }
+
+    /* ============================================
+       PAGE HEADER
+    ============================================ */
+    #page-header {
+      background: var(--dark);
+      padding: 140px 16px 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    #page-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(22,163,74,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-header-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .page-header-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .page-header-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--green);
+    }
+    .page-header-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9vw, 96px);
+      line-height: 0.95;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+    .page-header-title span { color: var(--green); }
+    .page-header-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    /* ============================================
+       TOUR SECTIONS
+    ============================================ */
+    .tours-section { padding: 12px 16px; }
+    .tours-section:nth-child(even) { background: var(--surface); }
+
+    .tour-section-header { margin-bottom: 16px; }
+
+    .tour-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ============================================
+       ACCORDION
+    ============================================ */
+    .tour-item {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(15,23,42,0.05);
+    }
+
+    .tour-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+      background: var(--dark);
+      color: var(--white);
+      cursor: pointer;
+      transition: background var(--transition);
+      text-align: left;
+    }
+
+    .tour-header:hover { background: #1a2744; }
+
+    .tour-header[aria-expanded="true"] {
+      background: #0c1829;
+      border-bottom: 2px solid var(--green);
+    }
+
+    .tour-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: var(--white);
+    }
+
+    .tour-chevron {
+      flex-shrink: 0;
+      color: var(--green);
+      transition: transform 0.3s ease;
+    }
+
+    .tour-header[aria-expanded="true"] .tour-chevron {
+      transform: rotate(90deg);
+    }
+
+    .tour-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: var(--white);
+    }
+
+    .tour-panel.open { max-height: none; }
+
+    .tour-panel-inner {
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    @media (min-width: 640px) {
+      .tour-panel-inner { grid-template-columns: 1fr 1fr; align-items: stretch; }
+    }
+
+    .tour-photo-placeholder {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .tour-photo-placeholder svg { opacity: 0.4; }
+
+    .tour-photo-placeholder span {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .tour-details { display: flex; flex-direction: column; gap: 16px; }
+    .tour-details .btn-primary { margin-top: auto; align-self: flex-start; }
+
+    .tour-highlights-title {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: -8px;
+    }
+
+    .tour-description {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 400;
+      color: #1e293b;
+      line-height: 1.75;
+    }
+
+    .tour-photo-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 260px;
+    }
+
+    .tour-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tour-photo-double {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+
+    .tour-photo-item {
+      flex: 1;
+      width: 50%;
+      min-height: 260px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .tour-highlights {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      color: rgba(15,23,42,0.8);
+    }
+    .tour-highlights li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .tour-highlights li::before {
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .tour-best-for {
+      margin-top: 14px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer { background: #060E1A; padding: 56px 16px 0; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media (min-width: 768px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr; gap: 64px; } }
+    .footer-brand img { height: 52px; margin-bottom: 16px; }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .footer-socials a { display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); transition: color var(--transition); cursor: pointer; }
+    .footer-social-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.12); border-radius: 50%; transition: border-color var(--transition); flex-shrink: 0; }
+    .footer-social-icon svg { width: 22px; height: 22px; }
+    .footer-social-label { font-family: var(--font-heading); font-size: 10px; font-weight: 600; letter-spacing: 0.4px; color: rgba(255,255,255,0.35); transition: color var(--transition); white-space: nowrap; }
+    .footer-socials a:hover { color: var(--green); }
+    .footer-socials a:hover .footer-social-icon { border-color: var(--green); }
+    .footer-socials a:hover .footer-social-label { color: var(--green); }
+    .footer-partner-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); margin: 0 4px; align-self: flex-start; flex-shrink: 0; }
+    .footer-partner-link:hover { color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-icon { border-color: #FF8000 !important; }
+    .footer-partner-link:hover .footer-social-label { color: #FF8000 !important; }
+    .footer-col-title { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-size: 15px; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.6); }
+    .footer-contact-list li svg { flex-shrink: 0; margin-top: 2px; color: var(--green); }
+    .footer-contact-list a { color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-contact-list a:hover { color: var(--white); }
+    .footer-map-link { color: var(--green) !important; text-decoration: underline; text-underline-offset: 3px; }
+    .footer-map-link:hover { color: #fff !important; }
+    .footer-bottom { margin-top: 56px; border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+
+    /* ============================================
+       HERO ATMOSPHERIC ENHANCEMENT
+    ============================================ */
+    #page-header {
+      background: linear-gradient(160deg, #07111f 0%, #0F172A 45%, #091a0d 100%);
+    }
+    #page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 15% 60%, rgba(22,163,74,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 70% at 85% 20%, rgba(37,99,235,0.1) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 32px;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-right: 32px;
+      margin-right: 32px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+    .hero-stat-label {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ============================================
+       TOUR BADGES
+    ============================================ */
+    .tour-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .tour-badge {
+      display: none;
+      align-items: center;
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 4px 9px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    @media (min-width: 480px) { .tour-badge { display: inline-flex; } }
+    .badge-duration { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+    .badge-easy     { background: rgba(22,163,74,0.22);  color: #4ade80; }
+    .badge-moderate { background: rgba(234,179,8,0.2);   color: #fbbf24; }
+    .badge-hard     { background: rgba(239,68,68,0.18);  color: #f87171; }
+
+    /* ============================================
+       GRADIENT PHOTO PLACEHOLDERS
+    ============================================ */
+    .tour-photo-placeholder {
+      border: none !important;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .tour-photo-placeholder .ph-icon {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 4px;
+    }
+    .tour-photo-placeholder .ph-scene {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      pointer-events: none;
+    }
+    .tour-photo-placeholder .ph-label {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.2);
+      padding: 3px 7px;
+      border-radius: 3px;
+    }
+    /* Gradient themes */
+    .ph-city      { background: linear-gradient(150deg, #0f2040 0%, #1c3d74 100%); }
+    .ph-wine      { background: linear-gradient(150deg, #340d28 0%, #662040 100%); }
+    .ph-spa       { background: linear-gradient(150deg, #0a2a38 0%, #14566c 100%); }
+    .ph-monastery { background: linear-gradient(150deg, #1a260f 0%, #374e1e 100%); }
+    .ph-mtb       { background: linear-gradient(150deg, #0c1e0d 0%, #1a4020 100%); }
+    .ph-oldtown   { background: linear-gradient(150deg, #2a1604 0%, #663a0a 100%); }
+    .ph-lake      { background: linear-gradient(150deg, #051e2e 0%, #0c4462 100%); }
+    .ph-nature    { background: linear-gradient(150deg, #052818 0%, #0e5032 100%); }
+    .ph-kazbegi   { background: linear-gradient(150deg, #0a1630 0%, #182f60 100%); }
+    .ph-svaneti   { background: linear-gradient(150deg, #180b2e 0%, #361c5c 100%); }
+    .ph-borjomi   { background: linear-gradient(150deg, #0a1c12 0%, #164832 100%); }
+    .ph-kakheti   { background: linear-gradient(150deg, #261a04 0%, #5c3f0a 100%); }
+    .ph-custom    { background: linear-gradient(150deg, #0a0a1e 0%, #161630 100%); }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Panel height increase */
+    .tour-panel.open { max-height: none; }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      min-height: 56px;
+      transition: background var(--transition), transform var(--transition);
+      white-space: nowrap;
+    }
+    .btn-whatsapp:hover { background: #15803D; transform: translateY(-1px); }
+    .tour-promo {
+      background: linear-gradient(160deg, #0F172A 0%, #1A3A6B 60%, #16A34A 100%);
+      padding: 48px 16px;
+      margin-top: 40px;
+    }
+    .tour-promo-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .tour-promo-label {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4ade80;
+      margin-bottom: 8px;
+    }
+    .tour-promo-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 52px);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .tour-promo-sub {
+      font-family: var(--font-body);
+      font-size: 18px;
+      color: rgba(255,255,255,0.75);
+    }
+    @media (max-width: 640px) {
+      .tour-promo-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @keyframes tourFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .tour-promo-text {
+      animation: tourFloat 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading Tandro Bike Tours">
+    <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours" class="loader-logo" />
+    <div class="loader-track">
+      <div class="loader-road"></div>
+      <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
+        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="26" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="Tandro home">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <span class="nav-logo-name">
+          Tandro
+          <span class="nav-logo-bike-stack">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M9 10.5l3 6.5H5.5"/><path d="M9 10.5l7-1"/><path d="M16 9.5l-4 7.5"/><path d="M16 9.5l2.5 7.5"/><path d="M7.5 9.5h3.5"/><path d="M9 9.5v1"/><path d="M15 7.5h3"/><path d="M16.5 7.5l-.5 2"/></svg>
+            Bikes
+          </span>
+        </span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="/" data-i18n="nav_home">Home</a></li>
+        <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
+        <li><a href="/rental" data-i18n="nav_rental">Bike Rental</a></li>
+        <li><a href="/#why" data-i18n="nav_about">About</a></li>
+        <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-social" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button class="lang-current" id="lang-btn" onclick="toggleLangMenu()" aria-label="Switch language">
+            <span id="lo-current">EN</span>
+            <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="lang-menu" id="lang-menu">
+            <button class="lang-menu-item" id="lo-other" onclick="selectLang()">RU</button>
+          </div>
+        </div>
+
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" aria-label="Book a tour on WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Book Now
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-links" role="list">
+      <li><a href="/" onclick="closeMenu()" data-i18n="nav_home">Home</a></li>
+      <li><a href="/tours" onclick="closeMenu()" data-i18n="nav_tours">Tours</a></li>
+      <li><a href="/rental" onclick="closeMenu()" data-i18n="nav_rental">Bike Rental</a></li>
+      <li><a href="/#why" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
+      <li><a href="/#cta" onclick="closeMenu()" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send/?phone=995599373788&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-book" style="font-size:16px; padding: 14px 32px;"><span data-i18n="btn_book">Book Now</span></a>
+    <button class="mobile-lang-toggle" onclick="selectLang()">
+      Switch to <span id="lo-mobile-other">RU</span>
+    </button>
+    <div class="mobile-socials" aria-label="Social media">
+      <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PAGE HEADER
+  =========================================== -->
+  <section id="page-header">
+    <div class="page-header-inner">
+      <p class="page-header-label">Tandro Bike Tours &middot; October 2026</p>
+      <h1 class="page-header-title">Svaneti&ndash;Racha<br><span>Tour</span></h1>
+      <p class="page-header-sub">8-Day Version &mdash; Svaneti + Racha Wine Extension. Full itinerary, pricing, and booking details coming soon.</p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       COMING SOON
+  =========================================== -->
+  <section class="tours-section" id="coming-soon" aria-labelledby="coming-soon-title">
+    <div class="container" style="text-align:center; padding: 40px 16px 80px;">
+      <h2 id="coming-soon-title" style="font-family:var(--font-display); font-size:clamp(28px,5vw,44px); color:var(--dark); margin-bottom:16px;">Full Tour Details Coming Soon</h2>
+      <p style="max-width:560px; margin:0 auto 32px; color:var(--muted); font-size:17px;">We're putting together the day-by-day itinerary, pricing, and booking info for this tour. Message us on WhatsApp in the meantime and we'll answer any questions right away.</p>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I+am+interested+in+the+Svaneti-Racha+8-Day+Tour+in+October&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-whatsapp">
+        Ask on WhatsApp ↗
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours logo" />
+        <p class="footer-tagline" data-i18n="footer_tagline">Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.</p>
+        <div class="footer-socials" aria-label="Social media links">
+          <a href="https://www.instagram.com/tandrobikes/" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="footer-social-icon" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-color:transparent;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none"/></svg></span>
+            <span class="footer-social-label">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100087942223965" target="_blank" rel="noopener" aria-label="Facebook">
+            <span class="footer-social-icon" style="background:#1877F2;border-color:#1877F2;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span class="footer-social-label">Facebook</span>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=995599373788" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="footer-social-icon" style="background:#25D366;border-color:#25D366;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></span>
+            <span class="footer-social-label">WhatsApp</span>
+          </a>
+          <span class="footer-partner-divider" aria-hidden="true"></span>
+          <a href="https://www.getyourguide.com/tbilisi-l1379/tbilisi-bike-tour-peace-bridge-old-town-sameba-views-t1164852/?ranking_uuid=0132c445-e886-4253-93d0-9188ee75a85d" target="_blank" rel="noopener" aria-label="Book on GetYourGuide" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 2l-1.5 4H6l3.5 2.5-1.5 4L12 14l4 2.5-1.5-4L18 10h-4.5z"/></svg></span>
+            <span class="footer-social-label">GetYourGuide</span>
+          </a>
+          <a href="https://www.bajabikes.eu/en/tbilisi-sightseeing-tours/" target="_blank" rel="noopener" aria-label="Book on Baja Bikes" class="footer-partner-link">
+            <span class="footer-social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/><path d="M15 9 L15 7"/><path d="M13.5 7 L17 7"/></svg></span>
+            <span class="footer-social-label">Baja Bikes</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title" data-i18n="footer_nav">Navigate</p>
+        <ul class="footer-links" role="list">
+          <li><a href="/" data-i18n="nav_home">Home</a></li>
+          <li><a href="/tours" data-i18n="nav_tours">Tours</a></li>
+          <li><a href="/rental" data-i18n="nav_rental">Bike Rental</a></li>
+          <li><a href="/#why" data-i18n="nav_about">About</a></li>
+          <li><a href="/#cta" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title" data-i18n="nav_contact">Contact</p>
+        <ul class="footer-contact-list" role="list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.98-.98a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+995599373788">+995 599 373 788</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:kvkcycling@gmail.com">kvkcycling@gmail.com</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="https://maps.app.goo.gl/dW8tMeMxYSkNPnKz7" target="_blank" rel="noopener" class="footer-map-link">Tbilisi</a> &amp; <a href="https://maps.app.goo.gl/DyHZWoafGciduHgX7" target="_blank" rel="noopener" class="footer-map-link">Kutaisi</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy" data-i18n="footer_copy">© 2026 Tandro Bike Tours &amp; Bike Rent Georgia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       LANGUAGE SWITCHER
+  =========================================== -->
+  <script>
+    const T = {
+      en: {
+        nav_home:'Home', nav_tours:'Tours', nav_rental:'Bike Rental', nav_about:'About', nav_contact:'Contact',
+        btn_book:'Book Now', btn_book_tour:'Book This Tour',
+        tours_brand:'Tandro Bike Tours',
+        tours_title:'Georgia<br><span>Bike Tours</span>',
+        tours_sub:"Guided rides across Kutaisi, Tbilisi, and Georgia's most breathtaking landscapes — led by local cyclists who know every route, viewpoint, and hidden corner.",
+        tstat1:'Tours', tstat2:'Regions', tstat3_num:'Local', tstat3_lbl:'Guides', tstat4_num:'Easy', tstat4_lbl:'Book via WhatsApp',
+        kutaisi_label:'Kutaisi', kutaisi_title:'Bike Tours<br>in Kutaisi',
+        tbilisi_label:'Tbilisi', tbilisi_title:'Bike Tours<br>in Tbilisi',
+        svaneti_label:'Svaneti', svaneti_title:'Bike Tours<br>in Svaneti',
+        georgia_label:'Georgia', georgia_title:'Bike Tours<br>across Georgia',
+        t1_name:'Kutaisi City Ride', t2_name:'Winery Tour', t3_name:'Tskaltubo Tour',
+        t6_name:'Tbilisi Urban Discovery',
+        t7_name:'Turtle Lake', t8_name:'Bevreti & Lisi Lake',
+        t14_name:'Mestia Bike Tour', t15_name:'Gwaldi Pass E-Bike Adventure',
+        t9_name:'Kazbegi & Gudauri — 7-Day Tour', t10_name:'Mestia & Svaneti — 7-Day Expedition',
+        t11_name:'Zekari Pass & Borjomi', t12_name:'Kakheti 550km Loop', t13_name:'Custom Tour',
+        footer_tagline:'Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.',
+        footer_nav:'Navigate', footer_copy:'© 2026 Tandro Bike Tours & Bike Rent Georgia. All rights reserved.'
+      },
+      ru: {
+        nav_home:'Главная', nav_tours:'Туры', nav_rental:'Аренда велосипеда', nav_about:'О нас', nav_contact:'Контакт',
+        btn_book:'Забронировать', btn_book_tour:'Забронировать тур',
+        tours_brand:'Tandro Велотуры',
+        tours_title:'Велотуры<br><span>по Грузии</span>',
+        tours_sub:'Туры с гидом по Кутаиси, Тбилиси и самым живописным местам Грузии — с местными велосипедистами, знающими каждый маршрут.',
+        tstat1:'Туров', tstat2:'Регионов', tstat3_num:'Местные', tstat3_lbl:'Гиды', tstat4_num:'Легко', tstat4_lbl:'Забронировать в WhatsApp',
+        kutaisi_label:'Кутаиси', kutaisi_title:'Велотуры<br>в Кутаиси',
+        tbilisi_label:'Тбилиси', tbilisi_title:'Велотуры<br>в Тбилиси',
+        svaneti_label:'Сванетия', svaneti_title:'Велотуры<br>в Сванетии',
+        georgia_label:'Грузия', georgia_title:'Велотуры<br>по Грузии',
+        t1_name:'Городской тур по Кутаиси', t2_name:'Тур по виноградникам', t3_name:'Тур в Цхалтубо',
+        t6_name:'Открытие Тбилиси',
+        t7_name:'Черепашье озеро', t8_name:'Беврети и озеро Лиси',
+        t14_name:'Велотур по Местии', t15_name:'Э-байк тур через перевал Гвалди',
+        t9_name:'Казбеги и Гудаури — 7-дневный тур', t10_name:'Местия и Сванетия — 7-дневная экспедиция',
+        t11_name:'Зекарский перевал и Боржоми', t12_name:'Кахетия 550 км петля', t13_name:'Индивидуальный тур',
+        footer_tagline:'Велотуры с гидом и аренда велосипедов по Грузии — от древнего Тбилиси до Кутаиси, Местии, Боржоми и других мест.',
+        footer_nav:'Навигация', footer_copy:'© 2026 Tandro Bike Tours & Bike Rent Georgia. Все права защищены.'
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+      });
+      const current = document.getElementById('lo-current');
+      const other = document.getElementById('lo-other');
+      if (current && other) {
+        current.textContent = lang === 'en' ? 'EN' : 'RU';
+        other.textContent = lang === 'en' ? 'RU' : 'EN';
+      }
+      const mobileOther = document.getElementById('lo-mobile-other');
+      if (mobileOther) mobileOther.textContent = lang === 'en' ? 'RU' : 'EN';
+      document.documentElement.lang = lang;
+      localStorage.setItem('tandro_lang', lang);
+    }
+
+    function toggleLangMenu() {
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function selectLang() {
+      const current = localStorage.getItem('tandro_lang') || 'en';
+      applyLang(current === 'en' ? 'ru' : 'en');
+      document.getElementById('lang-dropdown').classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const dd = document.getElementById('lang-dropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    const saved = localStorage.getItem('tandro_lang');
+    if (saved && saved !== 'en') applyLang(saved);
+  </script>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  =========================================== -->
+  <script>
+    // ---- Loader ----
+    const loader = document.getElementById('loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); }, 800);
+    });
+    setTimeout(() => { if (loader && !loader.classList.contains('hidden')) { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 500); } }, 4000);
+
+    // ---- Navbar scroll ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    // ---- Hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+    // ---- Scroll reveal ----
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.tour-item').forEach((el, i) => {
+      el.classList.add('reveal');
+      el.dataset.delay = (i % 5) * 80;
+      revealObserver.observe(el);
+    });
+
+    document.querySelectorAll('.tour-section-header, .hero-stats').forEach(el => {
+      el.classList.add('reveal');
+      el.dataset.delay = 0;
+      revealObserver.observe(el);
+    });
+
+    // ---- Accordion ----
+    document.querySelectorAll('.tour-list').forEach(group => {
+      group.querySelectorAll('.tour-header').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          // Close all in this group
+          group.querySelectorAll('.tour-header').forEach(b => {
+            b.setAttribute('aria-expanded', 'false');
+            const p = document.getElementById(b.getAttribute('aria-controls'));
+            if (p) { p.classList.remove('open'); p.style.maxHeight = '0'; }
+          });
+
+          // Open clicked if it was closed
+          if (!isOpen) {
+            btn.setAttribute('aria-expanded', 'true');
+            const panel = document.getElementById(btn.getAttribute('aria-controls'));
+            if (panel) { panel.classList.add('open'); panel.style.maxHeight = panel.scrollHeight + 'px'; }
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- WhatsApp click tracking (GA4) -->
+  <script>
+    function isCardEl(el) {
+      return Array.from(el.classList).some(function (c) {
+        const parts = c.split('-');
+        const last = parts[parts.length - 1].toLowerCase();
+        return last === 'card' || last === 'item';
+      });
+    }
+
+    function findCard(link) {
+      let el = link.parentElement;
+      while (el && el !== document.body) {
+        if (isCardEl(el)) return el;
+        el = el.parentElement;
+      }
+      return null;
+    }
+
+    document.addEventListener('click', function (e) {
+      const link = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (!link) return;
+
+      const card = findCard(link);
+      const heading = card && card.querySelector('h1, h2, h3, h4, h5, h6, [class*="name"], [class*="title"], [class*="heading"], [class*="type"]');
+      const product = (heading ? heading.textContent : link.textContent).trim().toUpperCase();
+
+      gtag('event', 'whatsapp_click', {
+        'page': location.pathname,
+        'product': product
+      });
+    });
+  </script>
+
+</body>
+</html>
