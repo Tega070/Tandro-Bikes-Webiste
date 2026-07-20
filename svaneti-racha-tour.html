@@ -462,6 +462,28 @@
       line-height: 1.1;
     }
 
+    .day-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      margin-top: 2px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .day-fact {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e293b;
+    }
+
+    .day-fact svg { color: var(--green); flex-shrink: 0; }
+    .day-fact strong { font-weight: 700; color: var(--dark); }
+
     /* ============================================
        FOOTER
     ============================================ */
@@ -996,12 +1018,17 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/day 1.jpg" alt="Day 1 — Kutaisi to Jvari / Enguri Reservoir" class="tour-photo" loading="eager" />
+              <img src="Images/8 day tour for september/day 1.jpg" alt="Day 1 — Transfer to Jvari, ride to Zugdidi" class="tour-photo" loading="eager" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 1</p>
-              <h3 class="itinerary-day-title">Kutaisi to Jvari / Enguri Reservoir</h3>
-              <p class="tour-description">Start from Kutaisi and transfer toward Jvari. Warm-up ride around the Enguri Reservoir area. This is an easier first day, useful for bike fitting, checking equipment, and starting the tour without stress. Overnight near Jvari / Enguri.</p>
+              <h3 class="itinerary-day-title">Transfer to Jvari &ndash; Ride to Zugdidi</h3>
+              <p class="tour-description">We transfer by vehicle from Kutaisi to Jvari, then get on the bikes for the first ride of the tour toward Zugdidi. A gentle, easy-paced start &mdash; perfect for adjusting to your bike, checking equipment, and settling into the group before the mountains begin.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/></svg><strong>35 km</strong>&nbsp;riding</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Zugdidi</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Astoria</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1009,12 +1036,16 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/Day 2.jpg" alt="Day 2 — Jvari to Khaishi / Becho direction" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/Day 2.jpg" alt="Day 2 — Transfer to Jvari, ride to Letsperi" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 2</p>
-              <h3 class="itinerary-day-title">Jvari to Khaishi / Becho direction</h3>
-              <p class="tour-description">We begin the road toward Svaneti, following the Enguri valley. The route is beautiful but long and mountainous, so we split Jvari&ndash;Mestia into two days. This keeps the riding realistic, especially for cycling distance and support logistics. Overnight around Khaishi / Becho direction or another suitable village before Mestia.</p>
+              <h3 class="itinerary-day-title">Transfer to Jvari &ndash; Ride to Letsperi</h3>
+              <p class="tour-description">A short transfer from Zugdidi back to Jvari, then we continue riding deeper into the Enguri valley toward Letsperi. The road begins to climb gently as Svaneti's peaks come into view, setting the stage for the days ahead.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Letsperi</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Chubuzeni</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1022,12 +1053,17 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/Day 3.jpg" alt="Day 3 — Khaishi / Becho direction to Mestia" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/Day 3.jpg" alt="Day 3 — Letsperi to Mestia ride" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 3</p>
-              <h3 class="itinerary-day-title">Khaishi / Becho direction to Mestia</h3>
-              <p class="tour-description">Continue toward Mestia, entering the heart of Upper Svaneti. The road becomes more dramatic, with mountain valleys, rivers, villages, and Svan towers. Because yesterday already covered part of the approach, this day becomes much more enjoyable and manageable. Overnight in Mestia.</p>
+              <h3 class="itinerary-day-title">Letsperi to Mestia</h3>
+              <p class="tour-description">The big climb of the tour. We ride from Letsperi into the heart of Upper Svaneti, with the road growing more dramatic at every turn &mdash; mountain valleys, rivers, remote villages, and the first Svan defense towers appear as we approach Mestia.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/></svg><strong>70 km</strong>&nbsp;riding</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Mestia</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Latour Mestia</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1035,12 +1071,16 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/day 4.jpg" alt="Day 4 — Mestia area ride" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/day 4.jpg" alt="Day 4 — Mestia area relaxed ride" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 4</p>
-              <h3 class="itinerary-day-title">Mestia area ride</h3>
-              <p class="tour-description">Full day around Mestia. Possible options include scenic village riding, viewpoints, cultural stops, or a stronger mountain route depending on the group. This day gives the tour proper time in Svaneti — this makes the itinerary more flexible &amp; enjoyable. Overnight in Mestia.</p>
+              <h3 class="itinerary-day-title">Mestia Area &ndash; Relaxed Ride</h3>
+              <p class="tour-description">A full day to enjoy Mestia itself. A relaxed ride around the surrounding villages, viewpoints, and Svan towers, with time for cultural stops and to properly rest the legs before the bigger days ahead in Upper Svaneti.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Mestia</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Latour Mestia</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1048,12 +1088,17 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/Day 5.jpg" alt="Day 5 — Mestia / Ushguli direction – Zagari Pass area – Lentekhi" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/Day 5.jpg" alt="Day 5 — Mestia to Ushguli ride" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 5</p>
-              <h3 class="itinerary-day-title">Mestia / Ushguli direction &ndash; Zagari Pass area &ndash; Lentekhi</h3>
-              <p class="tour-description">Adventure crossing from Upper Svaneti toward Lower Svaneti via the Zagari Pass direction. This is one of the most memorable parts of the tour, but it must stay flexible because of road and weather conditions. The support vehicle allows us to ride the best parts and skip rough or unrealistic sections if needed. Overnight in Lentekhi.</p>
+              <h3 class="itinerary-day-title">Mestia to Ushguli</h3>
+              <p class="tour-description">One of the most memorable rides in Georgia. We follow the valley road up toward Ushguli, one of the highest continuously inhabited settlements in Europe, with Mount Shkhara and its glaciers as a constant backdrop.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/></svg><strong>45 km</strong>&nbsp;riding</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Ushguli</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Koshki</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1061,12 +1106,18 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/day 6.jpg" alt="Day 6 — Lentekhi – Orbeli Pass – Ambrolauri / Racha" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/day 6.jpg" alt="Day 6 — Ushguli to Lentekhi ride, transfer to Ambrolauri" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 6</p>
-              <h3 class="itinerary-day-title">Lentekhi &ndash; Orbeli Pass &ndash; Ambrolauri / Racha</h3>
-              <p class="tour-description">From Lentekhi we cross toward Racha through the Orbeli Pass direction. This is a beautiful transition from Svaneti/Lechkhumi into Racha. We'll go up to the top of Orbeli pass by vehicle, and do an amazing, scenic descent towards Racha. This descent will even out all the climbs we'll have done before. Soon, we arrive in the Ambrolauri area. Overnight in Racha.</p>
+              <h3 class="itinerary-day-title">Ushguli to Lentekhi &ndash; Transfer to Ambrolauri</h3>
+              <p class="tour-description">A long and rewarding descent from Ushguli down to Lentekhi, leaving Upper Svaneti behind. From Lentekhi we transfer by vehicle to Ambrolauri, crossing into the Racha region and marking the start of the wine leg of the journey.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/></svg><strong>75 km</strong>&nbsp;riding</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="7" rx="1"/><path d="M5 11l1.5-5h11L19 11"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg><strong>70 km</strong>&nbsp;transfer</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Ambrolauri</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Nordmann</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1074,12 +1125,16 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/Day 7.jpeg" alt="Day 7 — Racha cycling and wine tasting" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/Day 7.jpeg" alt="Day 7 — Ambrolauri and Racha relaxed ride, wine dinner" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 7</p>
-              <h3 class="itinerary-day-title">Racha cycling + wine tasting</h3>
-              <p class="tour-description">A dedicated Racha day. We ride through the Ambrolauri / Khvanchkara / local village areas, with quieter roads, green valleys, vineyards, and mountain views. The riding should be enjoyable rather than exhausting, because the wine and food experience is an important part of this day. Wine tasting can focus on Khvanchkara, Usakhelouri, and other local wines, with a local dinner. Overnight in Racha.</p>
+              <h3 class="itinerary-day-title">Ambrolauri &amp; Racha &ndash; Relaxed Ride and Wine Dinner</h3>
+              <p class="tour-description">A dedicated Racha day. A relaxed ride through the Ambrolauri area and surrounding villages, with quiet roads, green valleys, and vineyards. In the evening, a wine dinner featuring local Racha wines such as Khvanchkara and Usakhelouri, paired with traditional food.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Ambrolauri</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Nordmann</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1087,12 +1142,18 @@
         <div class="tour-item">
           <div class="tour-panel-inner">
             <div class="tour-photo-wrap">
-              <img src="Images/8 day tour for september/Day 8.jpg" alt="Day 8 — Racha / Lechkhumi / Tskaltubo to Kutaisi" class="tour-photo" loading="lazy" />
+              <img src="Images/8 day tour for september/Day 8.jpg" alt="Day 8 — Ambrolauri to Alpana, ride to Kutaisi" class="tour-photo" loading="lazy" />
             </div>
             <div class="tour-details">
               <p class="itinerary-day-num">Day 8</p>
-              <h3 class="itinerary-day-title">Racha / Lechkhumi / Tskaltubo &ndash; Kutaisi</h3>
-              <p class="tour-description">Final ride and return to Kutaisi. We'll do a transfer to Alpana, and ride south, down into Kutaisi with the beautiful new road connecting these regions directly, passing Tvishi, home of the naturally semi-sweet white wine Tvishi.</p>
+              <h3 class="itinerary-day-title">Ambrolauri to Alpana &ndash; Ride to Kutaisi</h3>
+              <p class="tour-description">The final day. A transfer from Ambrolauri to Alpana, then we get back on the bikes for the last ride of the tour, down into Kutaisi on the scenic road connecting the regions, passing Tvishi &mdash; home of the naturally semi-sweet white wine of the same name.</p>
+              <div class="day-facts">
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="7" rx="1"/><path d="M5 11l1.5-5h11L19 11"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg><strong>30 km</strong>&nbsp;transfer</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M5.5 17.5 L9.5 9 L18.5 17.5"/><path d="M9.5 9 L13 13"/><path d="M8 12 L12 12"/><path d="M9.5 9 L15 9"/><path d="M15 9 L18.5 17.5"/></svg><strong>55 km</strong>&nbsp;riding</span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Overnight in <strong>Kutaisi</strong></span>
+                <span class="day-fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg><strong>Hotel Terrace Kutaisi</strong></span>
+              </div>
             </div>
           </div>
         </div>
