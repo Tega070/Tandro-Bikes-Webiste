@@ -763,7 +763,7 @@
     }
     .pricing-facts {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       margin-bottom: 20px;
       padding: 16px 0;
@@ -840,7 +840,7 @@
     }
     @media (max-width: 640px) {
       .pricing-hero { padding: 24px 20px; }
-      .pricing-facts { grid-template-columns: 1fr; gap: 12px; }
+      .pricing-facts { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
       .pricing-includes-list { grid-template-columns: 1fr; }
     }
 
@@ -1184,6 +1184,10 @@
 
         <div class="pricing-facts">
           <div class="pricing-fact">
+            <span class="pricing-fact-num">Sep 5&ndash;12</span>
+            <span class="pricing-fact-label">Tour Dates</span>
+          </div>
+          <div class="pricing-fact">
             <span class="pricing-fact-num">8&ndash;10</span>
             <span class="pricing-fact-label">Standard Group Size</span>
           </div>
@@ -1200,6 +1204,7 @@
         <p class="pricing-includes-title">What's Included</p>
         <ul class="pricing-includes-list">
           <li>Hotels</li>
+          <li>Breakfast</li>
           <li>Bike rental</li>
           <li>Professional guide</li>
           <li>Support vehicle / transport</li>
