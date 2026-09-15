@@ -249,6 +249,36 @@
     }
 
     /* ============================================
+       BEFORE YOU BOOK (compact note)
+    ============================================ */
+    .before-book-wrap { padding: 20px 16px 0; }
+    .before-book-box {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .before-book-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .before-book-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    @media (min-width: 768px) {
+      .before-book-wrap { padding: 28px 24px 0; }
+    }
+
+    /* ============================================
        TOUR SECTIONS
     ============================================ */
     .tours-section { padding: 12px 16px; }
@@ -1002,6 +1032,18 @@
       <p class="page-header-sub">Our brand-new gravel bike lineup. Full specs, models, and pricing are being added shortly — message us on WhatsApp for details in the meantime.</p>
     </div>
   </section>
+
+  <!-- ==========================================
+       BEFORE YOU BOOK
+  =========================================== -->
+  <div class="before-book-wrap">
+    <div class="container">
+      <div class="before-book-box">
+        <p class="before-book-title">Before You Book</p>
+        <p class="before-book-text">Your first message or email must include six details: your rental dates, pannier choice, pedal choice, pickup &amp; drop-off cities, accessories and riders' height. If a location has not been decided yet, please write &ldquo;Not decided yet&rdquo;.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- ==========================================
        GRAVEL BIKE DETAILS (placeholder)
