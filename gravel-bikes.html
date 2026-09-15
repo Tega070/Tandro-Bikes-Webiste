@@ -394,7 +394,56 @@
       width: 100%;
       object-fit: cover;
       border-bottom: 1px solid var(--border);
+      cursor: zoom-in;
+      transition: filter var(--transition);
     }
+    .gravel-tier-image:hover { filter: brightness(0.92); }
+
+    /* ============================================
+       LIGHTBOX
+    ============================================ */
+    #lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.92);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: auto;
+    }
+    #lightbox-overlay.open { display: flex; }
+    #lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 4px;
+      cursor: zoom-in;
+      transition: transform 0.25s ease;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    #lightbox-overlay img.zoomed {
+      max-width: none;
+      max-height: none;
+      width: 180%;
+      cursor: zoom-out;
+    }
+    #lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.2); }
     .gravel-tier-body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
     .gravel-tier-name {
       font-family: var(--font-heading);
@@ -1327,6 +1376,16 @@
   </section>
 
   <!-- ==========================================
+       IMAGE LIGHTBOX
+  =========================================== -->
+  <div id="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image preview">
+    <div id="lightbox-close" aria-label="Close image preview">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <!-- ==========================================
        FOOTER
   =========================================== -->
   <footer>
@@ -1559,6 +1618,40 @@
         });
       });
     });
+  </script>
+
+  <!-- Image Lightbox -->
+  <script>
+    const lightbox = document.getElementById('lightbox-overlay');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightboxImg.classList.remove('zoomed');
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightboxImg.classList.remove('zoomed');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.gravel-tier-image').forEach(img => {
+      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    });
+
+    lightboxImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lightboxImg.classList.toggle('zoomed');
+    });
+
+    lightbox.addEventListener('click', closeLightbox);
+    lightboxClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 
   <!-- WhatsApp click tracking (GA4) -->
