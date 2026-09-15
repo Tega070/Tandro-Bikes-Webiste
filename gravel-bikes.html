@@ -279,6 +279,36 @@
     }
 
     /* ============================================
+       BOOKING DETAILS
+    ============================================ */
+    .booking-details-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .booking-detail-item {
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
+    }
+    .booking-detail-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .booking-detail-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    @media (min-width: 768px) {
+      .booking-details-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ============================================
        TOUR SECTIONS
     ============================================ */
     .tours-section { padding: 12px 16px; }
@@ -1044,6 +1074,55 @@
       </div>
     </div>
   </div>
+
+  <!-- ==========================================
+       BOOKING DETAILS
+  =========================================== -->
+  <section class="tours-section" id="booking-details" aria-labelledby="booking-details-title">
+    <div class="container">
+      <div class="tour-section-header">
+        <p class="section-label">Please Read</p>
+        <h2 class="section-title" id="booking-details-title">Booking Details</h2>
+      </div>
+
+      <div class="booking-details-grid">
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Rental Dates</h3>
+          <p class="booking-detail-text">Your exact pickup and return dates must be included in your first message. If your dates are flexible, please state this.</p>
+        </div>
+
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Panniers &amp; Rear Racks</h3>
+          <p class="booking-detail-text">Regular and Premium bikes include rear racks; Luxury bikes do not. Panniers cost GEL 10 per day. You can bring your panniers or bags free of charge. Please state whether you need our panniers, will bring your own, or do not need any.</p>
+        </div>
+
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Pedals</h3>
+          <p class="booking-detail-text">Flat pedals are standard. SPD pedals (2-bolt, MTB-style) and SPD-SL pedals (3-bolt, road-style) cost GEL 10 per day. You can bring your own pedals free of charge. Please specify your choice. We do not provide cycling shoes or cleats.</p>
+        </div>
+
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Pickup &amp; Drop-Off</h3>
+          <p class="booking-detail-text">Pickup and return are available in Kutaisi and Tbilisi. The intercity drop-off fee is GEL 50 per bike. Please include the locations, or state &ldquo;Not decided yet&rdquo;.</p>
+        </div>
+
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Accessories</h3>
+          <p class="booking-detail-text">Every bike includes bottle cages. Bottles, phone holders, GPS mounts, mirrors and other personal accessories are not included. If you plan to bring and attach any accessories of your own, please mention them in your first message.</p>
+        </div>
+
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Rider Height</h3>
+          <p class="booking-detail-text">The exact height of every rider must be included in your first message so we can confirm the correct bike size.</p>
+        </div>
+
+        <div class="booking-detail-item">
+          <h3 class="booking-detail-title">Reservation</h3>
+          <p class="booking-detail-text">A bike is reserved only after the required prepayment has been received.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ==========================================
        GRAVEL BIKE DETAILS (placeholder)
