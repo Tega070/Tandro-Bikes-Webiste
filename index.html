@@ -518,16 +518,11 @@
       gap: 12px;
     }
 
-    @media (max-height: 900px) {
-      .hero-promo { margin-top: 48px; }
-    }
-
     @media (max-height: 760px) {
       .hero-content { padding-bottom: 32px; }
       .hero-label { margin-bottom: 10px; }
       .hero-title { font-size: clamp(40px, 8vw, 80px); margin-bottom: 12px; }
       .hero-sub { margin-bottom: 16px; }
-      .hero-promo { margin-top: 24px; margin-bottom: 12px; padding: 8px 14px; }
     }
 
     .btn-primary {
@@ -1415,71 +1410,6 @@
       animation: tourFloat 3s ease-in-out infinite;
     }
 
-    /* ── Hero Promo Badge (Svaneti-Racha tour teaser) ── */
-    @keyframes heroPromoGlow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0.55), 0 4px 18px rgba(22,163,74,0.35); }
-      50% { box-shadow: 0 0 0 10px rgba(22,163,74,0), 0 4px 18px rgba(22,163,74,0.35); }
-    }
-    @keyframes heroPromoDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-    .hero-promo {
-      display: flex;
-      width: fit-content;
-      align-items: center;
-      gap: 10px;
-      background: var(--green);
-      border: none;
-      border-radius: 999px;
-      padding: 12px 20px;
-      margin-top: 100px;
-      margin-bottom: 24px;
-      max-width: 100%;
-      cursor: pointer;
-      animation: heroPromoGlow 2.2s ease-in-out infinite;
-      transition: transform var(--transition), background var(--transition);
-    }
-    .hero-promo:hover {
-      background: #15803D;
-      transform: translateY(-2px) scale(1.02);
-    }
-    .hero-promo-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #fff;
-      flex-shrink: 0;
-      animation: heroPromoDot 1.4s ease-in-out infinite;
-    }
-    .hero-promo-tag {
-      font-family: var(--font-heading);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--green);
-      background: #fff;
-      border-radius: 3px;
-      padding: 3px 8px;
-      flex-shrink: 0;
-    }
-    .hero-promo-text {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 15px;
-      color: #fff;
-      line-height: 1.4;
-    }
-    .hero-promo svg {
-      color: #fff;
-      flex-shrink: 0;
-    }
-    @media (max-width: 480px) {
-      .hero-promo { padding: 10px 16px; }
-      .hero-promo-text { font-size: 13px; }
-    }
-
   </style>
 </head>
 <body>
@@ -1622,12 +1552,6 @@
     <div class="hero-bg" id="hero-bg" role="img" aria-label="Group of cyclists on a scenic mountain road in Georgia"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <a href="svaneti-racha-tour.html" class="hero-promo">
-        <span class="hero-promo-dot"></span>
-        <span class="hero-promo-tag">New</span>
-        <span class="hero-promo-text">Svaneti&ndash;Racha Group Tour &middot; September &mdash; View Full Tour Details</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
       <p class="hero-label" data-i18n="hero_label">Georgia · Tbilisi · Kutaisi</p>
       <h1 class="hero-title" data-i18n-html="hero_title">Bike Rental<br><span>& Tours</span><br>in Georgia</h1>
       <p class="hero-sub" data-i18n="hero_sub">Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
