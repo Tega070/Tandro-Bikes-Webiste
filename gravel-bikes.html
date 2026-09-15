@@ -536,39 +536,6 @@
       color: var(--green);
       margin-bottom: 2px;
     }
-    .gtp-hero-eyebrow {
-      font-family: var(--font-heading);
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2px;
-    }
-    .gtp-hero {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .gtp-hero-amount {
-      font-family: var(--font-display);
-      font-size: 42px;
-      color: var(--dark);
-      line-height: 1;
-      letter-spacing: 0.5px;
-    }
-    .gtp-hero-unit {
-      font-family: var(--font-heading);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-    }
-    .gtp-hero-caption {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
     .gravel-tier-pricing {
       list-style: none;
       display: flex;
@@ -585,7 +552,12 @@
       justify-content: space-between;
       gap: 12px;
       font-size: 13px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
     }
+    .gravel-tier-pricing li:last-child { border-bottom: none; padding-bottom: 0; }
+    .gravel-tier-pricing li.gtp-first .gtp-days,
+    .gravel-tier-pricing li.gtp-first .gtp-price { color: var(--green); }
     .gtp-days { color: var(--muted); font-family: var(--font-heading); }
     .gtp-price { color: var(--dark); font-weight: 700; font-family: var(--font-heading); white-space: nowrap; }
     .gravel-tier-cta {
@@ -1484,13 +1456,8 @@
               <li><span class="gts-label">Frame</span>Aluminium</li>
               <li><span class="gts-label">Models</span>Triban, Centurion, Bergamont</li>
             </ul>
-            <p class="gtp-hero-eyebrow">Starting From</p>
-            <div class="gtp-hero">
-              <span class="gtp-hero-amount">100</span>
-              <span class="gtp-hero-unit">GEL / day</span>
-            </div>
-            <p class="gtp-hero-caption">First 7 days</p>
             <ul class="gravel-tier-pricing">
+              <li class="gtp-first"><span class="gtp-days">Days 1&ndash;7</span><span class="gtp-price">100 GEL / day</span></li>
               <li><span class="gtp-days">Days 8&ndash;14</span><span class="gtp-price">80 GEL / day</span></li>
               <li><span class="gtp-days">Days 15+</span><span class="gtp-price">60 GEL / day</span></li>
             </ul>
@@ -1509,13 +1476,8 @@
               <li><span class="gts-label">Frame</span>High-quality aluminium, carbon fork</li>
               <li><span class="gts-label">Models</span>Canyon, Stevens</li>
             </ul>
-            <p class="gtp-hero-eyebrow">Starting From</p>
-            <div class="gtp-hero">
-              <span class="gtp-hero-amount">140</span>
-              <span class="gtp-hero-unit">GEL / day</span>
-            </div>
-            <p class="gtp-hero-caption">First 7 days</p>
             <ul class="gravel-tier-pricing">
+              <li class="gtp-first"><span class="gtp-days">Days 1&ndash;7</span><span class="gtp-price">140 GEL / day</span></li>
               <li><span class="gtp-days">Days 8&ndash;14</span><span class="gtp-price">100 GEL / day</span></li>
               <li><span class="gtp-days">Days 15+</span><span class="gtp-price">80 GEL / day</span></li>
             </ul>
@@ -1533,13 +1495,8 @@
               <li><span class="gts-label">Frame</span>Full carbon</li>
               <li><span class="gts-label">Models</span>Cannondale, Cube</li>
             </ul>
-            <p class="gtp-hero-eyebrow">Starting From</p>
-            <div class="gtp-hero">
-              <span class="gtp-hero-amount">200</span>
-              <span class="gtp-hero-unit">GEL / day</span>
-            </div>
-            <p class="gtp-hero-caption">First 7 days</p>
             <ul class="gravel-tier-pricing">
+              <li class="gtp-first"><span class="gtp-days">Days 1&ndash;7</span><span class="gtp-price">200 GEL / day</span></li>
               <li><span class="gtp-days">Days 8&ndash;14</span><span class="gtp-price">150 GEL / day</span></li>
               <li><span class="gtp-days">Days 15+</span><span class="gtp-price">130 GEL / day</span></li>
             </ul>
