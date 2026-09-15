@@ -422,8 +422,7 @@
       box-shadow: 0 16px 36px rgba(22,163,74,0.22);
     }
     @media (min-width: 768px) {
-      .gravel-tier-card.featured { transform: translateY(-10px); }
-      .gravel-tier-card.featured:hover { transform: translateY(-13px); }
+      .gravel-tier-card.featured { margin-top: -10px; }
     }
     .gravel-tier-badge {
       position: absolute;
@@ -461,9 +460,10 @@
       object-fit: cover;
       border-bottom: 1px solid var(--border);
       cursor: zoom-in;
-      transition: filter var(--transition);
+      transition: filter var(--transition), transform 0.4s ease;
     }
     .gravel-tier-image:hover { filter: brightness(0.92); }
+    .gravel-tier-card:hover .gravel-tier-image { transform: scale(1.04); }
 
     /* ============================================
        LIGHTBOX
@@ -536,6 +536,15 @@
       letter-spacing: 0.5px;
       text-transform: uppercase;
       color: var(--green);
+      margin-bottom: 2px;
+    }
+    .gtp-hero-eyebrow {
+      font-family: var(--font-heading);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--muted);
       margin-bottom: 2px;
     }
     .gtp-hero {
@@ -1005,6 +1014,12 @@
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .gravel-tier-card, .gravel-tier-image, .booking-detail-item, .gravel-tier-card:hover .gravel-tier-image {
+        transition: none !important;
+      }
     }
 
     /* Panel height increase */
@@ -1478,6 +1493,7 @@
               <li><span class="gts-label">Frame</span>Aluminium</li>
               <li><span class="gts-label">Models</span>Triban, Centurion, Bergamont</li>
             </ul>
+            <p class="gtp-hero-eyebrow">Starting From</p>
             <div class="gtp-hero">
               <span class="gtp-hero-amount">100</span>
               <span class="gtp-hero-unit">GEL / day</span>
@@ -1502,6 +1518,7 @@
               <li><span class="gts-label">Frame</span>High-quality aluminium, carbon fork</li>
               <li><span class="gts-label">Models</span>Canyon, Stevens</li>
             </ul>
+            <p class="gtp-hero-eyebrow">Starting From</p>
             <div class="gtp-hero">
               <span class="gtp-hero-amount">140</span>
               <span class="gtp-hero-unit">GEL / day</span>
@@ -1525,6 +1542,7 @@
               <li><span class="gts-label">Frame</span>Full carbon</li>
               <li><span class="gts-label">Models</span>Cannondale, Cube</li>
             </ul>
+            <p class="gtp-hero-eyebrow">Starting From</p>
             <div class="gtp-hero">
               <span class="gtp-hero-amount">200</span>
               <span class="gtp-hero-unit">GEL / day</span>
@@ -1758,6 +1776,24 @@
     });
 
     document.querySelectorAll('.tour-section-header, .hero-stats').forEach(el => {
+      el.classList.add('reveal');
+      el.dataset.delay = 0;
+      revealObserver.observe(el);
+    });
+
+    document.querySelectorAll('.booking-detail-item').forEach((el, i) => {
+      el.classList.add('reveal');
+      el.dataset.delay = (i % 3) * 80;
+      revealObserver.observe(el);
+    });
+
+    document.querySelectorAll('.gravel-tier-card').forEach((el, i) => {
+      el.classList.add('reveal');
+      el.dataset.delay = i * 100;
+      revealObserver.observe(el);
+    });
+
+    document.querySelectorAll('.before-book-box').forEach(el => {
       el.classList.add('reveal');
       el.dataset.delay = 0;
       revealObserver.observe(el);
