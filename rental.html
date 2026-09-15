@@ -413,7 +413,7 @@
       font-weight: 600;
       color: var(--muted);
     }
-    .price-gravel-teaser {
+    .price-teaser {
       font-family: var(--font-heading);
       font-size: 15px;
       color: var(--muted);
@@ -1185,14 +1185,8 @@
             <span class="price-badge badge-mtb">MTB</span>
           </div>
           <div class="price-card-body">
-            <div class="price-daily">
-              <span class="price-amount">70</span>
-              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
-            </div>
-            <ul class="price-discounts">
-              <li data-i18n="bike2_disc1">60 GEL / day — 10+ days</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Hardtail%20MTB&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
+            <p class="price-teaser" data-i18n="bike2_teaser">From 70 GEL/day, with discounts for longer rentals.</p>
+            <a href="hardtail-mtb.html" class="btn-rent" data-i18n="bike2_cta">See Hardtail MTB Options ↗</a>
           </div>
         </div>
 
@@ -1202,7 +1196,7 @@
             <span class="price-badge badge-gravel">Gravel</span>
           </div>
           <div class="price-card-body">
-            <p class="price-gravel-teaser" data-i18n="bike3_teaser">New fleet just added — check out our gravel bike options and pricing.</p>
+            <p class="price-teaser" data-i18n="bike3_teaser">New fleet just added — check out our gravel bike options and pricing.</p>
             <a href="gravel-bikes.html" class="btn-rent" data-i18n="bike3_cta">See Gravel Bike Options ↗</a>
           </div>
         </div>
@@ -1213,14 +1207,8 @@
             <span class="price-badge badge-mtb">MTB</span>
           </div>
           <div class="price-card-body">
-            <div class="price-daily">
-              <span class="price-amount">120</span>
-              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
-            </div>
-            <ul class="price-discounts">
-              <li data-i18n="bike4_disc1">100 GEL / day — 10+ days</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Full-Sus%20MTB&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
+            <p class="price-teaser" data-i18n="bike4_teaser">From 120 GEL/day, with discounts for longer rentals.</p>
+            <a href="full-suspension-mtb.html" class="btn-rent" data-i18n="bike4_cta">See Full Suspension MTB Options ↗</a>
           </div>
         </div>
 
@@ -1230,15 +1218,8 @@
             <span class="price-badge badge-ebike">E-Bike</span>
           </div>
           <div class="price-card-body">
-            <div class="price-daily">
-              <span class="price-amount">180</span>
-              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
-            </div>
-            <ul class="price-discounts">
-              <li data-i18n="bike5_disc1">160 GEL / day — 4+ days</li>
-              <li data-i18n="bike5_disc2">140 GEL / day — 7+ days</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Hardtail%20E-Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
+            <p class="price-teaser" data-i18n="bike5_teaser">From 180 GEL/day, with discounts for longer rentals.</p>
+            <a href="hardtail-ebike.html" class="btn-rent" data-i18n="bike5_cta">See Hardtail E-Bike Options ↗</a>
           </div>
         </div>
 
@@ -1248,15 +1229,8 @@
             <span class="price-badge badge-ebike">E-Bike</span>
           </div>
           <div class="price-card-body">
-            <div class="price-daily">
-              <span class="price-amount">250</span>
-              <span class="price-unit" data-i18n="price_unit">GEL / day</span>
-            </div>
-            <ul class="price-discounts">
-              <li data-i18n="bike6_disc1">230 GEL / day — 4+ days</li>
-              <li data-i18n="bike6_disc2">200 GEL / day — 7+ days</li>
-            </ul>
-            <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Full-Sus%20E-Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-rent" data-i18n="btn_rent">Rent Now ↗</a>
+            <p class="price-teaser" data-i18n="bike6_teaser">From 250 GEL/day, with discounts for longer rentals.</p>
+            <a href="full-suspension-ebike.html" class="btn-rent" data-i18n="bike6_cta">See Full Suspension E-Bike Options ↗</a>
           </div>
         </div>
 
@@ -1493,12 +1467,16 @@
         bike2_name: 'Hardtail MTB', bike3_name: 'Gravel Bike',
         bike4_name: 'Full Suspension MTB', bike5_name: 'Hardtail E-Bike', bike6_name: 'Full Suspension E-Bike',
         price_unit: 'GEL / day',
-        bike2_disc1: '60 GEL / day — 10+ days',
+        bike2_teaser: 'From 70 GEL/day, with discounts for longer rentals.',
+        bike2_cta: 'See Hardtail MTB Options ↗',
         bike3_teaser: 'New fleet just added — check out our gravel bike options and pricing.',
         bike3_cta: 'See Gravel Bike Options ↗',
-        bike4_disc1: '100 GEL / day — 10+ days',
-        bike5_disc1: '160 GEL / day — 4+ days', bike5_disc2: '140 GEL / day — 7+ days',
-        bike6_disc1: '230 GEL / day — 4+ days', bike6_disc2: '200 GEL / day — 7+ days',
+        bike4_teaser: 'From 120 GEL/day, with discounts for longer rentals.',
+        bike4_cta: 'See Full Suspension MTB Options ↗',
+        bike5_teaser: 'From 180 GEL/day, with discounts for longer rentals.',
+        bike5_cta: 'See Hardtail E-Bike Options ↗',
+        bike6_teaser: 'From 250 GEL/day, with discounts for longer rentals.',
+        bike6_cta: 'See Full Suspension E-Bike Options ↗',
         btn_rent: 'Rent Now ↗',
         inc1_title: 'Always Included — Free',
         inc1_lock: 'Lock', inc1_tool: 'Multi-tool', inc1_pump: 'Pump',
@@ -1553,12 +1531,16 @@
         bike2_name: 'Хардтейл МТБ', bike3_name: 'Гравийный велосипед',
         bike4_name: 'Двухподвес МТБ', bike5_name: 'Хардтейл E-Bike', bike6_name: 'Двухподвес E-Bike',
         price_unit: 'ГЕЛ / день',
-        bike2_disc1: '60 ГЕЛ / день — от 10 дней',
+        bike2_teaser: 'От 70 ГЕЛ/день, со скидками при длительной аренде.',
+        bike2_cta: 'Смотреть Хардтейл МТБ ↗',
         bike3_teaser: 'Новый парк велосипедов уже здесь — ознакомьтесь с моделями и ценами на гравийные велосипеды.',
         bike3_cta: 'Смотреть гравийные велосипеды ↗',
-        bike4_disc1: '100 ГЕЛ / день — от 10 дней',
-        bike5_disc1: '160 ГЕЛ / день — от 4 дней', bike5_disc2: '140 ГЕЛ / день — от 7 дней',
-        bike6_disc1: '230 ГЕЛ / день — от 4 дней', bike6_disc2: '200 ГЕЛ / день — от 7 дней',
+        bike4_teaser: 'От 120 ГЕЛ/день, со скидками при длительной аренде.',
+        bike4_cta: 'Смотреть Двухподвес МТБ ↗',
+        bike5_teaser: 'От 180 ГЕЛ/день, со скидками при длительной аренде.',
+        bike5_cta: 'Смотреть Хардтейл E-Bike ↗',
+        bike6_teaser: 'От 250 ГЕЛ/день, со скидками при длительной аренде.',
+        bike6_cta: 'Смотреть Двухподвес E-Bike ↗',
         btn_rent: 'Арендовать ↗',
         inc1_title: 'Всегда включено — Бесплатно',
         inc1_lock: 'Замок', inc1_tool: 'Мультитул', inc1_pump: 'Насос',
