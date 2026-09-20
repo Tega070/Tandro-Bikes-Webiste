@@ -362,13 +362,38 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: box-shadow var(--transition), transform var(--transition);
+      box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+      transition: box-shadow 250ms cubic-bezier(.2,.7,.3,1), transform 250ms cubic-bezier(.2,.7,.3,1), border-color 250ms ease;
     }
-    .price-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,0.08); transform: translateY(-2px); }
+    .price-card:hover {
+      box-shadow: 0 20px 40px -12px rgba(15,23,42,0.18);
+      transform: translateY(-5px);
+      border-color: rgba(15,23,42,0.18);
+    }
+    .price-card-accent { height: 3px; transition: box-shadow 250ms ease, height 250ms ease; }
+    .price-card-accent.badge-mtb-accent    { background: var(--green); }
+    .price-card-accent.badge-gravel-accent { background: #2563EB; }
+    .price-card-accent.badge-ebike-accent  { background: #D97706; }
+    .price-card:hover .price-card-accent.badge-mtb-accent    { height: 4px; box-shadow: 0 0 10px rgba(22,163,74,0.6); }
+    .price-card:hover .price-card-accent.badge-gravel-accent { height: 4px; box-shadow: 0 0 10px rgba(37,99,235,0.6); }
+    .price-card:hover .price-card-accent.badge-ebike-accent  { height: 4px; box-shadow: 0 0 10px rgba(217,119,6,0.6); }
     .price-card-head {
-      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(155deg, var(--dark) 0%, #1A3A6B 130%);
       padding: 20px 24px 16px;
     }
+    .price-card-head::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%; height: 100%;
+      background: linear-gradient(115deg, transparent, rgba(255,255,255,0.16), transparent);
+      transform: skewX(-20deg);
+      transition: left 650ms ease;
+      pointer-events: none;
+    }
+    .price-card:hover .price-card-head::after { left: 130%; }
     .price-bike-type {
       font-family: var(--font-display);
       font-size: 22px;
@@ -376,6 +401,7 @@
       color: var(--white);
       line-height: 1;
       margin-bottom: 6px;
+      position: relative;
     }
     .price-badge {
       display: inline-flex;
@@ -453,8 +479,8 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
     }
 
-    .btn-rent { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; padding: 8px 16px; border-radius: var(--radius); transition: background var(--transition); }
-    .btn-rent:hover { background: #15803d; }
+    .btn-rent { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; background: var(--green); color: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; padding: 8px 16px; border-radius: var(--radius); transition: background var(--transition), transform 150ms ease, box-shadow 150ms ease; }
+    .btn-rent:hover { background: #15803d; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(22,163,74,0.35); }
 
     .pricing-includes {
       margin-top: 48px;
@@ -1252,6 +1278,7 @@
       <div class="pricing-grid pricing-grid-top">
 
         <div class="price-card reveal">
+          <div class="price-card-accent badge-mtb-accent"></div>
           <div class="price-card-head">
             <p class="price-bike-type" data-i18n="bike2_name">Hardtail MTB</p>
             <span class="price-badge badge-mtb">MTB</span>
@@ -1263,6 +1290,7 @@
         </div>
 
         <div class="price-card reveal" data-delay="120">
+          <div class="price-card-accent badge-gravel-accent"></div>
           <div class="price-card-head">
             <p class="price-bike-type" data-i18n="bike3_name">Gravel Bike</p>
             <span class="price-badge badge-gravel">Gravel</span>
@@ -1278,6 +1306,7 @@
       <div class="pricing-grid pricing-grid-bottom">
 
         <div class="price-card reveal" data-delay="0">
+          <div class="price-card-accent badge-mtb-accent"></div>
           <div class="price-card-head">
             <p class="price-bike-type" data-i18n="bike4_name">Full Suspension MTB</p>
             <span class="price-badge badge-mtb">MTB</span>
@@ -1289,6 +1318,7 @@
         </div>
 
         <div class="price-card reveal" data-delay="60">
+          <div class="price-card-accent badge-ebike-accent"></div>
           <div class="price-card-head">
             <p class="price-bike-type" data-i18n="bike5_name">Hardtail E-Bike</p>
             <span class="price-badge badge-ebike">E-Bike</span>
@@ -1300,6 +1330,7 @@
         </div>
 
         <div class="price-card reveal" data-delay="120">
+          <div class="price-card-accent badge-ebike-accent"></div>
           <div class="price-card-head">
             <p class="price-bike-type" data-i18n="bike6_name">Full Suspension E-Bike</p>
             <span class="price-badge badge-ebike">E-Bike</span>
