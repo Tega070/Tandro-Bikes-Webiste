@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="Favicons/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="Favicons/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="Favicons/apple-touch-icon.png" />
-  <meta name="description" content="Rent a Hardtail E-Bike in Tbilisi from 180 GEL/day — discounts for 4+ and 7+ days. Free lock, pump, multi-tool & spare tube included. Book on WhatsApp." />
+  <meta name="description" content="Rent a Hardtail E-Bike in Tbilisi — 180 GEL/day for the first 3 days, 140 GEL/day for days 4-6, then 120 GEL/day from day 7 onward. Free lock, pump, multi-tool & spare tube included. Book on WhatsApp." />
   <title>Hardtail E-Bike Rental | Tandro Bikes</title>
 
   <!-- LocalBusiness structured data -->
@@ -742,48 +742,48 @@
       color: #4ade80;
       margin-bottom: 6px;
     }
-    .pricing-price {
+    .pricing-tier-table { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+    .pricing-tier-row {
       display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .pricing-price-amount {
-      font-family: var(--font-display);
-      font-size: clamp(40px, 6vw, 56px);
-      color: #fff;
-      line-height: 1;
-    }
-    .pricing-price-unit {
-      font-family: var(--font-heading);
-      font-size: 15px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.65);
-    }
-    .pricing-facts {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      margin-bottom: 20px;
-      padding: 16px 0;
-      border-top: 1px solid rgba(255,255,255,0.12);
-      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 14px 18px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .pricing-fact { display: flex; flex-direction: column; gap: 2px; }
-    .pricing-fact-num {
-      font-family: var(--font-display);
-      font-size: clamp(18px, 2.4vw, 22px);
-      color: #fff;
-      line-height: 1;
-    }
-    .pricing-fact-label {
-      font-family: var(--font-heading);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .pricing-tier-row.is-discount { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.35); }
+    .pricing-tier-range { display: flex; flex-direction: column; gap: 3px; }
+    .pricing-tier-range-title { font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: #fff; }
+    .pricing-tier-range small {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 12px;
       color: rgba(255,255,255,0.55);
+    }
+    .pricing-tier-price { font-family: var(--font-display); font-size: clamp(22px, 3vw, 28px); color: #fff; white-space: nowrap; }
+    .pricing-tier-unit { font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); margin-left: 4px; }
+    .pricing-tier-badge {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #0F172A;
+      background: #4ade80;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .pricing-tier-note {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 20px;
     }
     .pricing-includes-title {
       font-family: var(--font-heading);
@@ -840,7 +840,7 @@
     }
     @media (max-width: 640px) {
       .pricing-hero { padding: 24px 20px; }
-      .pricing-facts { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
+      .pricing-tier-row { flex-wrap: wrap; gap: 6px; }
       .pricing-includes-list { grid-template-columns: 1fr; }
     }
 
@@ -1015,21 +1015,31 @@
 
       <div class="pricing-hero">
         <p class="pricing-hero-label">Daily Rate</p>
-        <div class="pricing-price">
-          <span class="pricing-price-amount">180</span>
-          <span class="pricing-price-unit">GEL / day</span>
-        </div>
 
-        <div class="pricing-facts">
-          <div class="pricing-fact">
-            <span class="pricing-fact-num">160 GEL</span>
-            <span class="pricing-fact-label">Per day &mdash; 4+ days</span>
+        <div class="pricing-tier-table">
+          <div class="pricing-tier-row">
+            <span class="pricing-tier-range">
+              <span class="pricing-tier-range-title">First 3 Days</span>
+              <small>Every day of a 3-day-or-shorter rental</small>
+            </span>
+            <span class="pricing-tier-price">180<span class="pricing-tier-unit">GEL/day</span></span>
           </div>
-          <div class="pricing-fact">
-            <span class="pricing-fact-num">140 GEL</span>
-            <span class="pricing-fact-label">Per day &mdash; 7+ days</span>
+          <div class="pricing-tier-row is-discount">
+            <span class="pricing-tier-range">
+              <span class="pricing-tier-range-title">Days 4&ndash;6 <span class="pricing-tier-badge">Save 40 GEL/day</span></span>
+              <small>Each additional day from day 4 to day 6</small>
+            </span>
+            <span class="pricing-tier-price">140<span class="pricing-tier-unit">GEL/day</span></span>
+          </div>
+          <div class="pricing-tier-row is-discount">
+            <span class="pricing-tier-range">
+              <span class="pricing-tier-range-title">Day 7 Onward <span class="pricing-tier-badge">Save 60 GEL/day</span></span>
+              <small>Every additional day from day 7</small>
+            </span>
+            <span class="pricing-tier-price">120<span class="pricing-tier-unit">GEL/day</span></span>
           </div>
         </div>
+        <p class="pricing-tier-note">Example: an 8-day rental is 3&nbsp;&times;&nbsp;180 + 3&nbsp;&times;&nbsp;140 + 2&nbsp;&times;&nbsp;120 = <strong style="color:#fff;">1,200 GEL total</strong>.</p>
 
         <p class="pricing-includes-title">What's Included &mdash; Free</p>
         <ul class="pricing-includes-list">
@@ -1040,7 +1050,7 @@
           <li>Rear rack</li>
         </ul>
 
-        <p class="pricing-bike-note">Optional add-ons: Helmet &mdash; 10 GEL/day, Country-Wide Insurance &mdash; 150 GEL flat, Rear Pannier Bags &mdash; 20 GEL/day, Inter-City Drop-Off &mdash; 50 GEL.</p>
+        <p class="pricing-bike-note">Optional add-ons: Helmet &mdash; 10 GEL/day, Country-Wide Insurance &mdash; 150 GEL flat, Rear Pannier Bags &mdash; 20 GEL/day, SPD Pedals &mdash; 10 GEL/day, Inter-City Drop-Off &mdash; 50 GEL.</p>
 
         <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C%20I%27m%20interested%20in%20renting%20a%20Hardtail%20E-Bike&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-whatsapp pricing-cta">
           Rent Now ↗
