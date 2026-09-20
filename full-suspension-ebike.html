@@ -785,6 +785,22 @@
       color: rgba(255,255,255,0.6);
       margin-bottom: 20px;
     }
+    .fleet-photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .fleet-photo-grid img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    @media (max-width: 560px) {
+      .fleet-photo-grid { grid-template-columns: 1fr; }
+    }
     .pricing-includes-title {
       font-family: var(--font-heading);
       font-size: 12px;
@@ -1011,6 +1027,11 @@
       <div class="tour-section-header">
         <p class="section-label">Daily Rate</p>
         <h2 class="section-title" id="pricing-title">Full Suspension E-Bike Pricing</h2>
+      </div>
+
+      <div class="fleet-photo-grid">
+        <img src="Images/Full Suspension E-bike KTM.jpeg" alt="KTM full-suspension electric mountain bike" loading="lazy" />
+        <img src="Images/Full Susupension E-Bike Conway.jpeg" alt="Conway full-suspension electric mountain bike" loading="lazy" />
       </div>
 
       <div class="pricing-hero">
