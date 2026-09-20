@@ -797,6 +797,77 @@
     }
     .practical-list a { color: var(--green); transition: opacity var(--transition); }
     .practical-list a:hover { opacity: 0.75; }
+    .policy-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      cursor: pointer;
+      transition: opacity var(--transition);
+    }
+    .policy-link:hover { opacity: 0.75; }
+
+    /* Policy Modal */
+    #policy-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.6);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #policy-modal.open { display: flex; }
+    .policy-modal-box {
+      background: var(--white);
+      border-radius: 12px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      animation: lbFadeIn 0.2s ease;
+    }
+    .policy-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--muted);
+      opacity: 0.7;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+    }
+    .policy-modal-close:hover { opacity: 1; }
+    .policy-modal-title {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 20px;
+      padding-right: 24px;
+    }
+    .policy-modal-item { margin-bottom: 18px; }
+    .policy-modal-item:last-child { margin-bottom: 0; }
+    .policy-modal-item-title {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .policy-modal-item-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
 
     /* ============================================
        BOOKING CTA
@@ -1323,10 +1394,11 @@
           </div>
           <p class="practical-title" data-i18n="policy_title">Rental Policy</p>
           <ul class="practical-list">
-            <li data-i18n="policy1">Passport deposit — 1 per group</li>
-            <li data-i18n="policy2">No cash deposit required</li>
+            <li data-i18n="policy1">Passport, ID, or driver's license held as deposit — 1 per group</li>
+            <li data-i18n="policy2">Cash deposit required only for high-end &amp; carbon bikes</li>
             <li data-i18n="policy3">Wear &amp; tear parts are always free</li>
           </ul>
+          <button type="button" id="policy-link" class="policy-link" data-i18n="policy_link">Read full policy →</button>
         </div>
 
       </div>
@@ -1494,8 +1566,16 @@
         hours_title: 'Opening Hours',
         hours1: '<strong>Kutaisi:</strong> 09:00 – 21:00 daily', hours2: '<strong>Tbilisi:</strong> 09:00 – 15:00 daily', hours3: 'Flexible opening available by appointment',
         policy_title: 'Rental Policy',
-        policy1: 'Passport deposit — 1 per group', policy2: 'No cash deposit required',
+        policy1: "Passport, ID, or driver's license held as deposit — 1 per group", policy2: 'Cash deposit required only for high-end & carbon bikes',
         policy3: 'Wear & tear parts are always free',
+        policy_link: 'Read full policy →',
+        policy_modal_title: 'Full Rental Policy',
+        policy_id_title: "Passport / ID / Driver's License",
+        policy_id_desc: "A valid passport, ID card, or driver's license is held as a deposit for the duration of the rental — one document per group, returned in full when the bike comes back.",
+        policy_deposit_title: 'Cash Deposit',
+        policy_deposit_desc: 'Standard bikes require no cash deposit. High-end and carbon bikes require a refundable cash deposit, paid on pickup and returned in full when the bike is brought back undamaged.',
+        policy_wear_title: 'Wear & Tear',
+        policy_wear_desc: "Normal wear & tear parts — tires, brake pads, chains, cables — are never charged to you. That's on us.",
         cta_title_html: 'Ready to<br><span>Ride Georgia?</span>',
         cta_sub: "Message us on WhatsApp — tell us your city, dates, and bike preference. We'll confirm availability and have you rolling within hours.",
         btn_whatsapp: 'Book on WhatsApp',
@@ -1558,8 +1638,16 @@
         hours_title: 'Часы работы',
         hours1: '<strong>Кутаиси:</strong> 09:00 – 21:00 ежедневно', hours2: '<strong>Тбилиси:</strong> 09:00 – 15:00 ежедневно', hours3: 'Гибкое время по договорённости',
         policy_title: 'Условия аренды',
-        policy1: 'Залог паспорт — 1 на группу', policy2: 'Денежный залог не требуется',
+        policy1: 'Паспорт, удостоверение личности или водительские права в залог — 1 на группу', policy2: 'Денежный залог требуется только для премиальных и карбоновых велосипедов',
         policy3: 'Расходные части всегда бесплатны',
+        policy_link: 'Читать полные условия →',
+        policy_modal_title: 'Полные условия аренды',
+        policy_id_title: 'Паспорт / Удостоверение / Водительские права',
+        policy_id_desc: 'Действительный паспорт, удостоверение личности или водительские права остаются в залог на время аренды — один документ на группу, возвращается полностью при сдаче велосипеда.',
+        policy_deposit_title: 'Денежный залог',
+        policy_deposit_desc: 'Для стандартных велосипедов денежный залог не требуется. Для премиальных и карбоновых велосипедов требуется возвратный денежный залог, который вносится при получении и полностью возвращается при сдаче велосипеда без повреждений.',
+        policy_wear_title: 'Расходные материалы',
+        policy_wear_desc: 'Расходные части — покрышки, тормозные колодки, цепь, тросы — никогда не оплачиваются вами. Это на нас.',
         cta_title_html: 'Готов к<br><span>поездке по Грузии?</span>',
         cta_sub: 'Напишите нам в WhatsApp — укажите город, даты и предпочтения. Мы подтвердим наличие и в течение нескольких часов вы будете в седле.',
         btn_whatsapp: 'Написать в WhatsApp',
@@ -1665,6 +1753,25 @@
     <img id="lightbox-img" src="" alt="Bike photo enlarged" />
   </div>
 
+  <div id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policy-modal-title">
+    <div class="policy-modal-box">
+      <button class="policy-modal-close" id="policy-modal-close" aria-label="Close">&times;</button>
+      <h3 class="policy-modal-title" id="policy-modal-title" data-i18n="policy_modal_title">Full Rental Policy</h3>
+      <div class="policy-modal-item">
+        <p class="policy-modal-item-title" data-i18n="policy_id_title">Passport / ID / Driver's License</p>
+        <p class="policy-modal-item-desc" data-i18n="policy_id_desc">A valid passport, ID card, or driver's license is held as a deposit for the duration of the rental — one document per group, returned in full when the bike comes back.</p>
+      </div>
+      <div class="policy-modal-item">
+        <p class="policy-modal-item-title" data-i18n="policy_deposit_title">Cash Deposit</p>
+        <p class="policy-modal-item-desc" data-i18n="policy_deposit_desc">Standard bikes require no cash deposit. High-end and carbon bikes require a refundable cash deposit, paid on pickup and returned in full when the bike is brought back undamaged.</p>
+      </div>
+      <div class="policy-modal-item">
+        <p class="policy-modal-item-title" data-i18n="policy_wear_title">Wear &amp; Tear</p>
+        <p class="policy-modal-item-desc" data-i18n="policy_wear_desc">Normal wear &amp; tear parts — tires, brake pads, chains, cables — are never charged to you. That's on us.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
@@ -1682,6 +1789,22 @@
       lightbox.classList.remove('open');
       document.body.style.overflow = '';
     }
+
+    const policyModal = document.getElementById('policy-modal');
+    const policyLink = document.getElementById('policy-link');
+
+    function openPolicyModal() {
+      policyModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePolicyModal() {
+      policyModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    policyLink.addEventListener('click', openPolicyModal);
+    document.getElementById('policy-modal-close').addEventListener('click', closePolicyModal);
+    policyModal.addEventListener('click', (e) => { if (e.target === policyModal) closePolicyModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePolicyModal(); });
 
     document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
