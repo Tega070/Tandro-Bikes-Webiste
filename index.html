@@ -904,6 +904,10 @@
       background: var(--green);
     }
 
+    #experiences .section-sub {
+      color: rgba(255,255,255,0.6);
+    }
+
     .exp-header {
       margin-bottom: 40px;
     }
@@ -1553,8 +1557,8 @@
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
       <p class="hero-label" data-i18n="hero_label">Georgia · Tbilisi · Kutaisi</p>
-      <h1 class="hero-title" data-i18n-html="hero_title">Bike Rental<br><span>& Tours</span><br>in Georgia</h1>
-      <p class="hero-sub" data-i18n="hero_sub">Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.</p>
+      <h1 class="hero-title" data-i18n-html="hero_title">Private Tours<br><span>& Bike Rental</span><br>in Georgia</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Private mountain day trips, multi-day holidays, and custom tours for groups — across Georgia's most breathtaking landscapes. Plus easy bike rental in Tbilisi and Kutaisi.</p>
       <div class="hero-ctas">
         <a href="/tours" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -1568,21 +1572,6 @@
     </div>
     <div class="hero-scroll" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-  </section>
-
-  <!-- ── Group Tour Promo Banner ── -->
-  <section class="tour-promo">
-    <div class="tour-promo-inner container">
-      <div class="tour-promo-text">
-        <p class="tour-promo-label">&#128690; Group Tours</p>
-        <h2 class="tour-promo-title">Join Our Tbilisi Bike Tour</h2>
-        <p class="tour-promo-sub">Every Saturday &nbsp;·&nbsp; 50$ per person</p>
-      </div>
-      <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I+am+interested+in+the+Tbilisi+Group+Bike+Tour&type=phone_number&app_absent=0"
-         target="_blank" rel="noopener" class="btn-whatsapp">
-        Book on WhatsApp ↗
-      </a>
     </div>
   </section>
 
@@ -1603,8 +1592,8 @@
           <div class="service-icon-wrap">
             <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 20 9 4 12 10 15 7 21 20 3 20"/></svg>
           </div>
-          <h3 class="service-title" data-i18n="svc1_title">Guided Tours</h3>
-          <p class="service-text" data-i18n="svc1_text">City tours, mountain adventures, and more! Explore Georgia's best routes with a local guide who knows every corner.</p>
+          <h3 class="service-title" data-i18n="svc1_title">Private Tours</h3>
+          <p class="service-text" data-i18n="svc1_text">Mountain day trips, multi-day holidays, and custom tours for private groups. Explore Georgia's best routes with a local guide who knows every corner.</p>
           <div class="service-divider"></div>
           <span class="service-link">
             <span data-i18n="svc1_link">Explore tours</span>
@@ -1774,10 +1763,37 @@
   <section id="experiences" aria-labelledby="exp-title">
     <div class="container">
       <div class="exp-header">
-        <p class="section-label" data-i18n="exp_label">Our Tours</p>
+        <p class="section-label" data-i18n="exp_label">Private Tours</p>
         <h2 class="section-title" id="exp-title" data-i18n-html="exp_title">A Taste of<br>What's Waiting</h2>
+        <p class="section-sub" data-i18n="exp_sub">Mountain day trips, multi-day holidays, and custom tours for private groups of any size.</p>
       </div>
       <div class="exp-grid">
+
+        <a href="/tours" class="exp-card" aria-label="Mountain Bike Tour — view details">
+          <img src="Images/Imige 2.jpeg" alt="Mountain bikers grouped together in front of lush Caucasus peaks" loading="lazy" />
+          <div class="exp-overlay" aria-hidden="true"></div>
+          <div class="exp-info">
+            <span class="exp-tag" data-i18n="exp2_tag">Mountain Day Trip</span>
+            <h3 class="exp-title" data-i18n="exp2_title">Caucasus Trails</h3>
+            <span class="exp-arrow">
+              <span data-i18n="btn_explore">Explore</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="/tours" class="exp-card" aria-label="Multi-Day Bikepacking Tour — view details">
+          <img src="Images/Imige 3.jpeg" alt="Two cyclists with loaded bikes at a high mountain pass in Georgia" loading="lazy" />
+          <div class="exp-overlay" aria-hidden="true"></div>
+          <div class="exp-info">
+            <span class="exp-tag" data-i18n="exp3_tag">Multi-Day Holiday</span>
+            <h3 class="exp-title" data-i18n="exp3_title">Epic Bikepacking</h3>
+            <span class="exp-arrow">
+              <span data-i18n="btn_explore">Explore</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
         <a href="/tours" class="exp-card" aria-label="Tbilisi City Tour — view details">
           <img src="Images/Imige 1.jpeg" alt="Cyclists riding through Tbilisi with Metekhi Church in the background" loading="lazy" />
@@ -1792,33 +1808,22 @@
           </div>
         </a>
 
-        <a href="/tours" class="exp-card" aria-label="Mountain Bike Tour — view details">
-          <img src="Images/Imige 2.jpeg" alt="Mountain bikers grouped together in front of lush Caucasus peaks" loading="lazy" />
-          <div class="exp-overlay" aria-hidden="true"></div>
-          <div class="exp-info">
-            <span class="exp-tag" data-i18n="exp2_tag">Mountain</span>
-            <h3 class="exp-title" data-i18n="exp2_title">Caucasus Trails</h3>
-            <span class="exp-arrow">
-              <span data-i18n="btn_explore">Explore</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="/tours" class="exp-card" aria-label="Multi-Day Bikepacking Tour — view details">
-          <img src="Images/Imige 3.jpeg" alt="Two cyclists with loaded bikes at a high mountain pass in Georgia" loading="lazy" />
-          <div class="exp-overlay" aria-hidden="true"></div>
-          <div class="exp-info">
-            <span class="exp-tag" data-i18n="exp3_tag">Multi-Day</span>
-            <h3 class="exp-title" data-i18n="exp3_title">Epic Bikepacking</h3>
-            <span class="exp-arrow">
-              <span data-i18n="btn_explore">Explore</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
-
       </div>
+    </div>
+  </section>
+
+  <!-- ── Group Tour Promo Banner ── -->
+  <section class="tour-promo">
+    <div class="tour-promo-inner container">
+      <div class="tour-promo-text">
+        <p class="tour-promo-label">&#128690; Group Tours</p>
+        <h2 class="tour-promo-title">Join Our Tbilisi Bike Tour</h2>
+        <p class="tour-promo-sub">Every Saturday &nbsp;·&nbsp; 50$ per person</p>
+      </div>
+      <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I+am+interested+in+the+Tbilisi+Group+Bike+Tour&type=phone_number&app_absent=0"
+         target="_blank" rel="noopener" class="btn-whatsapp">
+        Book on WhatsApp ↗
+      </a>
     </div>
   </section>
 
@@ -1980,21 +1985,22 @@
         nav_home:'Home', nav_tours:'Tours', nav_rental:'Bike Rental', nav_about:'About', nav_contact:'Contact',
         btn_book:'Book Now', btn_view_tours:'View Tours', btn_rent_bike:'Rent a Bike', btn_explore:'Explore',
         hero_label:'Georgia · Tbilisi · Kutaisi',
-        hero_title:'Bike Rental<br><span>& Tours</span><br>in Georgia',
-        hero_sub:"Guided bike tours and bike rentals across Georgia's most breathtaking landscapes — from ancient Tbilisi streets to the peaks of the Caucasus.",
+        hero_title:'Private Tours<br><span>& Bike Rental</span><br>in Georgia',
+        hero_sub:"Private mountain day trips, multi-day holidays, and custom tours for groups — across Georgia's most breathtaking landscapes. Plus easy bike rental in Tbilisi and Kutaisi.",
         svc_label:'What We Do', svc_title:'Our Bikes,<br>Endless Rides',
         svc_sub:"Whether you want a guided tour through history or the freedom of your own bike ride, we've got you covered.",
-        svc1_title:'Guided Tours', svc1_text:"City tours, mountain adventures, and more! Explore Georgia's best routes with a local guide who knows every corner.", svc1_link:'Explore tours',
+        svc1_title:'Private Tours', svc1_text:"Mountain day trips, multi-day holidays, and custom tours for private groups. Explore Georgia's best routes with a local guide who knows every corner.", svc1_link:'Explore tours',
         svc2_title:'Bike Rentals', svc2_text:'Well-maintained bikes for every rider. Flexible pickup and drop-off in Tbilisi and Kutaisi. Explore at your own pace.', svc2_link:'Rent a Bike',
         why_label:'Why Choose Us', why_title:'Ride With<br>The Locals',
         why1_title:'Local Expertise', why1_text:'Born and raised in Georgia. We know the routes, the stories, and the best spots that no guidebook will tell you.',
         why2_title:'All Levels Welcome', why2_text:'From casual city rides to demanding mountain trails — we have tours and bikes suited to every rider\'s ability.',
         why3_title:'Quality Bikes', why3_text:'Our fleet is regularly serviced and maintained. Locks and spare parts included — your safety comes first.',
         why4_title:'Flexible Pickup & Drop-Off', why4_text:'Pick up in Tbilisi, drop off in Kutaisi — or the other way around. We also deliver bikes to your hotel or meeting point in Tbilisi. Small fees apply.',
-        exp_label:'Our Tours', exp_title:"A Taste of<br>What's Waiting",
+        exp_label:'Private Tours', exp_title:"A Taste of<br>What's Waiting",
+        exp_sub:'Mountain day trips, multi-day holidays, and custom tours for private groups of any size.',
         exp1_tag:'City Tour', exp1_title:'Tbilisi by Bike',
-        exp2_tag:'Mountain', exp2_title:'Caucasus Trails',
-        exp3_tag:'Multi-Day', exp3_title:'Epic Bikepacking',
+        exp2_tag:'Mountain Day Trip', exp2_title:'Caucasus Trails',
+        exp3_tag:'Multi-Day Holiday', exp3_title:'Epic Bikepacking',
         stat1:'Happy Riders', stat2:'Tour Routes', stat3:'Cities Covered', stat4:'Rated Experience',
         cta_title:'Ready to Ride<br><span>Georgia?</span>',
         cta_sub:"Get in touch and we'll plan the perfect ride or rental for you — a quick city tour, a week-long Caucasus guided ride, a bike rental to explore Tbilisi or Kutaisi, or a self-guided journey across Georgia at your own pace.",
@@ -2006,21 +2012,22 @@
         nav_home:'Главная', nav_tours:'Туры', nav_rental:'Аренда велосипеда', nav_about:'О нас', nav_contact:'Контакт',
         btn_book:'Забронировать', btn_view_tours:'Смотреть туры', btn_rent_bike:'Арендовать велосипед', btn_explore:'Смотреть',
         hero_label:'Грузия · Тбилиси · Кутаиси',
-        hero_title:'Аренда и туры<br><span>велосипедов</span><br>в Грузии',
-        hero_sub:'Велотуры с гидом и аренда велосипедов по самым живописным маршрутам Грузии — от древних улиц Тбилиси до вершин Кавказа.',
+        hero_title:'Частные туры<br><span>и аренда</span><br>в Грузии',
+        hero_sub:'Частные горные туры на день, многодневные путешествия и индивидуальные туры для групп — по самым живописным маршрутам Грузии. Плюс простая аренда велосипедов в Тбилиси и Кутаиси.',
         svc_label:'Что мы делаем', svc_title:'Два колеса,<br>бесконечные дороги',
         svc_sub:'Хотите тур с гидом или самостоятельную поездку — у нас есть всё.',
-        svc1_title:'Туры с гидом', svc1_text:'Городские туры, горные приключения и не только! Исследуйте лучшие маршруты Грузии с местным гидом.', svc1_link:'Смотреть туры',
+        svc1_title:'Частные туры', svc1_text:'Горные туры на день, многодневные путешествия и индивидуальные туры для частных групп. Исследуйте лучшие маршруты Грузии с местным гидом.', svc1_link:'Смотреть туры',
         svc2_title:'Аренда велосипедов', svc2_text:'Ухоженные велосипеды для любого уровня. Гибкий выезд и возврат в Тбилиси и Кутаиси. Езди в своём темпе.', svc2_link:'Арендовать велосипед',
         why_label:'Почему мы', why_title:'Езди с<br>местными',
         why1_title:'Местная экспертиза', why1_text:'Родились и выросли в Грузии. Мы знаем маршруты, истории и лучшие места, о которых не расскажет ни один путеводитель.',
         why2_title:'Для всех уровней', why2_text:'От прогулок по городу до сложных горных маршрутов — у нас есть туры и велосипеды для каждого.',
         why3_title:'Качественные велосипеды', why3_text:'Наш парк регулярно обслуживается. Замки и запасные части включены — ваша безопасность прежде всего.',
         why4_title:'Гибкий выезд и возврат', why4_text:'Возьмите велосипед в Тбилиси, верните в Кутаиси — или наоборот. Также доставляем велосипеды к вашему отелю или точке встречи в Тбилиси. Небольшая плата.',
-        exp_label:'Наши туры', exp_title:'Почувствуй,<br>что вас ждёт',
+        exp_label:'Частные туры', exp_title:'Почувствуй,<br>что вас ждёт',
+        exp_sub:'Горные туры на день, многодневные путешествия и индивидуальные туры для частных групп любого размера.',
         exp1_tag:'Городской тур', exp1_title:'Тбилиси на велосипеде',
-        exp2_tag:'Горы', exp2_title:'Тропы Кавказа',
-        exp3_tag:'Многодневный', exp3_title:'Эпик байкпекинг',
+        exp2_tag:'Горный тур на день', exp2_title:'Тропы Кавказа',
+        exp3_tag:'Многодневный отдых', exp3_title:'Эпик байкпекинг',
         stat1:'Довольных велосипедистов', stat2:'Маршрутов', stat3:'Города', stat4:'Оценённый опыт',
         cta_title:'Готов кататься<br><span>по Грузии?</span>',
         cta_sub:'Свяжитесь с нами — мы спланируем идеальный маршрут для вас, будь то утренний городской тур или недельная экспедиция по Кавказу.',
