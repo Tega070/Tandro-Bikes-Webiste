@@ -142,7 +142,7 @@
     .nav-logo img { height: 44px; width: auto; }
     .nav-logo-name { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 1px; line-height: 1; display: flex; align-items: flex-end; gap: 5px; }
     .nav-logo-bike-stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .nav-logo-bike-stack svg { width: 18px; height: 18px; opacity: 0.9; }
+    .nav-logo-bike-stack img { width: 20px; height: auto; opacity: 0.9; display: block; }
     .nav-links { display: none; list-style: none; gap: 32px; }
     .nav-links a { font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; color: var(--white); opacity: 0.85; transition: opacity var(--transition); }
     .nav-links a:hover { opacity: 1; }
@@ -892,21 +892,7 @@
     <img src="Images/Tandro Logo Without BG.png" alt="Tandro Bike Tours" class="loader-logo" />
     <div class="loader-track">
       <div class="loader-road"></div>
-      <svg class="loader-bike" width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="11" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
-        <circle cx="41" cy="26" r="9" stroke="white" stroke-width="2" fill="none"/>
-        <line x1="11" y1="26" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="26" y1="10" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="11" y1="26" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="30" y1="26" x2="41" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="26" y1="10" x2="30" y2="26" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="38" y1="10" x2="44" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="41" y1="10" x2="41" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="22" y1="8" x2="29" y2="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <line x1="26" y1="8" x2="26" y2="10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="30" cy="26" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
-        <line x1="27" y1="28" x2="33" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
+      <img class="loader-bike" src="Icons/bike-road-white.png" width="56" height="31" alt="" aria-hidden="true" />
     </div>
     <p class="loader-text">Loading</p>
   </div>
@@ -919,7 +905,7 @@
         <span class="nav-logo-name">
           Tandro
           <span class="nav-logo-bike-stack">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M9 10.5l3 6.5H5.5"/><path d="M9 10.5l7-1"/><path d="M16 9.5l-4 7.5"/><path d="M16 9.5l2.5 7.5"/><path d="M7.5 9.5h3.5"/><path d="M9 9.5v1"/><path d="M15 7.5h3"/><path d="M16.5 7.5l-.5 2"/></svg>
+            <img src="Icons/bike-road-white.png" class="nav-logo-bike-icon" alt="" />
             Bikes
           </span>
         </span>
