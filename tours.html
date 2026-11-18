@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="Favicons/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="Favicons/apple-touch-icon.png" />
   <meta name="description" content="Bike Tours in Georgia with local riders — private mountain day trips, multi-day expeditions to Kazbegi, Svaneti & Kakheti, plus weekly Tbilisi city rides from $50. Book on WhatsApp." />
-  <title>Bike Tours in Georgia | Tandro Bikes</title>
+  <title>Bike Tours in Georgia | Tandro Bikes Georgia</title>
 
   <!-- LocalBusiness structured data -->
   <script type="application/ld+json">
@@ -563,22 +563,53 @@
     .tour-card-grid {
       display: grid;
       grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 640px) {
+      .tour-card-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 280px; }
+      .tour-card-wide { grid-column: span 2; }
+    }
+
+    .tour-card-grid-simple {
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 14px;
     }
     @media (min-width: 640px) {
-      .tour-card-grid {
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 210px;
-        grid-auto-flow: dense;
-      }
-      .tour-card.featured { grid-column: span 2; grid-row: span 2; }
-      .tour-card-custom { grid-column: 1 / -1; grid-row: span 1; }
+      .tour-card-grid-simple { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 240px; }
     }
+    .tour-card-grid-simple .tour-card-name { font-size: 17px; }
+
+    .feature-tour {
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(15,23,42,0.06);
+      border: 1px solid var(--border);
+    }
+    @media (min-width: 768px) {
+      .feature-tour { flex-direction: row; }
+      .feature-tour-img { width: 46%; flex-shrink: 0; }
+    }
+    .feature-tour-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+    @media (min-width: 768px) { .feature-tour-img { aspect-ratio: auto; } }
+    .feature-tour-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .feature-tour-img-badges { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 2; }
+    .feature-tour-img-badges .tour-badge { background: rgba(7,17,31,0.6); backdrop-filter: blur(4px); color: rgba(255,255,255,0.85); }
+    .feature-tour-img-badges .badge-easy { color: #4ade80; }
+    .feature-tour-body { padding: 28px 24px 32px; display: flex; flex-direction: column; gap: 12px; }
+    @media (min-width: 768px) { .feature-tour-body { padding: 36px 40px; justify-content: center; } }
+    .feature-tour-name { font-family: var(--font-heading); font-weight: 700; font-size: 22px; color: var(--dark); line-height: 1.25; }
+    .feature-tour-text { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .feature-tour-note { font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--green); }
+    .feature-tour .btn-primary { align-self: flex-start; margin-top: 8px; }
 
     .tour-card {
       position: relative;
       display: block;
-      min-height: 240px;
+      aspect-ratio: 4 / 3;
       border-radius: 10px;
       overflow: hidden;
       text-decoration: none;
@@ -586,7 +617,7 @@
       background: var(--dark);
       isolation: isolate;
     }
-    @media (min-width: 640px) { .tour-card { min-height: 0; } }
+    @media (min-width: 640px) { .tour-card { aspect-ratio: auto; } }
 
     .tour-card-img-wrap,
     .tour-card-img-wrap img {
@@ -606,11 +637,11 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(7,17,31,0.92) 0%, rgba(7,17,31,0.45) 45%, rgba(7,17,31,0.05) 75%);
+      background: linear-gradient(to top, rgba(7,17,31,0.92) 0%, rgba(7,17,31,0.45) 45%, rgba(7,17,31,0.1) 70%, rgba(7,17,31,0.45) 100%);
       transition: background var(--transition);
       z-index: 1;
     }
-    .tour-card:hover::after { background: linear-gradient(to top, rgba(7,17,31,0.96) 0%, rgba(7,17,31,0.6) 50%, rgba(7,17,31,0.15) 80%); }
+    .tour-card:hover::after { background: linear-gradient(to top, rgba(7,17,31,0.96) 0%, rgba(7,17,31,0.6) 50%, rgba(7,17,31,0.2) 75%, rgba(7,17,31,0.55) 100%); }
 
     .tour-card-badges {
       position: absolute;
@@ -627,13 +658,16 @@
       color: rgba(255,255,255,0.8);
     }
     .tour-card-badges span {
-      background: rgba(7,17,31,0.55);
+      background: rgba(7,17,31,0.72);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       padding: 4px 9px;
       border-radius: 3px;
     }
     .tour-card-badges .badge-hard { color: #f87171; }
+    .tour-card-badges .badge-popular { background: var(--green); color: var(--white); }
+    .tour-card-wide .tour-card-name { font-size: clamp(20px, 2.2vw, 24px); }
+    .tour-card-wide .tour-card-teaser { -webkit-line-clamp: 3; font-size: 14px; }
 
     .tour-card-body {
       position: absolute;
@@ -649,7 +683,6 @@
       color: var(--white);
       letter-spacing: 0.1px;
     }
-    .tour-card.featured .tour-card-name { font-size: clamp(22px, 2.6vw, 28px); }
     .tour-card-teaser {
       font-size: 13px;
       color: rgba(255,255,255,0.78);
@@ -659,10 +692,6 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-    }
-    .tour-card.featured .tour-card-teaser {
-      font-size: 14.5px;
-      -webkit-line-clamp: 3;
     }
     .tour-card-link {
       font-family: var(--font-heading);
@@ -1015,14 +1044,50 @@
       <div class="tour-section-header">
         <p class="section-label" data-i18n="georgia_label">Georgia</p>
         <h2 class="section-title" id="georgia-title" data-i18n-html="georgia_title">Bike Tours<br>across Georgia</h2>
-        <p class="georgia-sub" data-i18n="georgia_sub">Multi-day expeditions into the Caucasus, Svaneti, and the Kakheti wine country — guided, supported, and built for riders who want more than a city loop.</p>
+        <p class="georgia-sub" data-i18n="georgia_sub">Multi-day expeditions and private Caucasus day tours into Kazbegi and Svaneti — guided, supported, and built for riders who want more than a city loop.</p>
       </div>
 
       <div class="tour-card-grid">
 
+        <a href="/truso-valley-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Turso Valley to use.jpeg" alt="Truso Valley bike tour — mineral terraces near Kazbegi" loading="lazy" />
+            <div class="tour-card-badges">
+              <span class="tour-badge badge-duration">Full Day</span>
+              <span class="tour-badge badge-moderate">Moderate</span>
+            </div>
+          </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Truso Valley Bike Tour</p>
+            <p class="tour-card-teaser">Mineral terraces, stone villages and Zakagori Fortress — a private ride from Tbilisi or Kazbegi.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="/juta-sno-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Juta Image to use for tours.jpeg" alt="Juta-Sno bike tour — Chaukhi peaks near Kazbegi" loading="lazy" />
+            <div class="tour-card-badges">
+              <span class="tour-badge badge-duration">Full Day</span>
+              <span class="tour-badge badge-moderate">Moderate</span>
+            </div>
+          </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Juta–Sno Bike Tour</p>
+            <p class="tour-card-teaser">Chaukhi's sharp peaks, stone sculptures and Sno Fortress — a private ride from Tbilisi or Kazbegi.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
         <a href="/kazbegi-bike-tour" class="tour-card">
           <div class="tour-card-img-wrap">
-            <img src="Images/Kazbegi Tour 1.jpeg" alt="Kazbegi bike tour — Georgian Military Highway under Mt. Kazbek" loading="lazy" />
+            <img src="Images/Kazbegi Tour 1.jpeg" alt="Kazbegi bike tour — Georgian Military Highway under Mt. Kazbek" loading="lazy" style="object-position: center 15%;" />
             <div class="tour-card-badges">
               <span class="tour-badge badge-duration">7 Days</span>
               <span class="tour-badge badge-hard">Challenging</span>
@@ -1038,10 +1103,11 @@
           </div>
         </a>
 
-        <a href="/mestia-svaneti-tour" class="tour-card featured">
+        <a href="/mestia-svaneti-tour" class="tour-card tour-card-wide">
           <div class="tour-card-img-wrap">
             <img src="Images/Mestia Tour 1.jpeg" alt="Mestia Svaneti bike — medieval towers and glaciers" loading="lazy" />
             <div class="tour-card-badges">
+              <span class="tour-badge badge-popular">Most Popular</span>
               <span class="tour-badge badge-duration">7 Days</span>
               <span class="tour-badge badge-hard">Challenging</span>
             </div>
@@ -1074,58 +1140,6 @@
           </div>
         </a>
 
-        <a href="/zekari-borjomi-tour" class="tour-card">
-          <div class="tour-card-img-wrap">
-            <img src="Images/Zekari&Borjomi 1.jpeg" alt="Zekari Pass descent — 1,200m of mountain gravel toward Akhaltsikhe" loading="lazy" />
-            <div class="tour-card-badges">
-              <span class="tour-badge badge-duration">3 Days</span>
-              <span class="tour-badge badge-hard">Challenging</span>
-            </div>
-          </div>
-          <div class="tour-card-body">
-            <p class="tour-card-name" data-i18n="t11_name">Zekari Pass &amp; Borjomi</p>
-            <p class="tour-card-teaser" data-i18n="t11_teaser">A 1,200m pass descent, a Kura River canyon ride, and Borjomi-Kharagauli National Park.</p>
-            <span class="tour-card-link">
-              <span data-i18n="btn_view_tour">View Full Tour</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="/kakheti-tour" class="tour-card">
-          <div class="tour-card-img-wrap">
-            <img src="Images/Kakheti 1.jpeg" alt="Kakheti bike — Gombori Pass descent through Georgian forest" loading="lazy" />
-            <div class="tour-card-badges">
-              <span class="tour-badge badge-duration">7 Days</span>
-              <span class="tour-badge badge-hard">Pro Level</span>
-            </div>
-          </div>
-          <div class="tour-card-body">
-            <p class="tour-card-name" data-i18n="t12_name">Kakheti 550km Loop</p>
-            <p class="tour-card-teaser" data-i18n="t12_teaser">Our most demanding route — Gombori Pass, the Alazani wine valley, Vashlovani steppe &amp; David Gareji.</p>
-            <span class="tour-card-link">
-              <span data-i18n="btn_view_tour">View Full Tour</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <div class="tour-card tour-card-custom">
-          <div class="tour-card-custom-text">
-            <div class="tour-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5 2.3-7.2-6-4.6h7.6z"/></svg>
-            </div>
-            <div>
-              <p class="tour-card-name" data-i18n="t13_name">Custom Tour</p>
-              <p class="tour-card-teaser" data-i18n="t13_teaser">None of the above quite fit? Tell us your destination, group size and days — we'll map it.</p>
-            </div>
-          </div>
-          <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'd+like+to+plan+a+custom+bike+tour+in+Georgia!" target="_blank" rel="noopener" class="tour-card-cta">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            Plan My Tour
-          </a>
-        </div>
-
       </div><!-- /tour-card-grid georgia -->
     </div>
   </section>
@@ -1140,119 +1154,63 @@
         <h2 class="section-title" id="tbilisi-title" data-i18n-html="tbilisi_title">Bike Tours<br>in Tbilisi</h2>
       </div>
 
-      <div class="tour-list" data-group="tbilisi">
+      <div class="tour-card-grid-simple" data-group="tbilisi">
 
-        <!-- Tbilisi Urban Discovery -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-tbilisi-city">
-            <span class="tour-name" data-i18n="t6_name">Tbilisi Urban Discovery</span>
-            <div class="tour-header-meta">
+        <a href="/tbilisi-urban-discovery-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Imige 1.jpeg" alt="Tbilisi city bike tour — Bridge of Peace and Old Town" loading="lazy" style="object-position: 35% center;" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">3h</span>
               <span class="tour-badge badge-easy">Easy</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-tbilisi-city">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-wrap">
-                <img src="Images/Imige 1.jpeg" alt="Tbilisi city bike tour — Bridge of Peace and Old Town" class="tour-photo" loading="eager" style="object-position: 35% center;" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">The Ultimate City Bike &amp; E-Bike Tour of Tbilisi. Most tourists see the Georgian capital from a bus — we see it from the saddle. A high-impact 3-hour loop that connects the ancient history and the modern vibe of Tbilisi through hidden lanes, bike-friendly paths, and the eyes of a local friend who knows where to stop.</p>
-                <p class="tour-highlights-title">Tour Highlights — 4 Parts</p>
-                <ul class="tour-highlights">
-                  <li><strong>Part 1 — The Modern &amp; The Vintage</strong> — Dry Bridge Flea Market (Soviet antiques &amp; local art) and the beautiful Orbeliani Square</li>
-                  <li><strong>Part 2 — Crossing the Mtkvari</strong> — The Bridge of Peace, Rike Park, and the cliffside Metekhi Church with views of Narikala Fortress</li>
-                  <li><strong>Part 3 — The Holy Trinity (Sameba)</strong> — Avlabari's narrow alleys leading to the largest cathedral in the South Caucasus</li>
-                  <li><strong>Part 4 — Rustaveli Avenue</strong> — Georgia's Champs-Élysées: Parliament Building, National Gallery, and the Opera &amp; Ballet Theater</li>
-                  <li><strong>Fleet choice</strong> — City Hybrids or premium E-bikes with mid-drive motors for effortless climbing</li>
-                  <li><strong>[Optional] Turtle Lake upgrade</strong> — Cable car ascent, lake loop on green bike paths, and a long adrenaline descent back into the city</li>
-                </ul>
-                <p class="tour-best-for">Best for: all fitness levels — E-bikes make the hills feel flat, regular bikes make them rewarding.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Tbilisi+Urban+Discovery+tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Tbilisi Urban Discovery</p>
+            <p class="tour-card-teaser">A high-impact 3-hour loop through Old Tbilisi's hidden lanes, bridges and landmarks.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-        <!-- Turtle Lake -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-turtle">
-            <span class="tour-name" data-i18n="t7_name">Turtle Lake MTB</span>
-            <div class="tour-header-meta">
+        <a href="/turtle-lake-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Turtle Lake 1.jpeg" alt="Turtle Lake Tbilisi — forest climb through Vake Park" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">3h</span>
               <span class="tour-badge badge-moderate">Moderate</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-turtle">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-double">
-                <img src="Images/Turtle Lake 1.jpeg" alt="Turtle Lake Tbilisi — forest climb through Vake Park" class="tour-photo-item" loading="lazy" />
-                <img src="Images/Turtle Lake 2.jpeg" alt="Kus Tba lake shore above Tbilisi" class="tour-photo-item" loading="lazy" style="object-position: 75% center;" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">Kus Tba — Turtle Lake — sits at 687 metres above Tbilisi, hidden inside a dense forest just 6 km from the city centre. This is where locals actually go on weekends; tourists almost never find it. The ride climbs through the upscale Vake district and its enormous 200-hectare park, gaining 217 metres of elevation before breaking out of the tree line at the lake. At the top, a full loop around the shoreline awaits — accessible to all levels, from a relaxed lakeside cruise to a faster MTB-style lap through the forest trails. The descent is fast, long, and completely satisfying.</p>
-                <p class="tour-highlights-title">Tour Highlights</p>
-                <ul class="tour-highlights">
-                  <li><strong>Vake Park climb</strong> — one of Tbilisi's great green lungs, past cascade fountains, a WWII memorial, and open-air cafes tucked under the trees</li>
-                  <li><strong>Turtle Lake arrival</strong> — a pristine mountain lake fed by the Varaziskhevi river, circled by thick forest and almost completely quiet</li>
-                  <li><strong>The lake loop</strong> — a 1 km shoreline ride with mountain views, ducks on the water, and lakeside bars if you want to stop</li>
-                  <li><strong>Vake Cable Car</strong> — 1,140 metres of gondola over the forest canopy, 6 minutes from lake to city — an optional way down for those who want the views without the legs</li>
-                  <li><strong>The descent</strong> — a rewarding, long roll back through the park and into the Vake neighbourhood, with Tbilisi spreading out below you</li>
-                  <li><strong>Panoramic views</strong> — at the lake you're looking out over the Mtatsminda ridge and the Caucasus foothills — the city feels a world away</li>
-                </ul>
-                <p class="tour-best-for">Best for: intermediate riders and anyone who wants to see where Tbilisi residents actually spend their Sundays.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Turtle+Lake+tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Turtle Lake MTB</p>
+            <p class="tour-card-teaser">A forest climb through Vake Park to a hidden mountain lake locals actually ride to.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-        <!-- Bevreti & Lisi Lake -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-bevreti">
-            <span class="tour-name" data-i18n="t8_name">Bevreti &amp; Lisi Lake</span>
-            <div class="tour-header-meta">
+        <a href="/bevreti-lisi-lake-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Bevreti 1.jpeg" alt="Bevreti climb — Trialeti Ridge above Tbilisi" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">5–6h</span>
               <span class="tour-badge badge-moderate">Moderate</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-bevreti">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-double">
-                <img src="Images/Bevreti 1.jpeg" alt="Bevreti climb — Trialeti Ridge above Tbilisi" class="tour-photo-item" loading="lazy" />
-                <img src="Images/Bevreti 2.jpeg" alt="Lisi Lake finish — 50km Bevreti loop from Tbilisi" class="tour-photo-item" loading="lazy" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">No shuttles. No shortcuts. This is 50km of pure pedaling from Tandro's location, straight into the Trialeti Range and back via Lisi Lake. You climb to the ridge, ride the spine of the hills with the Caucasus on one horizon and the entire Tbilisi valley on the other, cross the open plateau, and finish at the lake. One of the few operators in Georgia offering this full loop start-to-finish on a bike.</p>
-                <p class="tour-highlights-title">Route Breakdown</p>
-                <ul class="tour-highlights">
-                  <li><strong>The City Exit &amp; The Climb</strong> — Tbilisi pavement ends fast. The air changes as you grind toward the village of Bevreti — a solid climb that trades city noise for mountain silence</li>
-                  <li><strong>The Trialeti Ridge</strong> — The highlight of the day. Riding the spine between Mskhaldidi and Mukhattskaro with the Caucasus Mountains on your left and the full Tbilisi valley spread out on your right</li>
-                  <li><strong>The High Plateau</strong> — Fast gravel and rugged shepherd paths across open plateau tracks, past the Bevreti Monastery area, before the long descent begins</li>
-                  <li><strong>The Finish at Lisi</strong> — The 50km loop closes at Lisi Lake. Victory lap around the water, cold drink, then the roll back into Tbilisi</li>
-                  <li><strong>MTB or E-bike</strong> — 600m+ of climbing on high-spec MTBs, or Bosch/Yamaha-powered E-bikes with full eco mode for those who want the challenge dialled back. Your call</li>
-                  <li><strong>Local Intelligence</strong> — These trails are a maze of Soviet tracks and grazing paths. We know the exact lines. You follow the guide, not a confusing offline map</li>
-                </ul>
-                <p class="tour-best-for">50km · 5–6 hours · 600m+ elevation · Mixed asphalt, gravel, dirt ridgelines. High fitness required — book an E-bike if you're not a regular climber.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Bevreti+%26+Lisi+Lake+tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Bevreti &amp; Lisi Lake</p>
+            <p class="tour-card-teaser">50km of pure pedaling into the Trialeti Range and back via Lisi Lake — no shuttles.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-      </div><!-- /tour-list tbilisi -->
+      </div><!-- /tour-card-grid-simple tbilisi -->
     </div>
   </section>
 
@@ -1266,80 +1224,45 @@
         <h2 class="section-title" id="svaneti-title" data-i18n-html="svaneti_title">Bike Tours<br>in Svaneti</h2>
       </div>
 
-      <div class="tour-list" data-group="svaneti">
+      <div class="tour-card-grid-simple" data-group="svaneti">
 
-        <!-- Mestia Bike Tour -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-mestia-svaneti">
-            <span class="tour-name" data-i18n="t14_name">Mestia Bike Tour</span>
-            <div class="tour-header-meta">
+        <a href="/mestia-bike-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/mestia-bike-tour.jpeg" alt="Mestia E-bike tour — Upper Svaneti mountains" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">3h</span>
               <span class="tour-badge badge-easy">Easy</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-mestia-svaneti">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-wrap">
-                <img src="Images/mestia-bike-tour.jpeg" alt="Mestia E-bike tour — Upper Svaneti mountains" class="tour-photo" loading="lazy" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">Mestia is one of the most unique mountain towns in Georgia. It's surrounded by huge Caucasus peaks, medieval Svan towers, rivers, and quiet village roads. This relaxed 3-hour E-bike tour takes you through the heart of Upper Svaneti with plenty of scenic stops, local stories, and mountain viewpoints along the way.</p>
-                <p class="tour-highlights-title">Tour Highlights</p>
-                <ul class="tour-highlights">
-                  <li><strong>Part 1 — Old Mestia &amp; Svan Towers</strong> — A ride through the historic center and the famous defensive towers of Svaneti</li>
-                  <li><strong>Part 2 — Riverside &amp; Forest Roads</strong> — Quiet scenic sections along rivers, bridges, and nature</li>
-                  <li><strong>Part 3 — Queen Tamar Viewpoint</strong> — A steady climb to one of Mestia's best panoramic spots</li>
-                  <li><strong>Part 4 — Local Villages &amp; Backroads</strong> — Experience everyday Svaneti away from the busy tourist areas</li>
-                  <li><strong>Part 5 — Caucasus Panorama Everywhere</strong> — Wide open mountain views with amazing photo spots anywhere you look</li>
-                </ul>
-                <p class="tour-best-for">Best for: couples, solo travelers, families &amp; thanks to the E-bikes, even beginners.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Mestia+Bike+Tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Mestia Bike Tour</p>
+            <p class="tour-card-teaser">A relaxed 3-hour E-bike tour through Svan towers, river roads and mountain viewpoints.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-        <!-- Gwaldi Pass E-Bike Adventure -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-gwaldi">
-            <span class="tour-name" data-i18n="t15_name">Gwaldi Pass E-Bike Adventure</span>
-            <div class="tour-header-meta">
+        <a href="/gwaldi-pass-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/gwaldi-pass-ebike-adventure.jpeg" alt="Gwaldi Pass E-bike adventure — Caucasus alpine trail in Svaneti" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">3–4h</span>
               <span class="tour-badge badge-hard">Challenging</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-gwaldi">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-wrap">
-                <img src="Images/gwaldi-pass-ebike-adventure.jpeg" alt="Gwaldi Pass E-bike adventure — Caucasus alpine trail in Svaneti" class="tour-photo" loading="lazy" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">Ride one of the most breathtaking alpine routes in Svaneti. Starting from Mestia at 1,400m, this E-bike adventure climbs to the Gwaldi Pass at around 2,000–2,025m through gravel mountain roads and alpine trails. Throughout the ride you're surrounded by incredible panoramic scenery and authentic mountain landscapes unique to Svaneti. Designed for intermediate to advanced riders — not recommended for beginners.</p>
-                <p class="tour-highlights-title">Route Highlights</p>
-                <ul class="tour-highlights">
-                  <li><strong>360° Caucasus panorama</strong> — sweeping views of the Greater Caucasus range from the pass</li>
-                  <li><strong>Iconic mountain peaks</strong> — views of Ushba, Laila, Tetnuldi and Banguriani along the way</li>
-                  <li><strong>Remote alpine riding</strong> — gravel roads and mountain trails far from the tourist crowds</li>
-                  <li><strong>Historic Svan villages &amp; medieval towers</strong> — the soul of Upper Svaneti on every corner</li>
-                  <li><strong>Long scenic descent back to Mestia</strong> — the rewarding ride down after the climb</li>
-                  <li><strong>Everything included</strong> — premium E-bike, helmet, local guide, photos &amp; videos, water refill stops</li>
-                </ul>
-                <p class="tour-best-for">35 km · 3–4 hours · ~600m climb · Gravel &amp; alpine trails · Season: May 15 – November 15. Intermediate to advanced riders only.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Gwaldi+Pass+E-Bike+Adventure!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Gwaldi Pass E-Bike Adventure</p>
+            <p class="tour-card-teaser">An intermediate-to-advanced climb from Mestia to the Gwaldi Pass — 360° Caucasus panoramas.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-      </div><!-- /tour-list svaneti -->
+      </div><!-- /tour-card-grid-simple svaneti -->
     </div>
   </section>
 
@@ -1353,130 +1276,116 @@
         <h2 class="section-title" id="kutaisi-title" data-i18n-html="kutaisi_title">Bike Tours<br>in Kutaisi</h2>
       </div>
 
-      <div class="tour-list" data-group="kutaisi">
+      <div class="tour-card-grid-simple" data-group="kutaisi">
 
-        <!-- Kutaisi City Ride -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-kutaisi-city">
-            <span class="tour-name" data-i18n="t1_name">Kutaisi City Ride</span>
-            <div class="tour-header-meta">
+        <a href="/kutaisi-city-ride-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Kutaisi City Ride Image.jpg" alt="Kutaisi city bike tour" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">2–3h</span>
               <span class="tour-badge badge-easy">Easy</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-kutaisi-city">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-wrap">
-                <img src="Images/Kutaisi City Ride Image.jpg" alt="Kutaisi city bike tour" class="tour-photo" loading="lazy" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">Kutaisi is one of Georgia's oldest cities — a perfect mix of history, nature, and laid-back charm. This relaxed ~2-hour city ride takes you through the heart of Kutaisi with plenty of stops and stories along the way. Scenic bike routes, majestic cathedrals, lively markets, and riverside riding. Our most popular tour for a reason — flat roads, no fitness required.</p>
-                <p class="tour-highlights-title">City Bike Tour Highlights</p>
-                <ul class="tour-highlights">
-                  <li><strong>City Center &amp; Colchis Fountain</strong> — The pulse of Kutaisi</li>
-                  <li><strong>Boulevard &amp; Rioni River</strong> — Ride along the river</li>
-                  <li><strong>French Quarter &amp; Jewish District</strong> — Explore Kutaisi's multicultural roots</li>
-                  <li><strong>1st &amp; 3rd Public Schools</strong> — Where Georgian education history began</li>
-                  <li><strong>Rioni Water Dam</strong> — A quiet riverside spot with great picture spots</li>
-                  <li><strong>Optional: Bagrati Cathedral</strong> — A UNESCO-listed masterpiece with sweeping views</li>
-                </ul>
-                <p class="tour-best-for">Best for: solo travelers, couples &amp; families — total beginners welcome.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Kutaisi+City+Ride+tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Kutaisi City Ride</p>
+            <p class="tour-card-teaser">A relaxed ~2-hour loop through the heart of Kutaisi — flat roads, no fitness required.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-        <!-- Winery Tour -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-winery">
-            <span class="tour-name" data-i18n="t2_name">Winery Tour</span>
-            <div class="tour-header-meta">
+        <a href="/winery-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Winery Tour image.jpeg" alt="Baia's Winery bike tour" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">4–5h</span>
               <span class="tour-badge badge-easy">Easy</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-winery">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-wrap">
-                <img src="Images/Winery Tour image.jpeg" alt="Baia's Winery bike tour" class="tour-photo" loading="lazy" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">Cycle 35 km from Kutaisi through quiet countryside roads to Baia's Winery in the village of Obcha — one of Georgia's most celebrated natural wine producers. A scenic, relaxed ride for casual cyclists. Once the tasting is done, a car picks you up for the ride back. Optional upgrade — return to Kutaisi by car.</p>
-                <p class="tour-highlights-title">Winery Tour Highlights</p>
-                <ul class="tour-highlights">
-                  <li><strong>Scenic 35 km countryside ride</strong> — quiet roads, Georgian landscape</li>
-                  <li><strong>Vineyard walk</strong> — learn about grape varieties &amp; cultivation</li>
-                  <li><strong>Cellar tour</strong> — traditional kvevri &amp; modern winemaking techniques</li>
-                  <li><strong>Award-winning wine tasting</strong> — Georgia's most celebrated natural wines</li>
-                  <li><strong>Fresh local food menu</strong> — prepared on-site, all locally sourced</li>
-                  <li><strong>Car return to Kutaisi</strong> — no need to cycle back after the wine</li>
-                </ul>
-                <p class="tour-best-for">Best for: wine lovers, casual cyclists &amp; culture seekers.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Winery+Tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Winery Tour</p>
+            <p class="tour-card-teaser">35km through countryside roads to Baia's Winery for a kvevri cellar tour and tasting.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-        <!-- Tskaltubo Tour -->
-        <div class="tour-item">
-          <button class="tour-header" aria-expanded="false" aria-controls="panel-tskaltubo">
-            <span class="tour-name" data-i18n="t3_name">Tskaltubo Tour</span>
-            <div class="tour-header-meta">
+        <a href="/tskaltubo-tour" class="tour-card">
+          <div class="tour-card-img-wrap">
+            <img src="Images/Tskaltubo Tour.jpeg" alt="Tskaltubo Soviet sanatoriums bike tour" loading="lazy" />
+            <div class="tour-card-badges">
               <span class="tour-badge badge-duration">3h</span>
               <span class="tour-badge badge-easy">Easy</span>
-              <svg class="tour-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
-          <div class="tour-panel" id="panel-tskaltubo">
-            <div class="tour-panel-inner">
-              <div class="tour-photo-wrap">
-                <img src="Images/Tskaltubo Tour.jpeg" alt="Tskaltubo Soviet sanatoriums bike tour" class="tour-photo" loading="lazy" />
-              </div>
-              <div class="tour-details">
-                <p class="tour-description">A relaxed 7 km ride from Kutaisi to Tskaltubo — a town famous for its grand park and hauntingly beautiful Soviet-era sanatoriums. Loop through one of Europe's largest parks, discover buildings where Stalin himself once visited, and soak in a side of Georgia most tourists never see.</p>
-                <p class="tour-highlights-title">Tskaltubo Tour Highlights</p>
-                <ul class="tour-highlights">
-                  <li><strong>Grand Park Loop</strong> — one of the largest parks in Europe, by bike</li>
-                  <li><strong>Soviet Sanatoriums</strong> — grand historic buildings visited by Stalin himself</li>
-                  <li><strong>Tskaltubo Town Bazaar</strong> — local market vibes and fresh produce</li>
-                  <li><strong>Cold Lake</strong> — a scenic spot to relax and enjoy nature</li>
-                </ul>
-                <p class="tour-best-for">Best for: history lovers, casual riders &amp; anyone curious about Soviet Georgia.</p>
-                <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'm+interested+in+the+Tskaltubo+Tour!" target="_blank" rel="noopener" class="btn-primary">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                  <span data-i18n="btn_book_tour">Book This Tour</span>
-                </a>
-              </div>
             </div>
           </div>
-        </div>
+          <div class="tour-card-body">
+            <p class="tour-card-name">Tskaltubo Tour</p>
+            <p class="tour-card-teaser">One of Europe's largest parks and hauntingly beautiful Soviet-era sanatoriums.</p>
+            <span class="tour-card-link">
+              <span>View Full Tour</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
 
-      </div><!-- /tour-list kutaisi -->
+      </div><!-- /tour-card-grid-simple kutaisi -->
     </div>
   </section>
 
-  <!-- ── Group Tour Promo Banner ── -->
-  <section class="tour-promo">
-    <div class="tour-promo-inner container">
-      <div class="tour-promo-text">
-        <p class="tour-promo-label">&#128690; Group Tours</p>
-        <h2 class="tour-promo-title">Join Our Tbilisi Bike Tour</h2>
-        <p class="tour-promo-sub">Every Saturday &nbsp;·&nbsp; 50$ per person</p>
+  <!-- ==========================================
+       KUTAISI CITY CENTER TOUR (added at the bottom)
+  =========================================== -->
+  <section class="tours-section" id="kutaisi-city-center" style="background: var(--surface); padding-top: 12px; padding-bottom: 80px;">
+    <div class="container">
+      <div class="tour-section-header">
+        <p class="section-label">Kutaisi</p>
+        <h2 class="section-title">City Center, History<br>&amp; Riverside Paths</h2>
       </div>
-      <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I+am+interested+in+the+Tbilisi+Group+Bike+Tour&type=phone_number&app_absent=0"
-         target="_blank" rel="noopener" class="btn-whatsapp">
-        Book on WhatsApp ↗
-      </a>
+      <div class="feature-tour">
+        <div class="feature-tour-img">
+          <img src="Images/Kutaisi City Ride Image.jpg" alt="Kutaisi Bike Tour — City Center, History and Riverside Paths" loading="lazy" />
+          <div class="feature-tour-img-badges">
+            <span class="tour-badge badge-duration">2 Hours</span>
+            <span class="tour-badge badge-easy">Easy</span>
+          </div>
+        </div>
+        <div class="feature-tour-body">
+          <p class="feature-tour-name">Kutaisi Bike Tour: City Center, History &amp; Riverside Paths</p>
+          <p class="feature-tour-text">The Colchis Fountain, the White Bridge, riverside settlements and the option to climb to Bagrati Cathedral — a guided 2-hour ride through Georgia's oldest city.</p>
+          <p class="feature-tour-note">Minimum 2 people per booking · private groups available</p>
+          <a href="/kutaisi-city-center-tour" class="btn-primary">
+            <span>View Full Tour</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CUSTOM TOUR CTA (very bottom, before footer)
+  =========================================== -->
+  <section class="tours-section" style="padding-top: 0; padding-bottom: 80px;">
+    <div class="container">
+      <div class="tour-card tour-card-custom" style="position: static;">
+        <div class="tour-card-custom-text">
+          <div class="tour-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5 2.3-7.2-6-4.6h7.6z"/></svg>
+          </div>
+          <div>
+            <p class="tour-card-name" data-i18n="t13_name">Custom Tour</p>
+            <p class="tour-card-teaser" data-i18n="t13_teaser">None of the above quite fit? Tell us your destination, group size and days — we'll map it.</p>
+          </div>
+        </div>
+        <a href="https://api.whatsapp.com/send/?phone=995599373788&text=Hi%2C+I'd+like+to+plan+a+custom+bike+tour+in+Georgia!" target="_blank" rel="noopener" class="tour-card-cta">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Plan My Tour
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1565,18 +1474,12 @@
         svaneti_label:'Svaneti', svaneti_title:'Bike Tours<br>in Svaneti',
         georgia_label:'Georgia', georgia_title:'Bike Tours<br>across Georgia',
         georgia_sub:'Multi-day expeditions into the Caucasus, Svaneti, and the Kakheti wine country — guided, supported, and built for riders who want more than a city loop.',
-        t1_name:'Kutaisi City Ride', t2_name:'Winery Tour', t3_name:'Tskaltubo Tour',
-        t6_name:'Tbilisi Urban Discovery',
-        t7_name:'Turtle Lake', t8_name:'Bevreti & Lisi Lake',
-        t14_name:'Mestia Bike Tour', t15_name:'Gwaldi Pass E-Bike Adventure',
         t9_name:'Kazbegi & Gudauri — 7-Day Tour', t10_name:'Mestia & Svaneti — 7-Day Expedition',
-        t11_name:'Zekari Pass & Borjomi', t12_name:'Kakheti 550km Loop', t13_name:'Custom Tour',
+        t13_name:'Custom Tour',
         t16_name:'Svaneti-Racha — 8-Day Group Tour',
         t9_teaser:'Ride in the shadow of Mt. Kazbek — glacial valleys, 2,200m passes, and full 4x4 support.',
         t10_teaser:'The Svaneti Legend — Svan towers, the ride to Ushguli, and the Zagari Pass descent.',
         t16_teaser:'The complete version — Svaneti, Lower Svaneti, Lechkhumi, Racha, mountain roads and wine. September departure.',
-        t11_teaser:'A 1,200m pass descent, a Kura River canyon ride, and Borjomi-Kharagauli National Park.',
-        t12_teaser:'Our most demanding route — Gombori Pass, the Alazani wine valley, Vashlovani steppe & David Gareji.',
         t13_teaser:"None of the above quite fit? Tell us your destination, group size and days — we'll map it.",
         footer_tagline:'Guided bike tours and bike rentals across Georgia — from ancient Tbilisi to Kutaisi, Mestia, Borjomi and more.',
         footer_nav:'Navigate', footer_copy:'© 2026 Tandro Bike Tours & Bike Rent Georgia. All rights reserved.'
@@ -1592,19 +1495,13 @@
         tbilisi_label:'Тбилиси', tbilisi_title:'Велотуры<br>в Тбилиси',
         svaneti_label:'Сванетия', svaneti_title:'Велотуры<br>в Сванетии',
         georgia_label:'Грузия', georgia_title:'Велотуры<br>по Грузии',
-        georgia_sub:'Многодневные экспедиции на Кавказ, в Сванетию и винный регион Кахетии — с гидом, поддержкой и настоящим маршрутом, а не просто городской петлёй.',
-        t1_name:'Городской тур по Кутаиси', t2_name:'Тур по виноградникам', t3_name:'Тур в Цхалтубо',
-        t6_name:'Открытие Тбилиси',
-        t7_name:'Черепашье озеро', t8_name:'Беврети и озеро Лиси',
-        t14_name:'Велотур по Местии', t15_name:'Э-байк тур через перевал Гвалди',
+        georgia_sub:'Многодневные экспедиции и частные туры на день в Казбеги и Сванетию — с гидом, поддержкой и настоящим маршрутом, а не просто городской петлёй.',
         t9_name:'Казбеги и Гудаури — 7-дневный тур', t10_name:'Местия и Сванетия — 7-дневная экспедиция',
-        t11_name:'Зекарский перевал и Боржоми', t12_name:'Кахетия 550 км петля', t13_name:'Индивидуальный тур',
+        t13_name:'Индивидуальный тур',
         t16_name:'Сванетия-Рача — 8-дневный групповой тур',
         t9_teaser:'Маршрут в тени горы Казбек — ледниковые долины, перевалы 2 200 м и полная поддержка 4x4.',
         t10_teaser:'Легенда Сванетии — сванские башни, маршрут до Ушгули и спуск через перевал Загаари.',
         t16_teaser:'Полная версия — Сванетия, Нижняя Сванетия, Лечхуми, Рача, горные дороги и вино. Отправление в сентябре.',
-        t11_teaser:'Спуск с перевала на 1 200 м, каньон реки Кура и национальный парк Боржоми-Харагаули.',
-        t12_teaser:'Наш самый сложный маршрут — перевал Гомбори, винная долина Алазани, степь Вашловани и Давид Гареджи.',
         t13_teaser:'Ничего не подошло? Расскажите направление, размер группы и число дней — мы спланируем маршрут.',
         footer_tagline:'Велотуры с гидом и аренда велосипедов по Грузии — от древнего Тбилиси до Кутаиси, Местии, Боржоми и других мест.',
         footer_nav:'Навигация', footer_copy:'© 2026 Tandro Bike Tours & Bike Rent Georgia. Все права защищены.'
